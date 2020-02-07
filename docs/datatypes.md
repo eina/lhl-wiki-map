@@ -1,6 +1,8 @@
 # DataTypes
 
-todo: figure out how and where to store user map activity
+## schema
+
+![Wiki Maps Schema](./LHL_Wiki_Maps.png "Wiki Maps Schema")
 
 ## users
 
@@ -19,7 +21,6 @@ todo: figure out how and where to store user map activity
   owner_id: FK integer,
   title: varchar(255),
   created_on: timestamp,
-  is_editable: bool
 }
 ```
 
