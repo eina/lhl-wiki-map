@@ -1,49 +1,60 @@
 # DataTypes
 
-## schema
+## ERD
 
-![Wiki Maps Schema](./LHL_Wiki_Maps.png "Wiki Maps Schema")
+![Wiki Maps Schema](./wiki_maps_erd.png "Wiki Maps Schema")
 
-## users
-
-```js
-{
-  id: integer,
-  email: string,
-}
-```
-
-## maps
-
-```js
-{
-  id: PK integer,
-  owner_id: FK integer,
-  title: varchar(255),
-  created_on: timestamp,
-}
-```
-
-## points
+## Users
 
 ```js
 {
   id: PK int,
-  map_id: FK integer,
-  lat: int,
-  lng: int,
-  title: varchar(255),
-  image: string,
-  description: string?
+  email: string,
 }
 ```
 
-## users_fave
+## Maps
+
+```js
+{
+  id: PK int,
+  owner_id: FK int,
+  title: string,
+  created_at: timestamp,
+}
+```
+
+## Points
+
+```js
+{
+  id: PK int,
+  map_id: FK int,
+  title: string,
+  detail: string,
+  image_url: string,
+  lat: int,
+  lng: int,
+}
+```
+
+## Favorites
 
 ```js
 {
   id: PK int,
   user_id: FK int,
-  map_id: FK int
+  map_id: FK int,
+}
+```
+
+## Edits
+
+```js
+{
+  id: PK int,
+  user_id: FK int,
+  map_id: FK int,
+  edited_at: timestamp,
 }
 ```

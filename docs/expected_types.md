@@ -1,5 +1,9 @@
 # Expected Types
 
+*Kevin:* \
+*Slightly outdated since datatypes and ERD got updated.* \
+*Refer to [datatypes.md](./datatypes.md) for correct datatypes.*
+
 Expected types for methods
 
 ## /user
