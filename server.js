@@ -56,6 +56,10 @@ app.get("/maps/new", (req, res) => {
   res.render("map-form");
 });
 
+app.get("/maps/:id", (req, res) => {
+  res.render("single-map");
+});
+
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });

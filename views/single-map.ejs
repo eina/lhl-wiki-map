@@ -5,14 +5,12 @@
 <%- include('partials/_headnav') %>
 
 <main>
-  <div id="map-create" class="map"></div>
-  <form id="createMapForm">
-    <label>
-      <span>Map Name</span>
-      <input name="map-title" id="map-title" />
-    </label>
-    <button type="submit" class="btn">Create Map</button>
-  </form>
+  <div class="header">
+    <h2>[My Awesome Map Name]</h2>
+    <p>by [User Name]</p>
+    <p>[# of favs] <button>&hearts;</button></p>
+  </div>
+  <div id="single-map" class="map"></div>
 
   <h3>My Places</h3>
   <!-- id needs to be unique identifier -->
@@ -26,10 +24,6 @@
     <div class="card-body">
       <p>[Place Description] Some description about this awesome place I put on the map yay.</p>
     </div>
-    <div class="card-footer">
-      <button class="btn edit-place" type="button">Edit</button>
-      <button class="btn" type="button">Delete</button>
-    </div>
   </div>
 
   <div class="card" id="place-2">
@@ -41,10 +35,6 @@
     </div>
     <div class="card-body">
       <p>[Place Description] Some description about this awesome place I put on the map yay.</p>
-    </div>
-    <div class="card-footer">
-      <button class="btn edit-place" type="button">Edit</button>
-      <button class="btn" type="button">Delete</button>
     </div>
   </div>
 </main>
