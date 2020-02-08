@@ -18,7 +18,7 @@
 ```js
 {
   id: PK int,
-  owner_id: FK int,
+  u_id: FK int,
   title: string,
   created_at: timestamp,
 }
@@ -43,7 +43,7 @@
 ```js
 {
   id: PK int,
-  user_id: FK int,
+  u_id: FK int,
   map_id: FK int,
 }
 ```
@@ -53,7 +53,7 @@
 ```js
 {
   id: PK int,
-  user_id: FK int,
+  u_id: FK int,
   map_id: FK int,
   edited_at: timestamp,
 }
