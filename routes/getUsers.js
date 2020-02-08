@@ -2,7 +2,22 @@ const express = require('express');
 const router  = express.Router();
 
 module.exports = (db) => {
-  router.get("/", (req, res) => {
+  // Get all users.
+  router.get("/all", (req, res) => {
+    db.query(`SELECT * FROM users;`)
+      .then(data => {
+        const users = data.rows;
+        res.json(users);
+      })
+      .catch(err => {
+        res
+          .status(500)
+          .json({ error: err.message });
+      });
+  });
+
+  // Get logged in user based on data in cookie.
+  router.get("/current", (req, res) => {
     if (req.cookies.userID) {
       let queryParams = [];
       let queryString = `SELECT * FROM users `;
@@ -24,19 +39,7 @@ module.exports = (db) => {
     }
   });
 
-  router.get("/all", (req, res) => {
-    db.query(`SELECT * FROM users;`)
-      .then(data => {
-        const users = data.rows;
-        res.json(users);
-      })
-      .catch(err => {
-        res
-          .status(500)
-          .json({ error: err.message });
-      });
-  });
-
+  // Get user data given a user ID.
   router.get("/:userID", (req, res) => {
     let queryParams = [];
     let queryString = `SELECT * FROM users `;
