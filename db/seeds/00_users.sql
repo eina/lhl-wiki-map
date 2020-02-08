@@ -1,12 +1,12 @@
-INSERT INTO users (email)
-  VALUES ('Alice@example.com');
+INSERT INTO users (fullname, email)
+  VALUES ('Alice One', 'Alice@example.com');
 
-INSERT INTO users (email)
-  VALUES ('Kira@example.com');
+INSERT INTO users (fullname, email)
+  VALUES ('Kira Two', 'Kira@example.com');
 
-INSERT INTO users (email)
-  VALUES ('Christopher@example.com');
+INSERT INTO users (fullname, email)
+  VALUES ('Christopher Three', 'Christopher@example.com');
 
-INSERT INTO users (email)
-  VALUES ('William@example.com');
+INSERT INTO users (fullname, email)
+  VALUES ('William Four', 'William@example.com');
 

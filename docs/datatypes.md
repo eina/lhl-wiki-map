@@ -9,6 +9,7 @@
 ```js
 {
   id: PK int,
+  fullname: string,
   email: string,
 }
 ```
