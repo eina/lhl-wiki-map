@@ -57,7 +57,10 @@ app.get("/maps/new", (req, res) => {
 });
 
 app.get("/maps/:id", (req, res) => {
-  res.render("single-map");
+  const mapDetail = require("./data/map-with-points");
+  const { id } = req.params;
+  // console.log("map" + id, mapDetail[`map${id}`]);
+  res.render("single-map", { map: mapDetail[`map${id}`] });
 });
 
 app.get("/user/:id", (req, res) => {

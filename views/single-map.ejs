@@ -2,40 +2,31 @@
 <%- include('partials/_site-head') %>
 
 <!-- <header> + <nav> -->
-<%- include('partials/_headnav') %>
-
+<%- include('partials/_headnav') %> <%- JSON.stringify(map) %>
 <main>
+  <% if (map) { %>
   <div class="header">
-    <h2>[My Awesome Map Name]</h2>
-    <p>by [User Name]</p>
-    <p>[# of favs] <button>&hearts;</button></p>
+    <h2><%= map.details.title %></h2>
+    <p>by <%= map.details.owner_name %></p>
+    <p><%= map.details.faves %> <button>&hearts;</button></p>
   </div>
   <div id="single-map" class="map"></div>
 
+  <% if (map.points.length) { %>
   <h3>My Places</h3>
-  <!-- id needs to be unique identifier -->
-  <div class="card" id="place-1">
-    <div class="card-image">
-      <img class="img-responsive" src="https://picsum.photos/300/150" />
-    </div>
-    <div class="card-header">
-      <div class="card-title h5">[Place Title]</div>
-    </div>
-    <div class="card-body">
-      <p>[Place Description] Some description about this awesome place I put on the map yay.</p>
-    </div>
-  </div>
 
-  <div class="card" id="place-2">
+  <% map.points.forEach(place => { %>
+  <div class="card">
     <div class="card-image">
-      <img class="img-responsive" src="https://picsum.photos/300/150" />
+      <img class="img-responsive" src="<%= place.img %>" />
     </div>
     <div class="card-header">
-      <div class="card-title h5">[Place Title]</div>
+      <div class="card-title h5"><%= place.title %></div>
     </div>
     <div class="card-body">
-      <p>[Place Description] Some description about this awesome place I put on the map yay.</p>
+      <p><%= place.description %></p>
     </div>
   </div>
+  <% }); %> <% } %> <% } %>
 </main>
 <%- include('partials/_site-foot') %>
