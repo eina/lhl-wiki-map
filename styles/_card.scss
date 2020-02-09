@@ -1,7 +1,7 @@
 // extending base.scss styles from spectre.css
 
 .card {
-  margin-bottom: 0.5em;
+  max-width: 800px;
   box-shadow: 0 0.25rem 1rem rgba(48, 55, 66, 0.15);
 
   &-header {
