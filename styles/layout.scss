@@ -1,6 +1,9 @@
 // vendor imports
 @import "vendor/spectre-css";
 
+// leaflet/map styles
+@import "map";
+
 body {
   background-color: #eee;
 
@@ -9,7 +12,21 @@ body {
   }
 }
 
-// map height
-.map {
-  height: 500px;
+.site-nav {
+  // background-color: #dfdce0;
+  align-items: center;
+  padding: 1em 0.5em;
+
+  h1 {
+    margin-bottom: 0;
+  }
+}
+
+main {
+  width: 90%;
+  margin: 1em auto;
+}
+
+.card {
+  margin-bottom: 0.5em;
 }
