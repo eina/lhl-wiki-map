@@ -45,11 +45,6 @@ main {
   }
 }
 
-.full-width {
-  margin-left: -11.5%;
-  margin-right: -11.5%;
-}
-
 .card-grid {
   display: grid;
   grid-gap: 1.5em;
@@ -67,6 +62,23 @@ main {
   @media screen and (min-width: 720px) {
     grid-template-columns: repeat(2, 1fr);
   }
+}
+
+// utilities
+
+.mb-0 {
+  margin-bottom: 0;
+}
+
+.flex-space-between {
+  display: flex;
+  justify-content: space-between;
+  // align-items: center;
+}
+
+.full-width {
+  margin-left: -11.5%;
+  margin-right: -11.5%;
 }
 
 // misc components/elements

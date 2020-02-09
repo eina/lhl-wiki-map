@@ -5,28 +5,53 @@
 <%- include('partials/_headnav') %>
 <main>
   <% if (map) { %>
-  <div class="header">
-    <h2><%= map.details.title %></h2>
-    <p>by <%= map.details.owner_name %></p>
-    <p><%= map.details.faves %> <button>&hearts;</button></p>
+  <div class="header flex-space-between">
+    <div>
+      <h2 class="mb-0"><%= map.details.title %></h2>
+      <p class="mb-0">by <%= map.details.owner_name %></p>
+    </div>
+
+    <p class="mb-0">
+      <span><%= map.details.faves %></span>
+      <button class="btn btn-link btn-heart">
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="feather feather-heart"
+        >
+          <path
+            d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
+          ></path>
+        </svg>
+      </button>
+    </p>
   </div>
-  <div id="leaflet-map" class="map"></div>
+  <div id="leaflet-map" class="map full-width"></div>
 
   <% if (map.points.length) { %>
   <h3>My Places</h3>
 
-  <% map.points.forEach(place => { %>
-  <div class="card">
-    <div class="card-image">
-      <img class="img-responsive" src="<%= place.img %>" />
+  <div class="card-grid place-grid">
+    <% map.points.forEach(place => { %>
+    <div class="card">
+      <div class="card-image">
+        <img class="img-responsive" src="<%= place.img %>" />
+      </div>
+      <div class="card-header">
+        <div class="card-title h5"><%= place.title %></div>
+      </div>
+      <div class="card-body">
+        <p><%= place.description %></p>
+      </div>
     </div>
-    <div class="card-header">
-      <div class="card-title h5"><%= place.title %></div>
-    </div>
-    <div class="card-body">
-      <p><%= place.description %></p>
-    </div>
+    <% }); %>
   </div>
-  <% }); %> <% } %> <% } %>
+  <% } %> <% } %>
 </main>
 <%- include('partials/_site-foot') %>
