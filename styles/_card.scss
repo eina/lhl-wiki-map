@@ -1,0 +1,31 @@
+// extending base.scss styles from spectre.css
+
+.card {
+  margin-bottom: 0.5em;
+  box-shadow: 0 0.25rem 1rem rgba(48, 55, 66, 0.15);
+
+  &-header {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &-title {
+    font-weight: 700;
+  }
+
+  p.card-subtitle {
+    margin-bottom: 0;
+  }
+
+  &-map {
+    position: relative;
+  }
+}
+
+.btn.view-btn {
+  padding: 0.25rem 1.25rem;
+  position: absolute;
+  bottom: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+}

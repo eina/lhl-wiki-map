@@ -1,32 +1,32 @@
 // vendor imports
 @import "vendor/spectre-css";
 
+// variables
+$logo-font: "Poppins", sans-serif;
+
 // leaflet/map styles
 @import "map";
 
-body {
-  background-color: #eee;
+@import "headnav";
+@import "card";
 
-  h1 {
-    color: #244751;
+// type stuff
+main {
+  a {
+    font-weight: 700;
   }
 }
 
-.site-nav {
-  // background-color: #dfdce0;
-  align-items: center;
-  padding: 1em 0.5em;
+body {
+  background-color: #eee;
+}
 
-  h1 {
-    margin-bottom: 0;
-  }
+.wrapper {
+  width: 90%;
+  margin: auto;
 }
 
 main {
   width: 90%;
   margin: 1em auto;
-}
-
-.card {
-  margin-bottom: 0.5em;
 }

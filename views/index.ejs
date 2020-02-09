@@ -5,15 +5,22 @@
 <%- include('partials/_headnav') %>
 
 <main>
-  <div class="card">
-    <div class="card-image">
+  <article class="card s-rounded">
+    <div class="card-image card-map">
       <img class="img-responsive" src="https://picsum.photos/800/500" />
+      <button class="btn s-rounded view-btn">View</button>
     </div>
     <div class="card-header">
-      <button class="btn btn-primary float-right">&hearts;</button>
-      <div class="card-title h5">Map Title</div>
-      <div class="card-subtitle text-gray">by <a href="#">[User Name]</a></div>
+      <div>
+        <div class="card-title h3">Map Title</div>
+        <p class="card-subtitle text-gray">by <a href="#">[User Name]</a></p>
+      </div>
+
+      <div>
+        <span>999</span>
+        <button class="btn btn-primary">&hearts;</button>
+      </div>
     </div>
-  </div>
+  </article>
 </main>
 <%- include('partials/_site-foot') %>
