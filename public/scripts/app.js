@@ -91,6 +91,8 @@ $(() => {
 
   createMap.on("click touchstart", onMapClick);
 
+  /* Profile Select Thing */
+
   /* Edit Place Details */
 
   const editPlaceBtn = $(".edit-place");
