@@ -60,6 +60,10 @@ app.get("/maps/:id", (req, res) => {
   res.render("single-map");
 });
 
+app.get("/user/:id", (req, res) => {
+  res.render("profile");
+});
+
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });
