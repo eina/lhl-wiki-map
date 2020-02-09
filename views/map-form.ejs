@@ -5,46 +5,61 @@
 <%- include('partials/_headnav') %>
 
 <main>
-  <div id="map-create" class="map"></div>
+  <h1>Create A Map</h1>
   <form id="createMapForm">
-    <label>
-      <span>Map Name</span>
-      <input name="map-title" id="map-title" />
+    <label class="form-group">
+      <span class="form-label">This map is a collection of</span>
+      <input
+        type="text"
+        name="map-title"
+        id="map-title"
+        class="form-input input-lg"
+        placeholder="eg. Best Coffee in Town"
+      />
     </label>
-    <button type="submit" class="btn">Create Map</button>
+
+    <div class="btn-container">
+      <button type="submit" class="btn btn-primary">Save</button>
+      <!-- hide if path is not maps/edit -->
+      <button type="button" class="btn btn-error">Delete</button>
+    </div>
   </form>
+
+  <div id="leaflet-map" class="map full-width"></div>
 
   <h3>My Places</h3>
   <!-- id needs to be unique identifier -->
-  <div class="card" id="place-1">
-    <div class="card-image">
-      <img class="img-responsive" src="https://picsum.photos/300/150" />
+  <div class="card-grid place-grid">
+    <div class="card s-rounded" id="place-1">
+      <div class="card-image">
+        <img class="img-responsive" src="https://picsum.photos/300/150" />
+      </div>
+      <div class="card-header">
+        <div class="card-title h5">[Place Title]</div>
+      </div>
+      <div class="card-body">
+        <p>[Place Description] Some description about this awesome place I put on the map yay.</p>
+      </div>
+      <div class="card-footer text-center">
+        <button class="btn edit-place" type="button">Edit</button>
+        <button class="btn" type="button">Delete</button>
+      </div>
     </div>
-    <div class="card-header">
-      <div class="card-title h5">[Place Title]</div>
-    </div>
-    <div class="card-body">
-      <p>[Place Description] Some description about this awesome place I put on the map yay.</p>
-    </div>
-    <div class="card-footer">
-      <button class="btn edit-place" type="button">Edit</button>
-      <button class="btn" type="button">Delete</button>
-    </div>
-  </div>
 
-  <div class="card" id="place-2">
-    <div class="card-image">
-      <img class="img-responsive" src="https://picsum.photos/300/150" />
-    </div>
-    <div class="card-header">
-      <div class="card-title h5">[Place Title]</div>
-    </div>
-    <div class="card-body">
-      <p>[Place Description] Some description about this awesome place I put on the map yay.</p>
-    </div>
-    <div class="card-footer">
-      <button class="btn edit-place" type="button">Edit</button>
-      <button class="btn" type="button">Delete</button>
+    <div class="card s-rounded" id="place-2">
+      <div class="card-image">
+        <img class="img-responsive" src="https://picsum.photos/300/150" />
+      </div>
+      <div class="card-header">
+        <div class="card-title h5">[Place Title]</div>
+      </div>
+      <div class="card-body">
+        <p>[Place Description] Some description about this awesome place I put on the map yay.</p>
+      </div>
+      <div class="card-footer">
+        <button class="btn edit-place" type="button">Edit</button>
+        <button class="btn" type="button">Delete</button>
+      </div>
     </div>
   </div>
 </main>

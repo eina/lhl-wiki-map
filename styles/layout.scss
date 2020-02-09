@@ -9,12 +9,18 @@ $logo-font: "Poppins", sans-serif;
 
 @import "headnav";
 @import "card";
+@import "form";
 
 // type stuff
 main {
   a {
     font-weight: 700;
   }
+}
+
+// overrides
+.img-responsive {
+  width: 100%;
 }
 
 body {
@@ -39,16 +45,27 @@ main {
   }
 }
 
+.full-width {
+  margin-left: -11.5%;
+  margin-right: -11.5%;
+}
+
 .card-grid {
   display: grid;
   grid-gap: 1.5em;
 
-  @media screen and (min-width: 960px) {
+  @media screen and (min-width: 900px) {
     grid-template-columns: repeat(2, 1fr);
   }
 
   @media screen and (min-width: 1280px) {
     grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.place-grid {
+  @media screen and (min-width: 720px) {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
