@@ -1,9 +1,9 @@
-const express = require('express');
+const express = require(`express`);
 const router  = express.Router();
 
 module.exports = (db) => {
   // Get all users
-  router.get("/all", (req, res) => {
+  router.get(`/all`, (req, res) => {
     db.query(`SELECT * FROM users;`)
       .then(data => {
         const users = data.rows;
@@ -17,7 +17,7 @@ module.exports = (db) => {
   });
 
   // Get the logged-in user based on data in cookie
-  router.get("/current", (req, res) => {
+  router.get(`/current`, (req, res) => {
     if (req.cookies.userID) {
       let queryParams = [];
       let queryString = `SELECT * FROM users `;
@@ -35,12 +35,12 @@ module.exports = (db) => {
             .json({ error: err.message });
         });
     } else {
-      return res.status(401).json('401: y u no login');
+      return res.status(401).json(`401: y u no login`);
     }
   });
 
   // Get user given a user ID
-  router.get("/:userID", (req, res) => {
+  router.get(`/:userID`, (req, res) => {
     let queryParams = [];
     let queryString = `SELECT * FROM users `;
 
