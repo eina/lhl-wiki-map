@@ -1,7 +1,7 @@
 # Expected Types
 
 *Kevin:* \
-*Slightly outdated since datatypes and ERD got updated.* \
+*~~Slightly~~ VERY outdated, ~~since datatypes and ERD got updated~~ I'm not even sure if anyone uses this page.* \
 *Refer to [datatypes.md](./datatypes.md) for correct datatypes.*
 
 Expected types for methods
