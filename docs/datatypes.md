@@ -22,6 +22,8 @@
   u_id: FK int,
   title: string,
   created_at: timestamp,
+  center_lat: float,
+  center_lng: float,
 }
 ```
 
@@ -34,8 +36,8 @@
   title: string,
   detail: string,
   image_url: string,
-  lat: int,
-  lng: int,
+  lat: float,
+  lng: float,
 }
 ```
 
