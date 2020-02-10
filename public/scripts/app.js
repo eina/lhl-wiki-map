@@ -72,7 +72,6 @@ $(() => {
 
       $userContainer.append($gridHeader, $cardGrid);
     }
-
     if ($selectVal === "my-activity") {
       const $gridHeader = `<h2 class="grid-header">Activity</h2>`;
       const $table = renderActivityTable();
@@ -107,17 +106,17 @@ $(() => {
     );
     yvrMap.addTo(myMap);
     // render markers
-    L.marker([49.280571, -123.11378])
-      .bindPopup("Hopefully details here")
-      .addTo(myMap);
-    L.marker([49.282656, -123.126912])
-      .bindPopup("Hopefully details here")
-      .addTo(myMap);
-    L.marker([49.285944, -123.134379])
-      .bindPopup("Hopefully details here")
-      .addTo(myMap);
+    // L.marker([49.280571, -123.11378])
+    //   .bindPopup("Hopefully details here")
+    //   .addTo(myMap);
+    // L.marker([49.282656, -123.126912])
+    //   .bindPopup("Hopefully details here")
+    //   .addTo(myMap);
+    // L.marker([49.285944, -123.134379])
+    //   .bindPopup("Hopefully details here")
+    //   .addTo(myMap);
   };
-  renderSingleMap();
+  // renderSingleMap();
 
   /* Leaflet: Create Map (on map-form.ejs) */
   const createMap = L.map("leaflet-map").setView([49.280571, -123.11378], 15);
@@ -133,18 +132,33 @@ $(() => {
     }
   ).addTo(createMap);
 
-  const onMapClick = function(e) {
-    const { lat, lng } = e.latlng;
-    const popup = L.popup({
-      minWidth: 250,
-      keepInView: true
-    });
-    // on click open this popup
-    popup
-      .setLatLng(e.latlng)
-      // put a form in here to submit stuff
-      .setContent(
-        `
+  /* Create Map Form Submit */
+  $("#createMapForm").submit(function(e) {
+    e.preventDefault();
+    if (!createMap) {
+      return false;
+    } else {
+      const query = $(this).serialize();
+      const center = createMap.getCenter();
+      const formValues = { ...center };
+      console.log("formValues to be sent", formValues, query);
+      return formValues;
+    }
+  });
+
+  const renderPopupDetails = function(details) {
+    // param: details is an object { img, name, detail }
+    const $placeImg = $("<img>").attr({ src: "https://picsum.photos/300/150" });
+    const $placeName = $("<p>").text("[Cool Place Name]");
+    const $placeDescription = $("<p>").text("[Cool Place Description]");
+    const $place = $("<div>");
+
+    $place.append($placeImg, $placeName, $placeDescription);
+    return $place.prop("outerHTML");
+  };
+
+  const renderPopupForm = function() {
+    return `
       <form id="addPlace">
         <div class="form-group">
           <label for="place-name" class="form-label">Name</label>
@@ -160,21 +174,43 @@ $(() => {
         </div>
       <button type="submit" class="btn btn-primary">Add</button>
       </form>
-      `
-      )
+      `;
+  };
+
+  /* Create Point Submit Function */
+  const addPointOnMap = function({ query, lat, lng }) {
+    console.log("hellooooooo", lat, lng, query);
+    // todo: write a POST request
+    // add the marker
+    const marker = L.marker([lat, lng]).addTo(createMap);
+    // bind the popup to the marker
+    // marker.bindPopup(`<b>${query}</b><br>I am a popup on ${lat}, ${lng}.`).openPopup();
+    marker.bindPopup(renderPopupDetails).openPopup();
+    // close the popup form
+    createMap.closePopup();
+  };
+
+  const onMapClick = function(e) {
+    const { lat, lng } = e.latlng;
+
+    const popup = L.popup({
+      minWidth: 250,
+      keepInView: true
+    });
+    // on click open this popup
+    popup
+      .setLatLng(e.latlng)
+      // put a form in here to submit stuff
+      .setContent(renderPopupForm)
       .openOn(createMap);
 
     // submit handler for the form
     if ($("#addPlace")) {
+      console.log("popup is alive!");
       $("#addPlace").submit(function(event) {
         event.preventDefault();
-        // todo: write a POST request
-        // add the marker
-        const marker = L.marker([lat, lng]).addTo(createMap);
-        // bind the popup to the marker
-        marker.bindPopup(`<b>Hello world!</b><br>I am a popup on ${lat}, ${lng}.`).openPopup();
-        // close the popup form
-        createMap.closePopup();
+        const query = $(this).serialize();
+        addPointOnMap({ query, lat, lng });
       });
     }
   };
