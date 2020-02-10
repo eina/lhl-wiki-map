@@ -39,8 +39,27 @@ module.exports = (db) => {
     }
   });
 
+  // Get user given a user email address
+  router.get(`/email/:userEmail`, (req, res) => {
+    let queryParams = [];
+    let queryString = `SELECT * FROM users `;
+
+    queryParams.push(req.params.userEmail);
+    queryString += `WHERE users.email = $${queryParams.length};`;
+
+    db.query(queryString, queryParams)
+      .then(data => {
+        res.json(data.rows[0]);
+      })
+      .catch(err => {
+        res
+          .status(500)
+          .json({ error: err.message });
+      });
+  });
+
   // Get user given a user ID
-  router.get(`/:userID`, (req, res) => {
+  router.get(`/id/:userID`, (req, res) => {
     let queryParams = [];
     let queryString = `SELECT * FROM users `;
 
