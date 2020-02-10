@@ -16,60 +16,83 @@ $(() => {
   const renderProfileSections = function(e) {
     const $selectVal = $(this).val();
     const $userContainer = $("#user-container");
-    console.log("yo did a change happen");
+    const renderCard = () => {
+      const $card = $("<div>").addClass("card s-rounded");
+      const $cardImg = $("<div>").addClass("card-image");
+      const $cardHeader = $("<div>").addClass("card-header");
+      const $cardTitle = $("<div>")
+        .addClass("card-title h5")
+        .text("Map Title");
+      const $mapFaves = $("<p>")
+        .addClass("map-faves")
+        .text(999);
+
+      const $pointImg = $("<img>").attr({ src: "https://picsum.photos/800/500" });
+
+      $cardImg.append($pointImg);
+      $cardHeader.append($cardTitle, $mapFaves);
+
+      $card.append($cardImg, $cardHeader);
+
+      return $card;
+    };
+
+    const renderActivityTable = () => {
+      const $table = $("<table>").addClass("table table-striped table-hover");
+      const $thead = $("<thead>").append(`<tr><th>Date</th><th>Details</th></tr>`);
+      const $tr = $("<tr>");
+
+      // loop through something
+      const $td1 = $("<td>").text("January 24, 2020");
+      const $mapLink = $("<a>")
+        .attr({ href: "#" })
+        .text("[Map Name]");
+      const $td2 = $("<td>").append("Edited ", $mapLink);
+
+      const $activeRow = $tr.addClass("active").append($td1, $td2);
+      const $tbody = $("<tbody>").append($activeRow);
+
+      $table.append($thead, $tbody);
+      return $table;
+    };
+
     // remove content inside
     $userContainer.empty();
     if ($selectVal === "my-maps") {
-      $userContainer.append(`    <h2 class="grid-header">My Maps</h2>
+      const $card = renderCard();
+      const $gridHeader = `<h2 class="grid-header">My Maps</h2>`;
+      const $cardGrid = $(`<div class="card-grid"></div>`).prepend($card);
 
-    <div class="card-grid">
-      <div class="card s-rounded">
-        <div class="card-image">
-          <img class="img-responsive" src="https://picsum.photos/800/500" />
-        </div>
-        <div class="card-header">
-          <div class="card-title h5">Map Title</div>
-          <p>999 &hearts;</p>
-        </div>
-      </div>
-    </div>`);
+      $userContainer.append($gridHeader, $cardGrid);
     }
     if ($selectVal === "my-faves") {
-      $userContainer.append(`    <h2 class="grid-header">My Favourite Maps</h2>
+      const $card = renderCard();
+      const $gridHeader = `<h2 class="grid-header">Favourites</h2>`;
+      const $cardGrid = $(`<div class="card-grid"></div>`).prepend($card);
 
-    <div class="card-grid">
-      <div class="card s-rounded">
-        <div class="card-image">
-          <img class="img-responsive" src="https://picsum.photos/800/500" />
-        </div>
-        <div class="card-header">
-          <div>
-            <div class="card-title h5">Map Title</div>
-            <p class="card-subtitle">by Some Other User</p>
-          </div>
-
-          <p>999 &hearts;</p>
-        </div>
-      </div>
-    </div>`);
+      $userContainer.append($gridHeader, $cardGrid);
     }
 
     if ($selectVal === "my-activity") {
-      $userContainer.append(`    <h2 class="grid-header">Activity</h2>
-    <table class="table table-striped table-hover">
-      <thead>
-        <tr>
-          <th>Date</th>
-          <th>Details</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr class="active">
-          <td>January 24, 2020</td>
-          <td>Edited <a href="#">[Map Name]</a></td>
-        </tr>
-      </tbody>
-    </table>`);
+      const $gridHeader = `<h2 class="grid-header">Activity</h2>`;
+      const $table = renderActivityTable();
+
+      $userContainer.append($gridHeader, $table);
+      //   $userContainer.append(`
+      // <table class="table table-striped table-hover">
+      //   <thead>
+      //     <tr>
+      //       <th>Date</th>
+      //       <th>Details</th>
+      //     </tr>
+      //   </thead>
+      //   <tbody>
+      //     <tr class="active">
+      //       <td>January 24, 2020</td>
+      //       <td>Edited <a href="#">[Map Name]</a></td>
+      //     </tr>
+      //   </tbody>
+      // </table>`);
     }
   };
 
