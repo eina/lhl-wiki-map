@@ -7,6 +7,6 @@ CREATE TABLE points (
   detail varchar,
   image_url varchar,
   lat double precision,
-  long double precision
+  lng double precision
 );
 
