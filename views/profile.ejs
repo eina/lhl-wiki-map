@@ -5,15 +5,19 @@
 <%- include('partials/_headnav') %>
 
 <main>
-  <h1>[User Name]</h1>
-  <div class="form-group">
-    <select class="form-select" id="profile-view-select">
-      <option value="my-maps">My Maps</option>
-      <option value="my-faves">My Favourite Maps</option>
-      <option value="my-activity">My Activity</option>
-    </select>
+  <div class="content-header">
+    <h1>[User Name]</h1>
+
+    <div class="form-group text-right">
+      <select class="form-select profile-view" id="profile-view-select">
+        <option value="my-maps">My Maps</option>
+        <option value="my-faves">My Favourite Maps</option>
+        <option value="my-activity">My Activity</option>
+      </select>
+    </div>
   </div>
-  <section id="user-container">
+
+  <section id="user-container" class="grid-container">
     <!-- <h2>My Maps</h2>
 
     <div class="card-grid">

@@ -14,14 +14,15 @@ $(() => {
   /* Profile Select Thing */
   const $profileSelect = $("#profile-view-select");
 
-  const renderProfileSections = function(e) {
-    const $selectVal = $(this).val();
-    const $userContainer = $("#user-container");
-    console.log("yo did a change happen");
-    // remove content inside
-    $userContainer.empty();
-    if ($selectVal === "my-maps") {
-      $userContainer.append(`    <h2>My Maps</h2>
+  if ($profileSelect) {
+    const renderProfileSections = function(e) {
+      const $selectVal = $(this).val();
+      const $userContainer = $("#user-container");
+      console.log("yo did a change happen");
+      // remove content inside
+      $userContainer.empty();
+      if ($selectVal === "my-maps") {
+        $userContainer.append(`    <h2>My Maps</h2>
 
     <div class="card-grid">
       <div class="card s-rounded">
@@ -34,9 +35,9 @@ $(() => {
         </div>
       </div>
     </div>`);
-    }
-    if ($selectVal === "my-faves") {
-      $userContainer.append(`    <h2>My Favourite Maps</h2>
+      }
+      if ($selectVal === "my-faves") {
+        $userContainer.append(`    <h2>My Favourite Maps</h2>
 
     <div class="card-grid">
       <div class="card s-rounded">
@@ -53,10 +54,10 @@ $(() => {
         </div>
       </div>
     </div>`);
-    }
+      }
 
-    if ($selectVal === "my-activity") {
-      $userContainer.append(`    <h2>Activity</h2>
+      if ($selectVal === "my-activity") {
+        $userContainer.append(`    <h2>Activity</h2>
     <table class="table table-striped table-hover">
       <thead>
         <tr>
@@ -71,14 +72,15 @@ $(() => {
         </tr>
       </tbody>
     </table>`);
-    }
-  };
+      }
+    };
 
-  $profileSelect.on("change", renderProfileSections);
+    $profileSelect.on("change", renderProfileSections);
 
-  // set the default selected option
-  // trigger change to load content for that
-  $profileSelect.val("my-maps").trigger("change");
+    // set the default selected option
+    // trigger change to load content for that
+    $profileSelect.val("my-maps").trigger("change");
+  }
 
   /* Leaflet Shared Map? */
   /* Leaflet: View Map With Points (on single-map.ejs) */
