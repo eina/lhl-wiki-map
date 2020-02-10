@@ -66,6 +66,10 @@ app.get("/user/:id", (req, res) => {
   res.render("profile");
 });
 
+app.get("/error", (req, res) => {
+  res.render("error", { status: 400, message: "Oops something went wrong" });
+});
+
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });
