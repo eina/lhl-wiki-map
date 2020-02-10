@@ -5,12 +5,20 @@
 <%- include('partials/_headnav') %>
 
 <main>
-  <a href="maps/new" class="btn btn-lg btn-primary s-rounded">Create Your Map</a>
+  <div class="bg-gray full-width">
+    <div class="hero hero-lg site-hero">
+      <div class="hero-body">
+        <h1>Curate your favourite spots</h1>
+        <a href="maps/new" class="btn btn-lg btn-primary s-rounded">Create Your Map</a>
+      </div>
+    </div>
+  </div>
+
   <div class="card-grid">
     <article class="card s-rounded">
       <div class="card-image card-map">
         <img class="img-responsive" src="https://picsum.photos/800/500" />
-        <a class="btn btn-primary s-rounded view-btn">View</a>
+        <a class="btn btn-primary s-rounded view-btn" href="/maps/1">View</a>
       </div>
       <div class="card-header">
         <div>

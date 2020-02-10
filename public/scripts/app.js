@@ -1,6 +1,7 @@
 $(() => {
-  /* Edit Place Details */
+  /* Save a Map */
 
+  /* Edit Place Details */
   const editPlaceBtn = $(".edit-place");
 
   editPlaceBtn.click(function(event) {

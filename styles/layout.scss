@@ -10,6 +10,7 @@ $logo-font: "Poppins", sans-serif;
 @import "headnav";
 @import "card";
 @import "form";
+@import "single";
 
 // type stuff
 main {
@@ -27,7 +28,8 @@ body {
   background-color: #eee;
 }
 
-.wrapper {
+.wrapper,
+.hero.site-hero {
   width: 90%;
   margin: auto;
 
@@ -36,12 +38,15 @@ body {
   }
 }
 
-main {
-  width: 90%;
-  margin: 1em auto;
+main,
+.site-hero > .hero-body {
+  margin: 1em;
+}
 
+.full-width {
   @media screen and (min-width: 960px) {
-    width: 95%;
+    margin-left: -10%;
+    margin-right: -10%;
   }
 }
 
@@ -52,16 +57,23 @@ main {
   @media screen and (min-width: 900px) {
     grid-template-columns: repeat(2, 1fr);
   }
-
-  @media screen and (min-width: 1280px) {
-    grid-template-columns: repeat(3, 1fr);
-  }
 }
 
 .place-grid {
   @media screen and (min-width: 720px) {
     grid-template-columns: repeat(2, 1fr);
   }
+}
+
+.card-grid,
+.place-grid {
+  @media screen and (min-width: 1280px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.hero.site-hero {
+  margin-bottom: 3em;
 }
 
 // utilities
@@ -74,11 +86,6 @@ main {
   display: flex;
   justify-content: space-between;
   // align-items: center;
-}
-
-.full-width {
-  margin-left: -11.5%;
-  margin-right: -11.5%;
 }
 
 // misc components/elements

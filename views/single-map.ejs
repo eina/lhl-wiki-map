@@ -5,9 +5,9 @@
 <%- include('partials/_headnav') %>
 <main>
   <% if (map) { %>
-  <div class="header flex-space-between">
+  <div class="content-header flex-space-between">
     <div>
-      <h2 class="mb-0"><%= map.details.title %></h2>
+      <h1 class="mb-0"><%= map.details.title %></h1>
       <p class="mb-0">by <%= map.details.owner_name %></p>
     </div>
 
@@ -34,24 +34,28 @@
   </div>
   <div id="leaflet-map" class="map full-width"></div>
 
-  <% if (map.points.length) { %>
-  <h3>My Places</h3>
+  <div class="points-container">
+    <% if (map.points.length) { %>
+    <h2>My Places</h2>
 
-  <div class="card-grid place-grid">
-    <% map.points.forEach(place => { %>
-    <div class="card">
-      <div class="card-image">
-        <img class="img-responsive" src="<%= place.img %>" />
+    <div class="card-grid place-grid">
+      <% map.points.forEach(place => { %>
+      <div class="card">
+        <div class="card-image">
+          <img class="img-responsive" src="<%= place.img %>" />
+        </div>
+        <div class="card-header">
+          <div class="card-title h5"><%= place.title %></div>
+        </div>
+        <div class="card-body">
+          <p><%= place.description %></p>
+        </div>
       </div>
-      <div class="card-header">
-        <div class="card-title h5"><%= place.title %></div>
-      </div>
-      <div class="card-body">
-        <p><%= place.description %></p>
-      </div>
+      <% }); %>
     </div>
-    <% }); %>
+    <% } %>
   </div>
-  <% } %> <% } %>
+
+  <% } %>
 </main>
 <%- include('partials/_site-foot') %>
