@@ -44,6 +44,7 @@ const getUsers = require(`./routes/getUsers`);
 const getMaps = require(`./routes/getMaps`);
 const getSingleMap = require(`./routes/getSingleMap`);
 const deleteMap = require(`./routes/deleteMap`);
+const interactFav = require(`./routes/interactFav`);
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
@@ -53,6 +54,7 @@ app.use(`/test/u`, getUsers(db));
 app.use(`/test/maps`, getMaps(db));
 app.use(`/test/m`, getSingleMap(db));
 app.use(`/test/m/delete`, deleteMap(db));
+app.use(`/test/f`, interactFav(db));
 
 // Home page
 // Warning: avoid creating more routes in this file!
