@@ -5,10 +5,39 @@ $(() => {
   const editPlaceBtn = $(".edit-place");
 
   editPlaceBtn.click(function(event) {
-    const formParent = $(this);
-    console.log("hey do you know where you are", $(this));
+    const $placeID = $(this)
+      .parent()
+      .parent();
+    const $placeIDString = $placeID.attr("id");
+    const $copyBeforeEdit = $placeID.clone();
+    // todo: need the details of this place to be populated!
 
-    // i want to replace card innards with a form
+    const renderEditPlaceForm = placeId => {
+      return `<form id="edit-${placeId}">
+        <div class="card-body">
+          <label class="form-group">
+            <span class="form-label">Name</span>
+            <input type="text" class="form-input" id="edit-place2-name" name="place-name" />
+          </label>
+          <label class="form-group">
+            <span class="form-label">Image URL</span>
+            <input type="text" class="form-input" id="edit-place2-img" name="place-img" />
+          </label>
+          <label class="form-group">
+            <span class="form-label">Description</span>
+            <textarea class="form-input" id="edit-place2-desc" rows="3"></textarea>
+          </label>
+        </div>
+        <div class="card-footer">
+          <button class="btn edit-place" type="button">Edit</button>
+          <button class="btn" type="button" id="cancel-edit">Cancel</button>
+        </div>
+      </form>`;
+    };
+    console.log("hey do you know where you are", $placeID);
+
+    $placeID.empty();
+    $placeID.append(() => renderEditPlaceForm($placeIDString));
   });
 
   /* Profile Select Thing */
@@ -184,7 +213,6 @@ $(() => {
     // add the marker
     const marker = L.marker([lat, lng]).addTo(createMap);
     // bind the popup to the marker
-    // marker.bindPopup(`<b>${query}</b><br>I am a popup on ${lat}, ${lng}.`).openPopup();
     marker.bindPopup(renderPopupDetails).openPopup();
     // close the popup form
     createMap.closePopup();
