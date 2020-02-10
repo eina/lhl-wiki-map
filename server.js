@@ -37,20 +37,16 @@ app.use(`/styles`, sass({
 app.use(express.static(`public`));
 
 // Separated Routes for each Resource
-const getMaps = require(`./routes/getMaps`);
-const getSingleMap = require(`./routes/getSingleMap`);
-const deleteMap = require(`./routes/deleteMap`);
 const interactFav = require(`./routes/interactFav`);
 
 const usersAPI = require(`./routes/api/users`);
+const mapsAPI = require(`./routes/api/maps`);
 
 // Mount all resource routes
-app.use(`/test/maps`, getMaps(db));
-app.use(`/test/m`, getSingleMap(db));
-app.use(`/test/m/delete`, deleteMap(db));
 app.use(`/test/f`, interactFav(db));
 
 app.use(`/api/users`, usersAPI(db));
+app.use(`/api/maps`, mapsAPI(db));
 
 // Home page
 // Warning: avoid creating more routes in this file!
