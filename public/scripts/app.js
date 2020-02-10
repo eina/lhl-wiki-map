@@ -30,14 +30,22 @@ $(() => {
         </div>
         <div class="card-footer">
           <button class="btn edit-place" type="button">Edit</button>
-          <button class="btn" type="button" id="cancel-edit">Cancel</button>
+          <button class="btn" type="button" id="cancel-edit-${placeId}">Cancel</button>
         </div>
       </form>`;
     };
-    console.log("hey do you know where you are", $placeID);
 
     $placeID.empty();
     $placeID.append(() => renderEditPlaceForm($placeIDString));
+
+    // todo: make this work lol
+    const revertChanges = function(event) {
+      $placeID.empty();
+      $placeID.append($copyBeforeEdit);
+    };
+
+    // click handler for cancel edit
+    $(`#cancel-edit-${$placeIDString}`).click(revertChanges);
   });
 
   /* Profile Select Thing */
@@ -245,14 +253,9 @@ $(() => {
 
   createMap.on("click touchstart", onMapClick);
 
-  // $.ajax({
-  //   method: "GET",
-  //   url: "/api/users"
-  // }).done(users => {
-  //   for (user of users) {
-  //     $("<div>")
-  //       .text(user.name)
-  //       .appendTo($("body"));
-  //   }
-  // });
+  $.ajax({
+    method: "GET",
+    url:
+      "https://api.mapbox.com/styles/v1/mapbox/light-v10/static/-123.117,49.2816,14.3/300x200?access_token=pk.eyJ1IjoidGhlbGl0dGxlYmxhY2tzbWl0aCIsImEiOiJjazZkeHZmcTcwMnV1M2tvZHNpb3VidzZpIn0.STnRpYTjWHNdD1n1Ew6u6g"
+  }).then(data => console.log("what is this", data));
 });
