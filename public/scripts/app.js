@@ -78,21 +78,6 @@ $(() => {
       const $table = renderActivityTable();
 
       $userContainer.append($gridHeader, $table);
-      //   $userContainer.append(`
-      // <table class="table table-striped table-hover">
-      //   <thead>
-      //     <tr>
-      //       <th>Date</th>
-      //       <th>Details</th>
-      //     </tr>
-      //   </thead>
-      //   <tbody>
-      //     <tr class="active">
-      //       <td>January 24, 2020</td>
-      //       <td>Edited <a href="#">[Map Name]</a></td>
-      //     </tr>
-      //   </tbody>
-      // </table>`);
     }
   };
 
