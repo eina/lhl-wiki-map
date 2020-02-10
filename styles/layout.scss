@@ -26,7 +26,11 @@ main {
 }
 
 body {
+  height: 100%;
+  min-height: 100vh;
+  position: relative;
   background-color: #eee;
+  padding-bottom: 5rem;
 }
 
 .wrapper,
@@ -82,6 +86,14 @@ main,
 
 .hero.site-hero {
   margin-bottom: 3em;
+}
+
+.site-footer {
+  padding: 1em;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  bottom: 0;
 }
 
 // utilities
