@@ -1,0 +1,19 @@
+#createMapForm {
+  position: relative;
+  // margin-bottom: 2em;
+  padding: 1em 0;
+
+  .btn-container {
+    position: absolute;
+    top: -59%;
+    right: 0;
+  }
+
+  input[name="map-title"] {
+    max-width: 65%;
+  }
+}
+
+textarea {
+  resize: none;
+}

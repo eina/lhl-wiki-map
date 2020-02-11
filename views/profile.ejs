@@ -1,0 +1,37 @@
+<!-- site meta + body tag -->
+<%- include('partials/_site-head') %>
+
+<!-- <header> + <nav> -->
+<%- include('partials/_headnav') %>
+
+<main>
+  <div class="content-header">
+    <h1>[User Name]</h1>
+
+    <div class="form-group text-right">
+      <select class="form-select profile-view" id="profile-view-select">
+        <option value="my-maps">My Maps</option>
+        <option value="my-faves">My Favourite Maps</option>
+        <option value="my-activity">My Activity</option>
+      </select>
+    </div>
+  </div>
+
+  <section id="user-container" class="grid-container">
+    <!-- <h2>My Maps</h2>
+
+    <div class="card-grid">
+      <div class="card s-rounded">
+        <div class="card-image">
+          <img class="img-responsive" src="https://picsum.photos/800/500" />
+        </div>
+        <div class="card-header">
+          <div class="card-title h5">Map Title</div>
+          <p>999 &hearts;</p>
+        </div>
+      </div>
+    </div> -->
+  </section>
+</main>
+
+<%- include('partials/_site-foot') %>

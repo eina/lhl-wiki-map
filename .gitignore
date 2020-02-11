@@ -1,8 +1,14 @@
+# folders
 node_modules/
 working_files/
 public/styles
+working_files/
+
+# files
+package-lock.json
 .env
+
+# misc
 *.log
 *.sqlite3
 .DS_Store
-package-lock.json

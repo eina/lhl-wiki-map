@@ -1,0 +1,15 @@
+<!-- site meta + body tag -->
+<%- include('partials/_site-head') %>
+
+<!-- <header> + <nav> -->
+<%- include('partials/_headnav') %>
+
+<main>
+  <div class="error">
+    <% if (status && message) { %>
+    <h1 class="error-code"><%= status %></h1>
+    <p class="error-msg"><%= message %></p>
+    <% } %>
+  </div>
+</main>
+<%- include('partials/_site-foot') %>

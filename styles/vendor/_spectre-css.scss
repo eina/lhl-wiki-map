@@ -1,0 +1,34 @@
+// Variables and mixins
+@import "spectre-css/variables";
+@import "spectre-css/mixins";
+
+/*! MIT License | github.com/picturepan2/spectre */
+// Rest and dependencies
+@import "spectre-css/base";
+
+// Elements
+@import "spectre-css/typography";
+@import "spectre-css/tables";
+@import "spectre-css/buttons";
+@import "spectre-css/forms";
+@import "spectre-css/media";
+
+// Layout
+@import "spectre-css/navbar";
+@import "spectre-css/hero";
+
+// Components
+@import "spectre-css/cards";
+@import "spectre-css/dropdowns";
+@import "spectre-css/empty";
+@import "spectre-css/menus";
+@import "spectre-css/modals";
+@import "spectre-css/navs";
+@import "spectre-css/pagination";
+@import "spectre-css/panels";
+@import "spectre-css/popovers";
+@import "spectre-css/tiles";
+
+// Utility classes
+@import "spectre-css/animations";
+@import "spectre-css/utilities";

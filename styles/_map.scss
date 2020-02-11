@@ -1,0 +1,9 @@
+// map height
+.map {
+  height: 450px;
+  min-height: 250px;
+  max-height: 650px;
+  margin: 2em 0 3em;
+  resize: vertical;
+  overflow: hidden; /* something other than visible */
+}
