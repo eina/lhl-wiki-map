@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 
-const heartSvg = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-heart"><pathd="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>`;
+const heartSvg = ``;
 
 $(() => {
   /* Log In Modal Functionalities */
@@ -42,9 +42,9 @@ $(() => {
       .text(ownerName);
     $mapSubtitle.append($mapOwner);
     const $mapLikes = $("<span>").text(numFavs);
-    const $heartBtn = $("<button>")
-      .addClass("btn btn-link btn-heart")
-      .append(heartSvg);
+    const $heartBtn = $(
+      `<button class="btn btn-link btn-heart"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-heart"><pathd="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg></button>`
+    );
     const $divFlex1 = $("<div>").append($mapTitle, $mapSubtitle);
     const $divFlex2 = $("<div>").append($mapLikes, $heartBtn);
 
