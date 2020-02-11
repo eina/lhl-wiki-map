@@ -1,6 +1,5 @@
 const express = require(`express`);
 const router = express.Router();
-const { getUserByID } = require("../routeHelpers");
 
 module.exports = db => {
   router.get(`/all`, (req, res) => {
