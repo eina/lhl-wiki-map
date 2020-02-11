@@ -1,21 +1,25 @@
 const express = require(`express`);
 const router = express.Router();
-// const { getUserByID, getUserByEmail } = require("./routeHelpers");
+const { getUserByID, getUserByEmail } = require("../lib/dataHelpers/users");
+const { getMaps } = require("../lib/dataHelpers/maps");
 
 module.exports = db => {
-  // router.get("/", (req, res) => {
-  //   const currentUser = req.cookies && req.cookies.userID ? req.cookies.userID : null;
-  //   let user;
+  router.get("/", (req, res) => {
+    const currentUser = req.cookies && req.cookies.userID ? req.cookies.userID : null;
+    let user;
+    return getUserByID(db, { id: currentUser })
+      .then(data => {
+        user = data;
+        return getMaps(db);
+      })
+      .then(maps => {
+        res.render("index", { currentUser, user, maps });
+      });
+  });
 
-  //   return getUserByID(db, { id: currentUser }).then(data => {
-  //     user = data;
-  //     res.render("index", { currentUser, user });
-  //   });
-  // });
-
-  // router.get("/login", (req, res) => {
-  //   res.render("index");
-  // });
+  router.get("/login", (req, res) => {
+    res.render("index");
+  });
 
   // router.get("/maps/:id", (req, res) => {
   //   res.render("single-map");
@@ -29,6 +33,10 @@ module.exports = db => {
   //     return user;
   //   });
   // });
+
+  router.get("/maps/new", (req, res) => {
+    res.render("map-form");
+  });
 
   // // Get user given a user email address
   // router.post(`/login`, (req, res) => {

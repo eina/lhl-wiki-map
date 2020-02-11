@@ -326,9 +326,9 @@ $(() => {
 
   createMap.on("click touchstart", onMapClick);
 
-  $.ajax({
-    method: "GET",
-    url:
-      "https://api.mapbox.com/styles/v1/mapbox/light-v10/static/-123.117,49.2816,14.3/300x200?access_token=pk.eyJ1IjoidGhlbGl0dGxlYmxhY2tzbWl0aCIsImEiOiJjazZkeHZmcTcwMnV1M2tvZHNpb3VidzZpIn0.STnRpYTjWHNdD1n1Ew6u6g"
-  }).then(data => console.log("what is this", data));
+  // $.ajax({
+  //   method: "GET",
+  //   url:
+  //     "https://api.mapbox.com/styles/v1/mapbox/light-v10/static/-123.117,49.2816,14.3/300x200?access_token=pk.eyJ1IjoidGhlbGl0dGxlYmxhY2tzbWl0aCIsImEiOiJjazZkeHZmcTcwMnV1M2tvZHNpb3VidzZpIn0.STnRpYTjWHNdD1n1Ew6u6g"
+  // }).then(data => console.log("what is this", data));
 });
