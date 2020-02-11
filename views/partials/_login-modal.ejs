@@ -1,0 +1,27 @@
+<div class="modal" id="modal-login">
+  <a href="#" class="modal-overlay" aria-label="Close"></a>
+  <div class="modal-container">
+    <div class="modal-header">
+      <button class="btn btn-clear float-right" id="modal-close" aria-label="Close"></button>
+      <h1 class="modal-title h2">Log In</h1>
+    </div>
+    <form id="login-form" method="POST" action="/login">
+      <div class="modal-body">
+        <div class="content">
+          <label class="form-group">
+            <span class="form-label">Email</span>
+            <input type="email" class="form-input" id="user-email" name="userEmail" />
+          </label>
+
+          <label class="form-group">
+            <span class="form-label">Password</span>
+            <input type="password" class="form-input" id="user-password" name="user-password" />
+          </label>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary btn-block" type="submit">Log In</button>
+      </div>
+    </form>
+  </div>
+</div>

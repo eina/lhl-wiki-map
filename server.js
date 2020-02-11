@@ -7,6 +7,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const sass = require("node-sass-middleware");
+const expressPromise = require("express-promise");
 const app = express();
 const morgan = require("morgan");
 
@@ -25,6 +26,7 @@ app.use(morgan("dev"));
 app.use(cookieParser());
 
 app.set(`view engine`, `ejs`);
+app.use(expressPromise());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(
   "/styles",
@@ -43,6 +45,7 @@ const mapsAPI = require(`./routes/api/maps`);
 const pointsAPI = require(`./routes/api/points`);
 const favsAPI = require(`./routes/api/favs`);
 const editsAPI = require(`./routes/api/edits`);
+const renderRoutes = require(`./routes/renderRoutes`);
 
 // Mount all resource routes
 app.use(`/api/users`, usersAPI(db));
@@ -51,17 +54,16 @@ app.use(`/api/points`, pointsAPI(db));
 app.use(`/api/favs`, favsAPI(db));
 app.use(`/api/edits`, editsAPI(db));
 
+// Renders
+app.use(`/`, renderRoutes(db));
+
 // Home page
 // Warning: avoid creating more routes in this file!
 // Separate them into separate routes files (see above).
-app.get(`/`, (req, res) => {
-  // [Test Code]
-  res.cookie(`userID`, `1`);
-  console.log(req.cookies);
-  // [Test Code End]
 
-  res.render(`index`);
-});
+// app.get("/maps/new", (req, res) => {
+//   res.render("map-form");
+// });
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
