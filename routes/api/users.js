@@ -1,7 +1,8 @@
 const express = require(`express`);
-const router  = express.Router();
+const router = express.Router();
+const { getUserByID } = require("../routeHelpers");
 
-module.exports = (db) => {
+module.exports = db => {
   router.get(`/all`, (req, res) => {
     db.query(`SELECT * FROM users;`)
       .then(data => {
@@ -9,9 +10,7 @@ module.exports = (db) => {
         res.json(users);
       })
       .catch(err => {
-        res
-          .status(500)
-          .json({ error: err.message });
+        res.status(500).json({ error: err.message });
       });
   });
 
@@ -28,30 +27,28 @@ module.exports = (db) => {
           res.json(data.rows[0]);
         })
         .catch(err => {
-          res
-            .status(500)
-            .json({ error: err.message });
+          res.status(500).json({ error: err.message });
         });
     } else {
       return res.status(401).json(`401: y u no login`);
     }
   });
 
-  router.get(`/email/:userEmail`, (req, res) => {
+  // Get user given a user email address
+  router.post(`/login`, (req, res) => {
     let queryParams = [];
     let queryString = `SELECT * FROM users `;
 
-    queryParams.push(req.params.userEmail);
-    queryString += `WHERE users.email ILIKE $${queryParams.length};`;
+    queryParams.push(req.body.userEmail);
+    queryString += `WHERE users.email = $${queryParams.length};`;
 
-    db.query(queryString, queryParams)
+    return db
+      .query(queryString, queryParams)
       .then(data => {
         res.json(data.rows[0]);
       })
       .catch(err => {
-        res
-          .status(500)
-          .json({ error: err.message });
+        res.status(500).json({ error: err.message });
       });
   });
 
@@ -67,9 +64,7 @@ module.exports = (db) => {
         res.json(data.rows[0]);
       })
       .catch(err => {
-        res
-          .status(500)
-          .json({ error: err.message });
+        res.status(500).json({ error: err.message });
       });
   });
 
@@ -103,9 +98,7 @@ module.exports = (db) => {
         res.json(maps);
       })
       .catch(err => {
-        res
-          .status(500)
-          .json({ error: err.message });
+        res.status(500).json({ error: err.message });
       });
   });
 
@@ -130,9 +123,7 @@ module.exports = (db) => {
         res.json(maps);
       })
       .catch(err => {
-        res
-          .status(500)
-          .json({ error: err.message });
+        res.status(500).json({ error: err.message });
       });
   });
 
@@ -162,13 +153,9 @@ module.exports = (db) => {
         res.json(maps);
       })
       .catch(err => {
-        res
-          .status(500)
-          .json({ error: err.message });
+        res.status(500).json({ error: err.message });
       });
   });
-
-
 
   return router;
 };

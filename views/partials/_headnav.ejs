@@ -5,16 +5,14 @@
     </div>
 
     <div class="navbar-section">
-      <p>Hi, <a href="/user/1">[user name]</a></p>
-      <!-- <div class="dropdown">
-        <a href="#" class="btn btn-link dropdown-toggle" tabindex="0">[user name]</a>
-
-        <ul class="menu">
-          <li class="menu-item"><a href="/user/1">My Maps</a></li>
-          <li class="menu-item"><a href="/user/1">Favourites</a></li>
-          <li class="menu-item"><a href="/user/1">Profile</a></li>
-        </ul>
-      </div> -->
+      <% if (locals.user) { %>
+      <p id="navbar-user">Hi, <a href="/users/<%= user.id %>"><%= user.fullname %></a></p>
+      <% } else { %>
+      <p id="navbar-user">
+        <!-- <a href="/login" class="btn-link" id="btn-login">Log In</a> -->
+        <button class="btn btn-link" id="btn-login">Log In</button>
+      </p>
+      <% } %>
     </div>
   </nav>
 </header>
