@@ -34,6 +34,46 @@ module.exports = (db) => {
       });
   });
 
+  // Get a map with map ID
+  router.get("/id/:mapID", (req, res) => {
+    let queryParams = [];
+    let queryString = `SELECT * FROM maps `;
+
+    queryParams.push(req.params.mapID);
+    queryString += `WHERE maps.id = $${queryParams.length};`;
+
+    db.query(queryString, queryParams)
+      .then(data => {
+
+        res.json(data.rows[0]);
+      })
+      .catch(err => {
+        res
+          .status(500)
+          .json({ error: err.message });
+      });
+  });
+
+  // Delete a map by map ID
+  router.delete("/:mapID", (req, res) => {
+    // res.json(`Not yet implemented lol`);
+    let queryParams = [];
+    let queryString = `DELETE FROM maps `;
+
+    queryParams.push(req.params.mapID);
+    queryString += `WHERE maps.id = $${queryParams.length};`;
+
+    db.query(queryString, queryParams)
+      .then(data => {
+        res.json(data);
+      })
+      .catch(err => {
+        res
+          .status(500)
+          .json({ error: err.message });
+      });
+  });
+
   // Get user's maps given a user ID.
   router.get("/u/:userID", (req, res) => {
     let queryParams = [];
