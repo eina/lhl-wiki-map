@@ -37,12 +37,12 @@ module.exports = (db) => {
     }
   });
 
-  router.get(`/id/:userID`, (req, res) => {
+  router.get(`/email/:userEmail`, (req, res) => {
     let queryParams = [];
     let queryString = `SELECT * FROM users `;
 
-    queryParams.push(req.params.userID);
-    queryString += `WHERE users.id = $${queryParams.length};`;
+    queryParams.push(req.params.userEmail);
+    queryString += `WHERE users.email ILIKE $${queryParams.length};`;
 
     db.query(queryString, queryParams)
       .then(data => {
@@ -55,12 +55,12 @@ module.exports = (db) => {
       });
   });
 
-  router.get(`/email/:userEmail`, (req, res) => {
+  router.get(`/:userID`, (req, res) => {
     let queryParams = [];
     let queryString = `SELECT * FROM users `;
 
-    queryParams.push(req.params.userEmail);
-    queryString += `WHERE users.email ILIKE $${queryParams.length};`;
+    queryParams.push(req.params.userID);
+    queryString += `WHERE users.id = $${queryParams.length};`;
 
     db.query(queryString, queryParams)
       .then(data => {

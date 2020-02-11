@@ -33,44 +33,6 @@ module.exports = (db) => {
       });
   });
 
-  router.get("/id/:mapID", (req, res) => {
-    let queryParams = [];
-    let queryString = `SELECT * FROM maps `;
-
-    queryParams.push(req.params.mapID);
-    queryString += `WHERE maps.id = $${queryParams.length};`;
-
-    db.query(queryString, queryParams)
-      .then(data => {
-
-        res.json(data.rows[0]);
-      })
-      .catch(err => {
-        res
-          .status(500)
-          .json({ error: err.message });
-      });
-  });
-
-  router.delete("/id/:mapID", (req, res) => {
-    // res.json(`Not yet implemented lol`);
-    let queryParams = [];
-    let queryString = `DELETE FROM maps `;
-
-    queryParams.push(req.params.mapID);
-    queryString += `WHERE maps.id = $${queryParams.length};`;
-
-    db.query(queryString, queryParams)
-      .then(data => {
-        res.json(data);
-      })
-      .catch(err => {
-        res
-          .status(500)
-          .json({ error: err.message });
-      });
-  });
-
   router.get("/u/:userID", (req, res) => {
     let queryParams = [];
     let queryString = `
@@ -126,6 +88,44 @@ module.exports = (db) => {
       .then(data => {
         const maps = data.rows;
         res.json(maps);
+      })
+      .catch(err => {
+        res
+          .status(500)
+          .json({ error: err.message });
+      });
+  });
+
+  router.get("/:mapID", (req, res) => {
+    let queryParams = [];
+    let queryString = `SELECT * FROM maps `;
+
+    queryParams.push(req.params.mapID);
+    queryString += `WHERE maps.id = $${queryParams.length};`;
+
+    db.query(queryString, queryParams)
+      .then(data => {
+
+        res.json(data.rows[0]);
+      })
+      .catch(err => {
+        res
+          .status(500)
+          .json({ error: err.message });
+      });
+  });
+
+  router.delete("/:mapID", (req, res) => {
+    // res.json(`Not yet implemented lol`);
+    let queryParams = [];
+    let queryString = `DELETE FROM maps `;
+
+    queryParams.push(req.params.mapID);
+    queryString += `WHERE maps.id = $${queryParams.length};`;
+
+    db.query(queryString, queryParams)
+      .then(data => {
+        res.json(data);
       })
       .catch(err => {
         res

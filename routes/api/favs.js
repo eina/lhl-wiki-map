@@ -40,7 +40,7 @@ module.exports = (db) => {
       });
   });
 
-  router.delete("/id/:favID", (req, res) => {
+  router.delete("/:favID", (req, res) => {
     let queryParams = [];
     let queryString = `DELETE FROM favorites `;
 
