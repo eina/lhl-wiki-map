@@ -17,6 +17,8 @@ Returns all data (*) about the user.
 - ```GET /:userID``` - Get the user, given a user ID.
 Returns all data (*) about the user.
 
+- Link get Edits, Maps, Fav here
+
 
 ```/api/maps```
 
@@ -34,24 +36,32 @@ Returns all data (*) about the map.
 
 - ```DELETE /:mapID``` - Delete the map from database, given a map ID.
 
+- Link get points here
+
 
 ```/api/points```
 
-*nothing here lul*
+- Get ID
 
 
 ```/api/favs```
 
-- ```PUT /u/:userID/m/:mapID``` - Create a new "favorite" relationship, with given userID and mapID.
+- ```POST /u/:userID/m/:mapID``` - Create a new "favorite" relationship, with given userID and mapID.
 
 - ```DELETE /u/:userID/m/:mapID``` - Delete the relationship from database, with given userID and mapID.
 
 - ```DELETE /:favID``` - Delete the relationship from database, given a fav ID.
 
+- Get ID
+
 
 ```/api/edits```
 
 - ```GET /u/:userID``` - Get all maps edited by the user, given a user ID.
+
+- Get ID
+
+- Create new edit.
 
 
 

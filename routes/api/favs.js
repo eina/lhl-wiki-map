@@ -2,7 +2,7 @@ const express = require('express');
 const router  = express.Router();
 
 module.exports = (db) => {
-  router.put("/u/:userID/m/:mapID", (req, res) => {
+  router.post("/u/:userID/m/:mapID", (req, res) => {
     let queryParams = [];
     let queryString = `INSERT INTO favorites (u_id, map_id) `;
 
