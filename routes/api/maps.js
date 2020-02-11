@@ -2,7 +2,6 @@ const express = require('express');
 const router  = express.Router();
 
 module.exports = (db) => {
-  // Get all maps
   router.get("/all", (req, res) => {
     let queryParams = [];
     let queryString = `
@@ -34,7 +33,6 @@ module.exports = (db) => {
       });
   });
 
-  // Get a map with map ID
   router.get("/id/:mapID", (req, res) => {
     let queryParams = [];
     let queryString = `SELECT * FROM maps `;
@@ -54,8 +52,7 @@ module.exports = (db) => {
       });
   });
 
-  // Delete a map by map ID
-  router.delete("/:mapID", (req, res) => {
+  router.delete("/id/:mapID", (req, res) => {
     // res.json(`Not yet implemented lol`);
     let queryParams = [];
     let queryString = `DELETE FROM maps `;
@@ -74,7 +71,6 @@ module.exports = (db) => {
       });
   });
 
-  // Get user's maps given a user ID.
   router.get("/u/:userID", (req, res) => {
     let queryParams = [];
     let queryString = `
@@ -111,7 +107,6 @@ module.exports = (db) => {
       });
   });
 
-  // Get user's maps given a user ID.
   router.get("/u/:userID/favs", (req, res) => {
     let queryParams = [];
     let queryString = `

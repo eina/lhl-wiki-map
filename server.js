@@ -40,10 +40,16 @@ app.use(express.static("public"));
 // Separated Routes for each Resource
 const usersAPI = require(`./routes/api/users`);
 const mapsAPI = require(`./routes/api/maps`);
+const pointsAPI = require(`./routes/api/points`);
+const favsAPI = require(`./routes/api/favs`);
+const editsAPI = require(`./routes/api/edits`);
 
 // Mount all resource routes
 app.use(`/api/users`, usersAPI(db));
 app.use(`/api/maps`, mapsAPI(db));
+app.use(`/api/points`, pointsAPI(db));
+app.use(`/api/favs`, favsAPI(db));
+app.use(`/api/edits`, editsAPI(db));
 
 // Home page
 // Warning: avoid creating more routes in this file!

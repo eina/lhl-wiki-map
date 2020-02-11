@@ -2,7 +2,6 @@ const express = require(`express`);
 const router  = express.Router();
 
 module.exports = (db) => {
-  // Get all users
   router.get(`/all`, (req, res) => {
     db.query(`SELECT * FROM users;`)
       .then(data => {
@@ -16,7 +15,6 @@ module.exports = (db) => {
       });
   });
 
-  // Get the logged-in user based on data in cookie
   router.get(`/current`, (req, res) => {
     if (req.cookies.userID) {
       let queryParams = [];
@@ -39,7 +37,6 @@ module.exports = (db) => {
     }
   });
 
-  // Get user given a user ID
   router.get(`/id/:userID`, (req, res) => {
     let queryParams = [];
     let queryString = `SELECT * FROM users `;
@@ -58,13 +55,12 @@ module.exports = (db) => {
       });
   });
 
-  // Get user given a user email address
   router.get(`/email/:userEmail`, (req, res) => {
     let queryParams = [];
     let queryString = `SELECT * FROM users `;
 
     queryParams.push(req.params.userEmail);
-    queryString += `WHERE users.email = $${queryParams.length};`;
+    queryString += `WHERE users.email ILIKE $${queryParams.length};`;
 
     db.query(queryString, queryParams)
       .then(data => {
