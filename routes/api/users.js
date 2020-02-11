@@ -1,5 +1,6 @@
 const express = require(`express`);
 const router = express.Router();
+const { getUserByID } = require("../routeHelpers");
 
 module.exports = db => {
   // Get all users
@@ -46,10 +47,7 @@ module.exports = db => {
     return db
       .query(queryString, queryParams)
       .then(data => {
-        const result = data.rows[0];
-        res.cookie("user", data.rows[0].email);
-        res.render("index", { user: result });
-        // res.cookie("user", data.rows[0].email).json(result);
+        res.json(data.rows[0]);
       })
       .catch(err => {
         res.status(500).json({ error: err.message });
@@ -58,13 +56,7 @@ module.exports = db => {
 
   // Get user given a user ID
   router.get(`/id/:userID`, (req, res) => {
-    let queryParams = [];
-    let queryString = `SELECT * FROM users `;
-
-    queryParams.push(req.params.userID);
-    queryString += `WHERE users.id = $${queryParams.length};`;
-
-    db.query(queryString, queryParams)
+    return getUserByID(req.params.userID)
       .then(data => {
         res.json(data.rows[0]);
       })

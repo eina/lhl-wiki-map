@@ -11,6 +11,10 @@ $(() => {
   $("#btn-login").click(modalControl);
   $("#modal-close").click(modalControl);
 
+  /**
+   * Renders single map card on /(index)
+   * @param {object} mapDetails object with: center_lat, center_lng, title, owner_name, id, numFavs
+   */
   const renderMapCard = function(mapDetails) {
     const { title, owner_name: ownerName, id, fav_count: numFavs } = mapDetails;
     const $cardContainer = $("<article>")
