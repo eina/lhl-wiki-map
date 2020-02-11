@@ -11,69 +11,6 @@ $(() => {
   $("#btn-login").click(modalControl);
   $("#modal-close").click(modalControl);
 
-  /**
-   * Renders single map card on /(index)
-   * @param {object} mapDetails object with: center_lat, center_lng, title, owner_name, id, numFavs
-   */
-  const renderMapCard = function(mapDetails) {
-    const { title, owner_name: ownerName, id, fav_count: numFavs } = mapDetails;
-    const $cardContainer = $("<article>")
-      .addClass("card s-rounded")
-      .attr({ id: `map-card-${id}` });
-    const $cardImgContainer = $("<div>").addClass("card-image card-map");
-    const $cardImg = $("<img>").attr({
-      class: "img-responsive",
-      src:
-        "https://api.mapbox.com/styles/v1/mapbox/light-v10/static/-123.117,49.2816,13/300x200?access_token=pk.eyJ1IjoidGhlbGl0dGxlYmxhY2tzbWl0aCIsImEiOiJjazZkeHZmcTcwMnV1M2tvZHNpb3VidzZpIn0.STnRpYTjWHNdD1n1Ew6u6g"
-    });
-    const $viewMapLink = $("<a>")
-      .text("View")
-      .attr({
-        class: "btn btn-primary s-rounded view-btn",
-        href: "/maps/1"
-      });
-    $cardImgContainer.append($cardImg, $viewMapLink);
-
-    const $cardHeaderContainer = $("<div>").addClass("card-header");
-    const $mapTitle = $("<h3>")
-      .addClass("card-title")
-      .text(title);
-    const $mapSubtitle = $("<p>")
-      .addClass("card-subtitle text-gray")
-      .text("by ");
-    const $mapOwner = $("<a>")
-      .attr({ src: `/maps/${id}` })
-      .text(ownerName);
-    $mapSubtitle.append($mapOwner);
-    const $mapLikes = $("<span>").text(numFavs);
-    const $heartBtn = $(
-      `<button class="btn btn-link btn-heart"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-heart"><pathd="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg></button>`
-    );
-    const $divFlex1 = $("<div>").append($mapTitle, $mapSubtitle);
-    const $divFlex2 = $("<div>").append($mapLikes, $heartBtn);
-
-    $cardHeaderContainer.append($divFlex1, $divFlex2);
-
-    $cardContainer.append($cardImgContainer, $cardHeaderContainer);
-    return $cardContainer;
-  };
-
-  // load items on index
-  $.ajax({ method: "GET", url: "/" }).then(page => {
-    if (page) {
-      // get maps
-      $.ajax({ method: "GET", url: "/test/maps/all" }).then(mapsList => {
-        // load maps
-        if (mapsList.length) {
-          mapsList.map(map => {
-            const $mapCard = renderMapCard({ ...map });
-            $("#all-maps").prepend($mapCard);
-          });
-        }
-      });
-    }
-  });
-
   /* Edit Place Details */
   const editPlaceBtn = $(".edit-place");
 
