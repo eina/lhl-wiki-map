@@ -1,7 +1,7 @@
-const express = require('express');
-const router  = express.Router();
+const express = require("express");
+const router = express.Router();
 
-module.exports = (db) => {
+module.exports = db => {
   // Get all maps.
   router.get("/all", (req, res) => {
     let queryParams = [];
@@ -28,9 +28,7 @@ module.exports = (db) => {
         res.json(maps);
       })
       .catch(err => {
-        res
-          .status(500)
-          .json({ error: err.message });
+        res.status(500).json({ error: err.message });
       });
   });
 
@@ -65,9 +63,7 @@ module.exports = (db) => {
         res.json(maps);
       })
       .catch(err => {
-        res
-          .status(500)
-          .json({ error: err.message });
+        res.status(500).json({ error: err.message });
       });
   });
 
@@ -92,9 +88,7 @@ module.exports = (db) => {
         res.json(maps);
       })
       .catch(err => {
-        res
-          .status(500)
-          .json({ error: err.message });
+        res.status(500).json({ error: err.message });
       });
   });
 
@@ -125,9 +119,7 @@ module.exports = (db) => {
         res.json(maps);
       })
       .catch(err => {
-        res
-          .status(500)
-          .json({ error: err.message });
+        res.status(500).json({ error: err.message });
       });
   });
 

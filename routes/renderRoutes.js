@@ -2,7 +2,7 @@ const express = require(`express`);
 const router = express.Router();
 
 module.exports = db => {
-  const getUserByEmail = email => {
+  router.getUserByEmail = ({ db, email }) => {
     let queryParams = [];
     let queryString = `SELECT * FROM users `;
 
@@ -23,7 +23,7 @@ module.exports = db => {
     const currentUser = req.cookies && req.cookies.user ? req.cookies.user : null;
     let user;
 
-    return getUserByEmail(currentUser).then(data => {
+    return router.getUserByEmail({ db, email: currentUser }).then(data => {
       user = data;
       res.render("index", { currentUser, user });
     });
@@ -47,7 +47,6 @@ module.exports = db => {
         const result = data.rows[0];
         res.cookie("user", data.rows[0].email);
         res.render("index", { user: { ...result, currentUser: req.cookies.user } });
-        // res.cookie("user", data.rows[0].email).json(result);
       })
       .catch(err => {
         res.status(500).json({ error: err.message });
