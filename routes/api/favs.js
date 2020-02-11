@@ -4,7 +4,7 @@ const router  = express.Router();
 module.exports = (db) => {
 
   // Delete a Fav by ID
-  router.delete("/:favID/delete", (req, res) => {
+  router.delete("/:favID", (req, res) => {
     let queryParams = [];
     let queryString = `DELETE FROM favorites `;
 

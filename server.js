@@ -38,14 +38,10 @@ app.use(
 app.use(express.static("public"));
 
 // Separated Routes for each Resource
-const interactFav = require(`./routes/interactFav`);
-
 const usersAPI = require(`./routes/api/users`);
 const mapsAPI = require(`./routes/api/maps`);
 
 // Mount all resource routes
-app.use(`/test/f`, interactFav(db));
-
 app.use(`/api/users`, usersAPI(db));
 app.use(`/api/maps`, mapsAPI(db));
 
