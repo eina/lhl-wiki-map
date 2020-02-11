@@ -16,15 +16,21 @@ $(() => {
    * @param {object} mapDetails object with: center_lat, center_lng, title, owner_name, id, numFavs
    */
   const renderMapCard = function(mapDetails) {
-    const { title, owner_name: ownerName, id, fav_count: numFavs } = mapDetails;
+    const {
+      title,
+      owner_name: ownerName,
+      id,
+      fav_count: numFavs,
+      center_lat: lat,
+      center_lng: lng
+    } = mapDetails;
     const $cardContainer = $("<article>")
       .addClass("card s-rounded")
       .attr({ id: `map-card-${id}` });
     const $cardImgContainer = $("<div>").addClass("card-image card-map");
     const $cardImg = $("<img>").attr({
       class: "img-responsive",
-      src:
-        "https://api.mapbox.com/styles/v1/mapbox/light-v10/static/-123.117,49.2816,13/300x200?access_token=pk.eyJ1IjoidGhlbGl0dGxlYmxhY2tzbWl0aCIsImEiOiJjazZkeHZmcTcwMnV1M2tvZHNpb3VidzZpIn0.STnRpYTjWHNdD1n1Ew6u6g"
+      src: `https://api.mapbox.com/styles/v1/mapbox/light-v10/static/${lng},${lat},13/300x200?access_token=pk.eyJ1IjoidGhlbGl0dGxlYmxhY2tzbWl0aCIsImEiOiJjazZkeHZmcTcwMnV1M2tvZHNpb3VidzZpIn0.STnRpYTjWHNdD1n1Ew6u6g`
     });
     const $viewMapLink = $("<a>")
       .text("View")
@@ -62,7 +68,7 @@ $(() => {
   $.ajax({ method: "GET", url: "/" }).then(page => {
     if (page) {
       // get maps
-      $.ajax({ method: "GET", url: "/test/maps/all" }).then(mapsList => {
+      $.ajax({ method: "GET", url: "/api/maps/all" }).then(mapsList => {
         // load maps
         if (mapsList.length) {
           mapsList.map(map => {
