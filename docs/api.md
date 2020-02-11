@@ -10,10 +10,10 @@ Returns the whole users table.
 - ```GET /current``` - Get the logged-in user based on data in cookie  
 Returns all data (*) about the user.
 
-- ```GET /email/:userEmail``` - Get user given a user email address  
+- ```GET /id/:userID``` - Get user given a user ID  
 Returns all data (*) about the user.
 
-- ```GET /id/:userID``` - Get user given a user ID  
+- ```GET /email/:userEmail``` - Get user given a user email address  
 Returns all data (*) about the user.
 
 
@@ -26,4 +26,7 @@ Returns all data (*), with the full name of the user, and the number of favorite
 
 - ```GET /u/:userID/favs``` - Get all maps faved by a user given a user ID
 
-- ```GET /u/:userID/edits``` - Move this to edits
+
+```/api/edits```
+
+- ```GET /u/:userID``` - Move this to edits
