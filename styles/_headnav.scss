@@ -1,0 +1,21 @@
+header {
+  margin-bottom: 2.5em;
+}
+
+.logo {
+  font-family: $logo-font;
+  font-size: 3.5em;
+
+  a {
+    color: $primary-color-dark;
+  }
+}
+
+.site-nav {
+  align-items: center;
+  padding: 1em 0.5em;
+
+  h1 {
+    margin-bottom: 0;
+  }
+}

@@ -1,0 +1,47 @@
+<!-- site meta + body tag -->
+<%- include('partials/_site-head') %>
+
+<!-- <header> + <nav> -->
+<%- include('partials/_headnav') %>
+<main>
+  <% if (map) { %>
+  <div class="content-header flex-space-between">
+    <div>
+      <h1 class="mb-0"><%= map.details.title %></h1>
+      <p class="mb-0">by <%= map.details.owner_name %></p>
+    </div>
+
+    <p class="mb-0">
+      <span><%= map.details.faves %></span>
+      <button class="btn btn-link btn-heart">
+        <%- include('partials/_heart-svg') %>
+      </button>
+    </p>
+  </div>
+  <div id="leaflet-map" class="map full-width"></div>
+
+  <div class="grid-container">
+    <% if (map.points.length) { %>
+    <h2 class="grid-header">My Places</h2>
+
+    <div class="card-grid place-grid">
+      <% map.points.forEach(place => { %>
+      <div class="card">
+        <div class="card-image">
+          <img class="img-responsive" src="<%= place.img %>" />
+        </div>
+        <div class="card-header">
+          <div class="card-title h5"><%= place.title %></div>
+        </div>
+        <div class="card-body">
+          <p><%= place.description %></p>
+        </div>
+      </div>
+      <% }); %>
+    </div>
+    <% } %>
+  </div>
+
+  <% } %>
+</main>
+<%- include('partials/_site-foot') %>
