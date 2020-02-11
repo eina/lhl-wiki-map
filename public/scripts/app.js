@@ -1,7 +1,4 @@
 /* eslint-disable no-undef */
-
-const heartSvg = ``;
-
 $(() => {
   /* Log In Modal Functionalities */
   const modalControl = function() {
@@ -56,7 +53,10 @@ $(() => {
       `<button class="btn btn-link btn-heart"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-heart"><pathd="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg></button>`
     );
     const $divFlex1 = $("<div>").append($mapTitle, $mapSubtitle);
-    const $divFlex2 = $("<div>").append($mapLikes, $heartBtn);
+    const $divFlex2 = $("<div>").append(
+      $mapLikes,
+      "<button class='btn btn-link' id='fave-map'>&hearts;</button>"
+    );
 
     $cardHeaderContainer.append($divFlex1, $divFlex2);
 
@@ -79,6 +79,13 @@ $(() => {
       });
     }
   });
+
+  /* Add Favourites */
+  console.log("what is this", $("#fave-map"));
+  // $(".btn-heart").click(function(e) {
+  //   console.log("what am i", $(this));
+  // });
+  // ("/u/:userID/m/:mapID");
 
   /* Edit Place Details */
   const editPlaceBtn = $(".edit-place");
@@ -127,81 +134,92 @@ $(() => {
     $(`#cancel-edit-${$placeIDString}`).click(revertChanges);
   });
 
+  const renderCard = () => {
+    const $card = $("<div>").addClass("card s-rounded");
+    const $cardImg = $("<div>").addClass("card-image");
+    const $cardHeader = $("<div>").addClass("card-header");
+    const $cardTitle = $("<div>")
+      .addClass("card-title h5")
+      .text("Map Title");
+    const $mapFaves = $("<p>")
+      .addClass("map-faves")
+      .text(999);
+
+    const $pointImg = $("<img>").attr({ src: "https://picsum.photos/800/500" });
+
+    $cardImg.append($pointImg);
+    $cardHeader.append($cardTitle, $mapFaves);
+
+    $card.append($cardImg, $cardHeader);
+
+    return $card;
+  };
+
+  const renderActivityTable = () => {
+    const $table = $("<table>").addClass("table table-striped table-hover");
+    const $thead = $("<thead>").append(`<tr><th>Date</th><th>Details</th></tr>`);
+    const $tr = $("<tr>");
+
+    // loop through something
+    const $td1 = $("<td>").text("January 24, 2020");
+    const $mapLink = $("<a>")
+      .attr({ href: "#" })
+      .text("[Map Name]");
+    const $td2 = $("<td>").append("Edited ", $mapLink);
+
+    const $activeRow = $tr.addClass("active").append($td1, $td2);
+    const $tbody = $("<tbody>").append($activeRow);
+
+    $table.append($thead, $tbody);
+    return $table;
+  };
+
   /* Profile Select Thing */
   const $profileSelect = $("#profile-view-select");
+  const $profileTest = $("#profile-btn");
+
   const renderProfileSections = function(e) {
     const $selectVal = $(this).val();
+    const userID = $(this).data().user;
     const $userContainer = $("#user-container");
-    const renderCard = () => {
-      const $card = $("<div>").addClass("card s-rounded");
-      const $cardImg = $("<div>").addClass("card-image");
-      const $cardHeader = $("<div>").addClass("card-header");
-      const $cardTitle = $("<div>")
-        .addClass("card-title h5")
-        .text("Map Title");
-      const $mapFaves = $("<p>")
-        .addClass("map-faves")
-        .text(999);
 
-      const $pointImg = $("<img>").attr({ src: "https://picsum.photos/800/500" });
+    $userContainer.append("<p>change happened!</p>");
 
-      $cardImg.append($pointImg);
-      $cardHeader.append($cardTitle, $mapFaves);
-
-      $card.append($cardImg, $cardHeader);
-
-      return $card;
-    };
-
-    const renderActivityTable = () => {
-      const $table = $("<table>").addClass("table table-striped table-hover");
-      const $thead = $("<thead>").append(`<tr><th>Date</th><th>Details</th></tr>`);
-      const $tr = $("<tr>");
-
-      // loop through something
-      const $td1 = $("<td>").text("January 24, 2020");
-      const $mapLink = $("<a>")
-        .attr({ href: "#" })
-        .text("[Map Name]");
-      const $td2 = $("<td>").append("Edited ", $mapLink);
-
-      const $activeRow = $tr.addClass("active").append($td1, $td2);
-      const $tbody = $("<tbody>").append($activeRow);
-
-      $table.append($thead, $tbody);
-      return $table;
-    };
+    $.ajax({ method: "GET ", url: `/api/users/${userID}/favs` }).then(data => {
+      console.log("data?", data);
+    });
 
     // remove content inside
-    $userContainer.empty();
+    // $userContainer.empty();
     if ($selectVal === "my-maps") {
-      const $card = renderCard();
-      const $gridHeader = `<h2 class="grid-header">My Maps</h2>`;
-      const $cardGrid = $(`<div class="card-grid"></div>`).prepend($card);
-
-      $userContainer.append($gridHeader, $cardGrid);
+      // const $card = renderCard();
+      // const $gridHeader = `<h2 class="grid-header">My Maps</h2>`;
+      // const $cardGrid = $(`<div class="card-grid"></div>`).prepend($card);
+      // console.log("hello??????");
+      // $.ajax({ method: "GET ", url: `/api/users/${$userID}/maps` }).then(data => {
+      //   console.log("data?", data);
+      // });
+      // $userContainer.append($gridHeader, $cardGrid);
     }
     if ($selectVal === "my-faves") {
-      const $card = renderCard();
-      const $gridHeader = `<h2 class="grid-header">Favourites</h2>`;
-      const $cardGrid = $(`<div class="card-grid"></div>`).prepend($card);
-
-      $userContainer.append($gridHeader, $cardGrid);
+      // const $card = renderCard();
+      // const $gridHeader = `<h2 class="grid-header">Favourites</h2>`;
+      // const $cardGrid = $(`<div class="card-grid"></div>`).prepend($card);
+      // $userContainer.append($gridHeader, $cardGrid);
     }
     if ($selectVal === "my-activity") {
-      const $gridHeader = `<h2 class="grid-header">Activity</h2>`;
-      const $table = renderActivityTable();
-
-      $userContainer.append($gridHeader, $table);
+      // const $gridHeader = `<h2 class="grid-header">Activity</h2>`;
+      // const $table = renderActivityTable();
+      // $userContainer.append($gridHeader, $table);
     }
   };
 
   if ($profileSelect) {
-    $profileSelect.on("change", renderProfileSections);
+    $profileSelect.on("change blur", renderProfileSections);
 
     // set the default selected option
     // trigger change to load content for that
-    $profileSelect.val("my-maps").trigger("change");
+    // $profileSelect.val("my-maps").trigger("change");
   }
 
   /* Leaflet Shared Map? */
@@ -331,10 +349,4 @@ $(() => {
   };
 
   createMap.on("click touchstart", onMapClick);
-
-  $.ajax({
-    method: "GET",
-    url:
-      "https://api.mapbox.com/styles/v1/mapbox/light-v10/static/-123.117,49.2816,14.3/300x200?access_token=pk.eyJ1IjoidGhlbGl0dGxlYmxhY2tzbWl0aCIsImEiOiJjazZkeHZmcTcwMnV1M2tvZHNpb3VidzZpIn0.STnRpYTjWHNdD1n1Ew6u6g"
-  }).then(data => console.log("what is this", data));
 });

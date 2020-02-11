@@ -17,6 +17,10 @@ module.exports = db => {
     res.render("index");
   });
 
+  router.get("/maps/new", (req, res) => {
+    res.render("map-form");
+  });
+
   router.get("/maps/:id", (req, res) => {
     res.render("single-map");
   });

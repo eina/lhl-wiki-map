@@ -4,6 +4,7 @@ const { getUserByID } = require("../routeHelpers");
 
 module.exports = db => {
   router.get(`/all`, (req, res) => {
+    console.log("hello???");
     db.query(`SELECT * FROM users;`)
       .then(data => {
         const users = data.rows;
