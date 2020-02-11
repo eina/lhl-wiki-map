@@ -1,28 +1,12 @@
 /* eslint-disable no-undef */
 $(() => {
   /* Log In Modal Functionalities */
-  const modalControl = function(event) {
+  const modalControl = function() {
     $("#modal-login").toggleClass("active");
   };
   // toggle modal open and close
   $("#btn-login").click(modalControl);
   $("#modal-close").click(modalControl);
-
-  $("#login-form").submit(function(event) {
-    event.preventDefault();
-    const query = $(this).serialize();
-    $.ajax({
-      method: "POST",
-      url: "/login",
-      data: query
-    }).then(data => {
-      console.log("hello data?", data);
-      // if (data) {
-      //   $("#modal-login").removeClass("active");
-      //   $("#navbar-user").text(`Hi, ${data.fullname}`);
-      // }
-    });
-  });
 
   /* Save a Map */
 
