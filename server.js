@@ -63,25 +63,6 @@ app.get(`/`, (req, res) => {
   res.render(`index`);
 });
 
-app.get("/maps/new", (req, res) => {
-  res.render("map-form");
-});
-
-app.get("/maps/:id", (req, res) => {
-  const mapDetail = require("./data/map-with-points");
-  const { id } = req.params;
-  // console.log("map" + id, mapDetail[`map${id}`]);
-  res.render("single-map", { map: mapDetail[`map${id}`] });
-});
-
-app.get("/user/:id", (req, res) => {
-  res.render("profile");
-});
-
-app.get("/error", (req, res) => {
-  res.render("error", { status: 400, message: "Oops something went wrong" });
-});
-
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });
