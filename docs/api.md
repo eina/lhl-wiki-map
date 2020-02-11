@@ -2,18 +2,58 @@
 
 All Get results are returned as JSON.
 
+
 ```/api/users```
 
-- ```/all``` - Get all users  
+- ```GET /all``` - Get all users.
 Returns the whole users table.
 
-- ```/current``` - Get the logged-in user based on data in cookie  
+- ```GET /current``` - Get the logged-in user, based on data in cookie.
 Returns all data (*) about the user.
 
-- ```/email/:userEmail``` - Get user given a user email address  
+- ```GET /id/:userID``` - Get the user, given a user ID.
 Returns all data (*) about the user.
 
-- ```/id/:userID``` - Get user given a user ID  
+- ```GET /email/:userEmail``` - Get the user, given a user email address.
 Returns all data (*) about the user.
+
+
+```/api/maps```
+
+- ```GET /all``` - Get all maps.
+Returns all data (*), with the full name of the creator, and the number of favorites.
+
+- ```GET /id/:mapID``` - Get the map, given a map ID.
+Returns all data (*) about the map.
+
+- ```DELETE /id/:mapID``` - Delete the map from database, given a map ID.
+
+- ```GET /u/:userID``` - Get all maps owned by the user, given a user ID.
+Returns all data (*), with the full name of the creator, and the number of favorites.
+
+- ```GET /u/:userID/favs``` - Get all maps faved by the user, given a user ID.
+Returns all data (*), with the full name of the creator
+
+
+```/api/points```
+
+*nothing here lul*
+
+
+```/api/favs```
+
+- ```PUT /u/:userID/m/:mapID``` - Create a new "favorite" relationship, with given userID and mapID.
+
+- ```DELETE /u/:userID/m/:mapID``` - Delete the relationship from database, with given userID and mapID.
+
+- ```DELETE /id/:favID``` - Delete the relationship from database, given a fav ID.
+
+
+```/api/edits```
+
+- ```GET /u/:userID``` - Get all maps edited by the user, given a user ID.
+
+
+
 
 

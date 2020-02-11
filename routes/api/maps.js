@@ -2,7 +2,6 @@ const express = require('express');
 const router  = express.Router();
 
 module.exports = (db) => {
-  // Get all maps.
   router.get("/all", (req, res) => {
     let queryParams = [];
     let queryString = `
@@ -34,7 +33,44 @@ module.exports = (db) => {
       });
   });
 
-  // Get user's maps given a user ID.
+  router.get("/id/:mapID", (req, res) => {
+    let queryParams = [];
+    let queryString = `SELECT * FROM maps `;
+
+    queryParams.push(req.params.mapID);
+    queryString += `WHERE maps.id = $${queryParams.length};`;
+
+    db.query(queryString, queryParams)
+      .then(data => {
+
+        res.json(data.rows[0]);
+      })
+      .catch(err => {
+        res
+          .status(500)
+          .json({ error: err.message });
+      });
+  });
+
+  router.delete("/id/:mapID", (req, res) => {
+    // res.json(`Not yet implemented lol`);
+    let queryParams = [];
+    let queryString = `DELETE FROM maps `;
+
+    queryParams.push(req.params.mapID);
+    queryString += `WHERE maps.id = $${queryParams.length};`;
+
+    db.query(queryString, queryParams)
+      .then(data => {
+        res.json(data);
+      })
+      .catch(err => {
+        res
+          .status(500)
+          .json({ error: err.message });
+      });
+  });
+
   router.get("/u/:userID", (req, res) => {
     let queryParams = [];
     let queryString = `
@@ -71,7 +107,7 @@ module.exports = (db) => {
       });
   });
 
-  router.get("/u/:userID/fav", (req, res) => {
+  router.get("/u/:userID/favs", (req, res) => {
     let queryParams = [];
     let queryString = `
     SELECT
@@ -85,39 +121,6 @@ module.exports = (db) => {
 
     queryParams.push(req.params.userID);
     queryString += `WHERE users.id = $${queryParams.length};`;
-
-    db.query(queryString, queryParams)
-      .then(data => {
-        const maps = data.rows;
-        res.json(maps);
-      })
-      .catch(err => {
-        res
-          .status(500)
-          .json({ error: err.message });
-      });
-  });
-
-  router.get("/u/:userID/edits", (req, res) => {
-    let queryParams = [];
-    let queryString = `
-    SELECT
-      users.id,
-      edits.edited_at,
-      maps.*
-    FROM
-      users
-      JOIN edits ON users.id = u_id
-      JOIN maps ON maps.id = edits.map_id
-    `;
-
-    queryParams.push(req.params.userID);
-    queryString += `WHERE users.id = $${queryParams.length} `;
-
-    queryString += `
-    ORDER BY
-      edits.edited_at DESC;
-    `;
 
     db.query(queryString, queryParams)
       .then(data => {
