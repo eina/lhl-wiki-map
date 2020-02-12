@@ -5,8 +5,7 @@ $(() => {
   const renderSingleMap = function() {
     const { mapDetails } = $("#single-map").data();
     // render map
-    const mapLatLng = L.latLng(mapDetails.center_lat, mapDetails.center_lng);
-    console.log("hello?", mapLatLng);
+    const mapLatLng = L.latLng(mapDetails.lat, mapDetails.lng);
     const myMap = L.map("single-map").setView(mapLatLng, 15);
     const yvrMap = L.tileLayer(
       "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoidGhlbGl0dGxlYmxhY2tzbWl0aCIsImEiOiJjazZlMnExanYwaXU0M2tsb2I5cDRzcTQwIn0.bwS19as5AZCy7I-y3w-Tkw",
