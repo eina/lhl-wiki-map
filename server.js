@@ -45,6 +45,7 @@ const mapsAPI = require(`./routes/api/maps`);
 const pointsAPI = require(`./routes/api/points`);
 const favsAPI = require(`./routes/api/favs`);
 const editsAPI = require(`./routes/api/edits`);
+const testRoutes = require(`./routes/testRoutes`);
 const renderRoutes = require(`./routes/renderRoutes`);
 
 // Mount all resource routes
@@ -54,7 +55,7 @@ app.use(`/api/points`, pointsAPI(db));
 app.use(`/api/favs`, favsAPI(db));
 app.use(`/api/edits`, editsAPI(db));
 
-// Renders
+app.use(`/test`, testRoutes(db));
 app.use(`/`, renderRoutes(db));
 
 // Home page
