@@ -1,6 +1,11 @@
 const express = require(`express`);
 const router = express.Router();
-const { getUserByID, getUsersMaps, getUsersFavs } = require("../lib/dataHelpers/users");
+const {
+  getUserByID,
+  getUsersMaps,
+  getUsersFavs,
+  getUsersEdits
+} = require("../lib/dataHelpers/users");
 const { getMaps } = require("../lib/dataHelpers/maps");
 
 module.exports = db => {
@@ -62,11 +67,17 @@ module.exports = db => {
 
   router.get("/users/:id/activity", (req, res) => {
     const currentUser = req.cookies && req.cookies.userID ? req.cookies.userID : null;
-    // let user;
-    return getUserByID(db, { id: req.params.id }).then(user => {
-      res.render("profile", { currentUser, user, currentPage: "activity" });
-      return user;
-    });
+    let templateVars = { currentUser };
+    return getUserByID(db, { id: req.params.id })
+      .then(user => {
+        templateVars = { ...templateVars, user };
+        return user;
+      })
+      .then(user => getUsersEdits(db, { userID: user.id }))
+      .then(activities => {
+        templateVars = { ...templateVars, activities, currentPage: "activity" };
+        res.render("profile", templateVars);
+      });
   });
 
   router.get("/maps/new", (req, res) => {

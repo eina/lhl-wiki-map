@@ -70,8 +70,22 @@
       <% }) %>    
     <% } %>
     <!-- activity -->
-    <% if (currentPage === 'activity') { %>
-    <p>my activity!</p>
+    <% if (currentPage === 'activity' && activities.length) { %>
+    <h2>My Activity</h2>
+    <table class="table table-striped table-hover">
+      <thead>
+        <td>Date</td>
+        <td>Details</td>
+      </thead>
+      <tbody>
+        <% activities.forEach(activity => { %>
+          <tr>
+            <td><%= activity.edited_at %></td>
+            <td><%= user.fullname %> edited <a href="/maps/<%= activity.map_id %>"><%= activity.title %></a></td>
+          </tr>         
+        <% }) %>
+      </tbody>
+    </table>
     <% } %>
   </section>
 </main>
