@@ -33,8 +33,12 @@
           </div>
 
           <div>
-            <span>999</span>
-            <button class="btn btn-link btn-heart">
+            <span class="map-faves"><%= map.fav_count %></span>
+            <button
+              class="btn btn-link btn-heart"
+              data-map="<%= map.id %>"
+              data-user="<%= map.u_id %>"
+            >
               <%- include('partials/_heart-svg') %>
             </button>
           </div>
