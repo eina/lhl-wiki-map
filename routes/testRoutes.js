@@ -1,7 +1,8 @@
 const express = require(`express`);
 const router = express.Router();
 const { postPoint } = require("../lib/dataHelpers/points");
-const { postMap } = require("../lib/dataHelpers/maps");
+const { postMap, getMapByID } = require("../lib/dataHelpers/maps");
+const { checkFav } = require("../lib/dataHelpers/favs");
 
 module.exports = db => {
 
@@ -10,6 +11,15 @@ module.exports = db => {
   // });
 
   router.get("/", (req, res) => {
+    checkFav(db, {userID:1, mapID:1}).then(data => {
+      res.json(data);
+    });
+  });
+
+  router.get("/getMapByID", (req, res) => {
+    getMapByID(db, {mapID:1}).then(data => {
+      res.json(data);
+    });
   });
 
   router.get("/maps", (req, res) => {
