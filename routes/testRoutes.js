@@ -3,7 +3,7 @@ const express = require(`express`);
 const router = express.Router();
 const { getUsersFavs } =
   require("../lib/dataHelpers/users");
-const { postMap, getMapByID, getMaps, deleteMapByID } =
+const { postMap, getMapByID, getMaps, deleteMapByID, getMapsFavedByUser } =
   require("../lib/dataHelpers/maps");
 const { postPoint, editPoint, getPointsByMapID } =
   require("../lib/dataHelpers/points");
@@ -14,7 +14,7 @@ const { checkFav, deleteFav } =
 module.exports = db => {
 
   router.get("/", (req, res) => {
-    getUsersFavs(db, { userID: 1 }).then(data => {
+    getMapsFavedByUser(db, { userID: 1 }).then(data => {
       res.json(data);
     });
   });
