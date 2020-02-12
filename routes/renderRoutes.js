@@ -43,6 +43,8 @@ module.exports = db => {
     res.render("map-form");
   });
 
+  router.get("/map/:id", (req, res) => {});
+
   router.get("/maps/:id", (req, res) => {
     let mapDetails = {};
     return (
@@ -57,7 +59,7 @@ module.exports = db => {
         .then(data => getUserByID(db, { userID: data.id }))
         .then(user => {
           mapDetails = { ...mapDetails, creator: user.fullname };
-          res.render("single-map", { map: mapDetails });
+          res.render("single-map", { singleMap: mapDetails });
         })
     );
   });

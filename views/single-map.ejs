@@ -4,7 +4,7 @@
 <!-- <header> + <nav> -->
 <%- include('partials/_headnav') %>
 <main>
-  <% if (map) { %>
+  <% if (locals.singleMap) { const map = singleMap; %> <%= %>
   <div class="content-header flex-space-between">
     <div>
       <h1 class="mb-0"><%= map.title %></h1>
@@ -18,7 +18,11 @@
       </button>
     </p>
   </div>
-  <div id="single-map" class="map full-width"></div>
+  <div
+    id="single-map"
+    class="map full-width"
+    data-map-details="<%= JSON.stringify(locals.singleMap); %>"
+  ></div>
 
   <div class="grid-container">
     <% if (map.points && map.points.length) { %>
