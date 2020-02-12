@@ -6,6 +6,7 @@ $(() => {
     const { mapDetails } = $("#single-map").data();
     // render map
     if (mapDetails) {
+      const { points } = $("#points-display").data();
       const mapLatLng = L.latLng(mapDetails.lat, mapDetails.lng);
       const myMap = L.map("single-map").setView(mapLatLng, 14);
       const yvrMap = L.tileLayer(
@@ -20,17 +21,20 @@ $(() => {
         }
       );
       yvrMap.addTo(myMap);
+
+      if (points) {
+        // render markers
+        // L.marker([49.280571, -123.11378])
+        //   .bindPopup("Hopefully details here")
+        //   .addTo(myMap);
+        // L.marker([49.282656, -123.126912])
+        //   .bindPopup("Hopefully details here")
+        //   .addTo(myMap);
+        // L.marker([49.285944, -123.134379])
+        //   .bindPopup("Hopefully details here")
+        //   .addTo(myMap);
+      }
     }
-    // render markers
-    // L.marker([49.280571, -123.11378])
-    //   .bindPopup("Hopefully details here")
-    //   .addTo(myMap);
-    // L.marker([49.282656, -123.126912])
-    //   .bindPopup("Hopefully details here")
-    //   .addTo(myMap);
-    // L.marker([49.285944, -123.134379])
-    //   .bindPopup("Hopefully details here")
-    //   .addTo(myMap);
   };
 
   renderSingleMap();

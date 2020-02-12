@@ -30,15 +30,15 @@
 
     <div class="card-grid place-grid">
       <% map.points.forEach(place => { %>
-      <div class="card">
+      <div class="card" id="map-<%= place.map_id %>-point-<%= place.id %>">
         <div class="card-image">
-          <img class="img-responsive" src="<%= place.img %>" />
+          <img class="img-responsive" src="<%= place.image_url %>" />
         </div>
         <div class="card-header">
           <div class="card-title h5"><%= place.title %></div>
         </div>
         <div class="card-body">
-          <p><%= place.description %></p>
+          <p><%= place.detail %></p>
         </div>
       </div>
       <% }); %>
