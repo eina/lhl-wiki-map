@@ -8,8 +8,10 @@
   <div class="content-header">
     <h1><%= user.fullname %></h1>
 
+    <button id="profile-btn" data-user="<%= user.id %>">test</button>
+
     <div class="form-group text-right">
-      <select class="form-select profile-view" id="profile-view-select">
+      <select class="form-select profile-view" id="profile-view-select" data-user="<%= user.id %>">
         <option value="my-maps">My Maps</option>
         <option value="my-faves">My Favourite Maps</option>
         <option value="my-activity">My Activity</option>
