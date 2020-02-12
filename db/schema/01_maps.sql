@@ -6,6 +6,7 @@ CREATE TABLE maps (
   title varchar,
   created_at timestamp,
   center_lat double precision,
-  center_lng double precision
+  center_lng double precision,
+  existence boolean DEFAULT TRUE
 );
 
