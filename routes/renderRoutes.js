@@ -7,18 +7,30 @@ const {
   getUsersEdits
 } = require("../lib/dataHelpers/users");
 const { getMaps } = require("../lib/dataHelpers/maps");
+const { checkFav } = require("../lib/dataHelpers/favs");
 
 module.exports = db => {
   router.get("/", (req, res) => {
     const currentUser = req.cookies && req.cookies.userID ? req.cookies.userID : null;
-    let user;
+    let templateVars = { currentUser };
     return getUserByID(db, { userID: currentUser })
-      .then(data => {
-        user = data;
+      .then(user => {
+        templateVars = { ...templateVars, user };
         return getMaps(db);
       })
       .then(maps => {
-        res.render("index", { currentUser, user, maps });
+        if (templateVars.currentUser) {
+          const updatedMaps = maps.map(el => {
+            return checkFav(db, { userID: templateVars.currentUser, mapID: el.id }).then(data => {
+              console.log(data);
+              return { ...el, favedByCurrentUser: data };
+            });
+          });
+          templateVars = { ...templateVars, maps: updatedMaps };
+        } else {
+          templateVars = { ...templateVars, maps };
+        }
+        res.render("index", templateVars);
       });
   });
 

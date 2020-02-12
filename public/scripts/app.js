@@ -9,24 +9,29 @@ $(() => {
   $("#modal-close").click(modalControl);
 
   /* Favourite A Map */
-  $(".btn-heart").click(function(event) {
-    const { user, map } = $(this).data();
+  $(".btn-heart").click(function() {
+    const { user, map, faved } = $(this).data();
     let $numFavs = $(this).prev(".map-faves");
 
-    $.ajax({ method: "POST", url: `/api/favs/u/${user}/m/${map}` }).then(data => {
-      if (data.rowCount) {
-        const current = Number($numFavs.text());
-        $numFavs.text(current + 1);
-      }
-    });
+    if (!faved) {
+      $.ajax({ method: "POST", url: `/api/favs/u/${user}/m/${map}` }).then(data => {
+        if (data.rowCount) {
+          const current = Number($numFavs.text());
+          $numFavs.text(current + 1);
+        }
+      });
+    } else {
+      $.ajax({
+        method: "DELETE",
+        url: `/api/favs/u/${user}/m/${map}`
+      }).then(data => {
+        if (data.rowCount) {
+          const current = Number($numFavs.text());
+          $numFavs.text(current - 1);
+        }
+      });
+    }
   });
-
-  /* Add Favourites */
-  console.log("what is this", $("#fave-map"));
-  // $(".btn-heart").click(function(e) {
-  //   console.log("what am i", $(this));
-  // });
-  // ("/u/:userID/m/:mapID");
 
   /* Edit Place Details */
   const editPlaceBtn = $(".edit-place");
