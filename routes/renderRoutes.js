@@ -1,6 +1,6 @@
 const express = require(`express`);
 const router = express.Router();
-const { getUserByID, getUsersMaps } = require("../lib/dataHelpers/users");
+const { getUserByID, getUsersMaps, getUsersFavs } = require("../lib/dataHelpers/users");
 const { getMaps } = require("../lib/dataHelpers/maps");
 
 module.exports = db => {
@@ -33,23 +33,31 @@ module.exports = db => {
         templateVars = { ...templateVars, user };
         return user;
       })
-      .then(user => {
-        return getUsersMaps(db, { userID: user.id });
-      })
+      .then(user => getUsersMaps(db, { userID: user.id }))
       .then(maps => {
         templateVars = { ...templateVars, maps, currentPage: "profile" };
-        console.log(templateVars);
         res.render("profile", templateVars);
       });
   });
 
   router.get("/users/:id/favs", (req, res) => {
     const currentUser = req.cookies && req.cookies.userID ? req.cookies.userID : null;
-    // let user;
-    return getUserByID(db, { id: req.params.id }).then(user => {
-      res.render("profile", { currentUser, user, currentPage: "favs" });
-      return user;
-    });
+    let templateVars = { currentUser };
+    return getUserByID(db, { id: req.params.id })
+      .then(user => {
+        templateVars = { ...templateVars, user };
+        return user;
+      })
+      .then(user => getUsersFavs(db, { userID: user.id }))
+      .then(maps => {
+        const favMaps = maps.map(el => {
+          return getUserByID(db, { id: el.u_id }).then(data => {
+            return { ...el, mapCreator: data.fullname };
+          });
+        });
+        templateVars = { ...templateVars, maps: favMaps, currentPage: "favs" };
+        res.render("profile", templateVars);
+      });
   });
 
   router.get("/users/:id/activity", (req, res) => {
