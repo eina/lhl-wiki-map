@@ -11,6 +11,15 @@ module.exports = db => {
   // });
 
   router.get("/", (req, res) => {
+    // getMapByID(db, {
+    //   mapID: 3,
+    // }).then(data => {
+    //   console.log(data);
+    //   res.json(data);
+    // });
+  });
+
+  router.get("/getMapByID/NowWithPoints", (req, res) => {
     getMapByID(db, {
       mapID: 3,
     }).then(data => {
