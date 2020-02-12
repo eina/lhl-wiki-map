@@ -1,19 +1,36 @@
 const express = require(`express`);
 const router = express.Router();
-const { getUserByID } = require("../lib/dataHelpers/users");
+const {
+  getUserByID,
+  getUsersMaps,
+  getUsersFavs,
+  getUsersEdits
+} = require("../lib/dataHelpers/users");
 const { getMaps } = require("../lib/dataHelpers/maps");
+const { checkFav } = require("../lib/dataHelpers/favs");
 
 module.exports = db => {
   router.get("/", (req, res) => {
     const currentUser = req.cookies && req.cookies.userID ? req.cookies.userID : null;
-    let user;
-    return getUserByID(db, { id: currentUser })
-      .then(data => {
-        user = data;
+    let templateVars = { currentUser };
+    return getUserByID(db, { userID: currentUser })
+      .then(user => {
+        templateVars = { ...templateVars, user };
         return getMaps(db);
       })
       .then(maps => {
-        res.render("index", { currentUser, user, maps });
+        if (templateVars.currentUser) {
+          const updatedMaps = maps.map(el => {
+            return checkFav(db, { userID: templateVars.currentUser, mapID: el.id }).then(data => {
+              console.log(data);
+              return { ...el, favedByCurrentUser: data };
+            });
+          });
+          templateVars = { ...templateVars, maps: updatedMaps };
+        } else {
+          templateVars = { ...templateVars, maps };
+        }
+        res.render("index", templateVars);
       });
   });
 
@@ -31,11 +48,52 @@ module.exports = db => {
 
   router.get("/users/:id", (req, res) => {
     const currentUser = req.cookies && req.cookies.userID ? req.cookies.userID : null;
-    // let user;
-    return getUserByID(db, { id: req.params.id }).then(user => {
-      res.render("profile", { currentUser, user });
-      return user;
-    });
+    let templateVars = { currentUser };
+    return getUserByID(db, { userID: req.params.id })
+      .then(user => {
+        templateVars = { ...templateVars, user };
+        return user;
+      })
+      .then(user => getUsersMaps(db, { userID: user.id }))
+      .then(maps => {
+        templateVars = { ...templateVars, maps, currentPage: "profile" };
+        res.render("profile", templateVars);
+      });
+  });
+
+  router.get("/users/:id/favs", (req, res) => {
+    const currentUser = req.cookies && req.cookies.userID ? req.cookies.userID : null;
+    let templateVars = { currentUser };
+    return getUserByID(db, { userID: req.params.id })
+      .then(user => {
+        templateVars = { ...templateVars, user };
+        return user;
+      })
+      .then(user => getUsersFavs(db, { userID: user.id }))
+      .then(maps => {
+        const favMaps = maps.map(el => {
+          return getUserByID(db, { userID: el.u_id }).then(data => {
+            return { ...el, mapCreator: data.fullname };
+          });
+        });
+        templateVars = { ...templateVars, maps: favMaps, currentPage: "favs" };
+        res.render("profile", templateVars);
+      });
+  });
+
+  router.get("/users/:id/activity", (req, res) => {
+    const currentUser = req.cookies && req.cookies.userID ? req.cookies.userID : null;
+    let templateVars = { currentUser };
+    return getUserByID(db, { userID: req.params.id })
+      .then(user => {
+        templateVars = { ...templateVars, user };
+        return user;
+      })
+      .then(user => getUsersEdits(db, { userID: user.id }))
+      .then(activities => {
+        templateVars = { ...templateVars, activities, currentPage: "activity" };
+        res.render("profile", templateVars);
+      });
   });
 
   router.get("/maps/new", (req, res) => {

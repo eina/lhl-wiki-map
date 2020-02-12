@@ -17,7 +17,7 @@
   <section class="grid-container">
     <h1 class="grid-header">All Maps</h1>
     <div class="card-grid" id="all-maps">
-      <% if (locals.maps) { %> <% maps.forEach(map => { %>
+      <% if (locals.maps && maps.length) { %> <% maps.forEach(map => { %>
       <article class="card s-rounded">
         <div class="card-image card-map">
           <img
@@ -34,13 +34,26 @@
 
           <div>
             <span class="map-faves"><%= map.fav_count %></span>
+            <!-- todo: refactor if possible -->
+            <%if (map.favedByCurrentUser) {%>
             <button
-              class="btn btn-link btn-heart"
+              class="btn btn-link btn-heart faved-map"
+              data-faved=<%= map.favedByCurrentUser %>
               data-map="<%= map.id %>"
               data-user="<%= map.u_id %>"
             >
               <%- include('partials/_heart-svg') %>
             </button>
+            <%} else {%>
+            <button
+              class="btn btn-link btn-heart"
+              data-faved=<%= map.favedByCurrentUser %>
+              data-map="<%= map.id %>"
+              data-user="<%= map.u_id %>"
+            >
+              <%- include('partials/_heart-svg') %>
+            </button>
+            <%}%>
           </div>
         </div>
       </article>
