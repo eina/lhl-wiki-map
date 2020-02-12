@@ -1,8 +1,6 @@
 /* eslint-disable no-unused-vars */
 const express = require(`express`);
 const router = express.Router();
-const { postEdit } =
-  require("../lib/dataHelpers/edits");
 const { getUsersFavs } =
   require("../lib/dataHelpers/users");
 const { postMap, getMapByID, getMaps, deleteMapByID, getMapsFavedByUser } =
@@ -16,17 +14,6 @@ const { checkFav, deleteFav } =
 module.exports = db => {
 
   router.get("/", (req, res) => {
-    const today = new Date();
-    postEdit(db, {
-      userID: 2,
-      mapID: 1,
-      creationTime: today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate() + ' ' + today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds(),
-    }).then(data => {
-      res.json(data);
-    });
-  });
-
-  router.get("/getMapsFavedByUser", (req, res) => {
     getMapsFavedByUser(db, { userID: 1 }).then(data => {
       res.json(data);
     });
