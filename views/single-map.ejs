@@ -40,8 +40,10 @@
         <div class="card-body">
           <p><%= place.detail %></p>
         </div>
-        <div class="card-footer">
-          <button class="btn btn-primary">View on Map</button>
+        <div class="card-footer text-center">
+          <button class="btn btn-primary view-marker-btn" data-point-id="<%= place.id %>">
+            View on Map
+          </button>
         </div>
       </div>
       <% }); %>

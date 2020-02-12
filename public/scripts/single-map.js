@@ -23,13 +23,23 @@ $(() => {
       yvrMap.addTo(myMap);
 
       if (points && points.length) {
+        const markerRef = [];
+
         points.forEach(({ lat, lng, id, detail: desc, title, image_url: imgURL }) => {
           const pointLatLng = L.latLng(lat, lng);
           // render markers
-          L.marker(pointLatLng)
+          markerRef[id] = L.marker(pointLatLng)
             .bindPopup(renderPopupDetails({ id, desc, title, imgURL }))
-            // .bindPopup("<h4>title</h4><p>detail</p>")
             .addTo(myMap);
+        });
+
+        $(".view-marker-btn").click(function() {
+          const { pointId } = $(this).data();
+          const pointMarker = markerRef[pointId];
+          // scroll to map div
+          $("html, body").animate({ scrollTop: $("#single-map").offset().top - 50 }, 300, "linear");
+          // open popup
+          pointMarker.openPopup();
         });
       }
     }
