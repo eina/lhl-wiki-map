@@ -24,8 +24,8 @@
     data-map-details="<%= JSON.stringify({ lat: map.center_lat, lng: map.center_lng}); %>"
   ></div>
 
-  <div class="grid-container">
-    <% if (map.points && map.points.length) { %>
+  <% if (map.points && map.points.length) { %>
+  <div class="grid-container" id="points-display" data-points="<%= JSON.stringify(map.points); %>">
     <h2 class="grid-header">My Places</h2>
 
     <div class="card-grid place-grid">
@@ -43,9 +43,7 @@
       </div>
       <% }); %>
     </div>
-    <% } %>
   </div>
-
-  <% } %>
+  <% } %> <% } %>
 </main>
 <%- include('partials/_site-foot') %>
