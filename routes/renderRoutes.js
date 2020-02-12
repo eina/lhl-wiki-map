@@ -8,6 +8,7 @@ const {
 } = require("../lib/dataHelpers/users");
 const { getMaps, getMapByID } = require("../lib/dataHelpers/maps");
 const { checkFav } = require("../lib/dataHelpers/favs");
+// const { getPointsByMapID } = require("../lib/dataHelpers/points");
 
 module.exports = db => {
   router.get("/", (req, res) => {
@@ -43,10 +44,21 @@ module.exports = db => {
   });
 
   router.get("/maps/:id", (req, res) => {
-    return getMapByID(db, { mapID: req.params.id }).then(data => {
-      console.log("data?", data);
-      res.render("single-map");
-    });
+    const currentUser = req.cookies && req.cookies.userID ? req.cookies.userID : null;
+    let singleMap = {};
+    return getMapByID(db, { mapID: req.params.id })
+      .then(mapDetails => {
+        singleMap = { ...singleMap, ...mapDetails };
+        return getUserByID(db, { userID: mapDetails.u_id });
+      })
+      .then(user => {
+        singleMap = { ...singleMap, creator: user.fullname };
+        return checkFav(db, { userID: currentUser, mapID: singleMap.id });
+      })
+      .then(data => {
+        singleMap = { ...singleMap, faved: data };
+        res.render("single-map", { currentUser, singleMap });
+      });
   });
 
   router.get("/users/:id", (req, res) => {

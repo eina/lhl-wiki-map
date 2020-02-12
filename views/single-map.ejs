@@ -4,44 +4,51 @@
 <!-- <header> + <nav> -->
 <%- include('partials/_headnav') %>
 <main>
-  <% if (map) { %>
+  <% if (locals.singleMap) { const map = singleMap; %> <%= %>
   <div class="content-header flex-space-between">
     <div>
-      <h1 class="mb-0"><%= map.details.title %></h1>
-      <p class="mb-0">by <%= map.details.owner_name %></p>
+      <h1 class="mb-0"><%= map.title %></h1>
+      <p class="mb-0">by <%= map.creator %></p>
     </div>
 
     <p class="mb-0">
-      <span><%= map.details.faves %></span>
-      <button class="btn btn-link btn-heart">
+      <span><%= map.fav_count %></span>
+      <button class="btn btn-link btn-heart <%= map.faved ? 'faved-map': ''; %>">
         <%- include('partials/_heart-svg') %>
       </button>
     </p>
   </div>
-  <div id="leaflet-map" class="map full-width"></div>
+  <div
+    id="single-map"
+    class="map full-width"
+    data-map-details="<%= JSON.stringify({ lat: map.center_lat, lng: map.center_lng}); %>"
+  ></div>
 
-  <div class="grid-container">
-    <% if (map.points.length) { %>
+  <% if (map.points && map.points.length) { %>
+  <div class="grid-container" id="points-display" data-points="<%= JSON.stringify(map.points); %>">
     <h2 class="grid-header">My Places</h2>
 
     <div class="card-grid place-grid">
       <% map.points.forEach(place => { %>
-      <div class="card">
+      <div class="card" id="map-<%= place.map_id %>-point-<%= place.id %>">
         <div class="card-image">
-          <img class="img-responsive" src="<%= place.img %>" />
+          <img class="img-responsive" src="<%= place.image_url %>" />
         </div>
         <div class="card-header">
           <div class="card-title h5"><%= place.title %></div>
         </div>
         <div class="card-body">
-          <p><%= place.description %></p>
+          <p><%= place.detail %></p>
+        </div>
+        <div class="card-footer text-center">
+          <button class="btn btn-primary view-marker-btn" data-point-id="<%= place.id %>">
+            View on Map
+          </button>
         </div>
       </div>
       <% }); %>
     </div>
-    <% } %>
   </div>
-
-  <% } %>
+  <% } %> <% } %>
 </main>
 <%- include('partials/_site-foot') %>
