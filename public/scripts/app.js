@@ -35,128 +35,52 @@ $(() => {
   });
 
   /* Edit Place Details */
-  const editPlaceBtn = $(".edit-place");
+  // const editPlaceBtn = $(".edit-place");
 
-  editPlaceBtn.click(function(event) {
-    const $placeID = $(this)
-      .parent()
-      .parent();
-    const $placeIDString = $placeID.attr("id");
-    const $copyBeforeEdit = $placeID.clone();
-    // todo: need the details of this place to be populated!
+  // editPlaceBtn.click(function(event) {
+  //   const $placeID = $(this)
+  //     .parent()
+  //     .parent();
+  //   const $placeIDString = $placeID.attr("id");
+  //   const $copyBeforeEdit = $placeID.clone();
+  //   // todo: need the details of this place to be populated!
 
-    const renderEditPlaceForm = placeId => {
-      return `<form id="edit-${placeId}">
-        <div class="card-body">
-          <label class="form-group">
-            <span class="form-label">Name</span>
-            <input type="text" class="form-input" id="edit-place2-name" name="place-name" />
-          </label>
-          <label class="form-group">
-            <span class="form-label">Image URL</span>
-            <input type="text" class="form-input" id="edit-place2-img" name="place-img" />
-          </label>
-          <label class="form-group">
-            <span class="form-label">Description</span>
-            <textarea class="form-input" id="edit-place2-desc" rows="3" name="place-desc"></textarea>
-          </label>
-        </div>
-        <div class="card-footer">
-          <button class="btn edit-place" type="button">Edit</button>
-          <button class="btn" type="button" id="cancel-edit-${placeId}">Cancel</button>
-        </div>
-      </form>`;
-    };
-
-    $placeID.empty();
-    $placeID.append(() => renderEditPlaceForm($placeIDString));
-
-    // todo: make this work lol
-    const revertChanges = function(event) {
-      $placeID.empty();
-      $placeID.append($copyBeforeEdit);
-    };
-
-    // click handler for cancel edit
-    $(`#cancel-edit-${$placeIDString}`).click(revertChanges);
-  });
-
-  /* Profile Select Thing */
-  // const $profileSelect = $("#profile-view-select");
-  // const renderProfileSections = function(e) {
-  //   const $selectVal = $(this).val();
-  //   const $userContainer = $("#user-container");
-  //   const renderCard = () => {
-  //     const $card = $("<div>").addClass("card s-rounded");
-  //     const $cardImg = $("<div>").addClass("card-image");
-  //     const $cardHeader = $("<div>").addClass("card-header");
-  //     const $cardTitle = $("<div>")
-  //       .addClass("card-title h5")
-  //       .text("Map Title");
-  //     const $mapFaves = $("<p>")
-  //       .addClass("map-faves")
-  //       .text(999);
-
-  //     const $pointImg = $("<img>").attr({ src: "https://picsum.photos/800/500" });
-
-  //     $cardImg.append($pointImg);
-  //     $cardHeader.append($cardTitle, $mapFaves);
-
-  //     $card.append($cardImg, $cardHeader);
-
-  //     return $card;
+  //   const renderEditPlaceForm = placeId => {
+  //     return `<form id="edit-${placeId}">
+  //       <div class="card-body">
+  //         <label class="form-group">
+  //           <span class="form-label">Name</span>
+  //           <input type="text" class="form-input" id="edit-place2-name" name="place-name" />
+  //         </label>
+  //         <label class="form-group">
+  //           <span class="form-label">Image URL</span>
+  //           <input type="text" class="form-input" id="edit-place2-img" name="place-img" />
+  //         </label>
+  //         <label class="form-group">
+  //           <span class="form-label">Description</span>
+  //           <textarea class="form-input" id="edit-place2-desc" rows="3" name="place-desc"></textarea>
+  //         </label>
+  //       </div>
+  //       <div class="card-footer">
+  //         <button class="btn edit-place" type="button">Edit</button>
+  //         <button class="btn" type="button" id="cancel-edit-${placeId}">Cancel</button>
+  //       </div>
+  //     </form>`;
   //   };
 
-  //   const renderActivityTable = () => {
-  //     const $table = $("<table>").addClass("table table-striped table-hover");
-  //     const $thead = $("<thead>").append(`<tr><th>Date</th><th>Details</th></tr>`);
-  //     const $tr = $("<tr>");
+  //   $placeID.empty();
+  //   $placeID.append(() => renderEditPlaceForm($placeIDString));
 
-  //     // loop through something
-  //     const $td1 = $("<td>").text("January 24, 2020");
-  //     const $mapLink = $("<a>")
-  //       .attr({ href: "#" })
-  //       .text("[Map Name]");
-  //     const $td2 = $("<td>").append("Edited ", $mapLink);
-
-  //     const $activeRow = $tr.addClass("active").append($td1, $td2);
-  //     const $tbody = $("<tbody>").append($activeRow);
-
-  //     $table.append($thead, $tbody);
-  //     return $table;
+  //   // todo: make this work lol
+  //   const revertChanges = function(event) {
+  //     $placeID.empty();
+  //     $placeID.append($copyBeforeEdit);
   //   };
 
-  //   // remove content inside
-  //   $userContainer.empty();
-  //   if ($selectVal === "my-maps") {
-  //     const $card = renderCard();
-  //     const $gridHeader = `<h2 class="grid-header">My Maps</h2>`;
-  //     const $cardGrid = $(`<div class="card-grid"></div>`).prepend($card);
+  //   // click handler for cancel edit
+  //   $(`#cancel-edit-${$placeIDString}`).click(revertChanges);
+  // });
 
-  //     $userContainer.append($gridHeader, $cardGrid);
-  //   }
-  //   if ($selectVal === "my-faves") {
-  //     const $card = renderCard();
-  //     const $gridHeader = `<h2 class="grid-header">Favourites</h2>`;
-  //     const $cardGrid = $(`<div class="card-grid"></div>`).prepend($card);
-
-  //     $userContainer.append($gridHeader, $cardGrid);
-  //   }
-  //   if ($selectVal === "my-activity") {
-  //     const $gridHeader = `<h2 class="grid-header">Activity</h2>`;
-  //     const $table = renderActivityTable();
-
-  //     $userContainer.append($gridHeader, $table);
-  //   }
-  // };
-
-  // if ($profileSelect) {
-  //   $profileSelect.on("change", renderProfileSections);
-
-  //   // set the default selected option
-  //   // trigger change to load content for that
-  //   $profileSelect.val("my-maps").trigger("change");
-  // }
   /* Leaflet Shared Map? */
   /* Leaflet: View Map With Points (on single-map.ejs) */
   const renderSingleMap = function() {
@@ -201,6 +125,8 @@ $(() => {
     }
   ).addTo(createMap);
 
+  const tempPointsArray = [];
+
   /* Create Map Form Submit */
   $("#createMapForm").submit(function(e) {
     e.preventDefault();
@@ -235,11 +161,11 @@ $(() => {
         </div>
         <div class="form-group">
           <label for="place-img" class="form-label">Image URL</label>
-          <input type="text" class="form-input" id="place-img" name="place-name" />
+          <input type="text" class="form-input" id="place-img" name="place-img" />
         </div>
         <div class="form-group">
           <label for="place-desc" class="form-label">Description</label>
-          <textarea class="form-input" id="place-desc" placeholder="Textarea" rows="3"></textarea>
+          <textarea class="form-input" name="place-desc" id="place-desc" placeholder="Textarea" rows="3"></textarea>
         </div>
       <button type="submit" class="btn btn-primary">Add</button>
       </form>
@@ -248,7 +174,8 @@ $(() => {
 
   /* Create Point Submit Function */
   const addPointOnMap = function({ query, lat, lng }) {
-    console.log("hellooooooo", lat, lng, query);
+    tempPointsArray.push({ lat, lng, query });
+    console.log("hellooooooo", tempPointsArray);
     // todo: write a POST request
     // add the marker
     const marker = L.marker([lat, lng]).addTo(createMap);
