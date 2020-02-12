@@ -1,4 +1,21 @@
 /* eslint-disable no-undef */
+/**
+ * Renders HTML element to be used for Leaflet's bindPopup method
+ * @param {object} details
+ */
+const renderPopupDetails = function({ id, desc, title, imgURL }) {
+  // param: details is an object { img, name, detail }
+  const $placeImg = $("<img>")
+    .addClass("img-responsive")
+    .attr({ src: imgURL });
+  const $placeName = $("<p>").text(title);
+  const $placeDescription = $("<p>").text(desc);
+  const $place = $("<div>").addClass("map-marker-details");
+
+  $place.append($placeImg, $placeName, $placeDescription);
+  return $place.prop("outerHTML");
+};
+
 $(() => {
   /* Log In Modal Functionalities */
   const modalControl = function() {

@@ -44,6 +44,7 @@ module.exports = db => {
   });
 
   router.get("/maps/:id", (req, res) => {
+    const currentUser = req.cookies && req.cookies.userID ? req.cookies.userID : null;
     let singleMap = {};
     return getMapByID(db, { mapID: req.params.id })
       .then(mapDetails => {
@@ -52,7 +53,7 @@ module.exports = db => {
       })
       .then(user => {
         singleMap = { ...singleMap, creator: user.fullname };
-        res.render("single-map", { singleMap });
+        res.render("single-map", { currentUser, singleMap });
       });
   });
 

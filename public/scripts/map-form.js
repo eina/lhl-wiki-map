@@ -28,17 +28,6 @@ $("#createMapForm").submit(function(e) {
   }
 });
 
-const renderPopupDetails = function(details) {
-  // param: details is an object { img, name, detail }
-  const $placeImg = $("<img>").attr({ src: "https://picsum.photos/300/150" });
-  const $placeName = $("<p>").text("[Cool Place Name]");
-  const $placeDescription = $("<p>").text("[Cool Place Description]");
-  const $place = $("<div>");
-
-  $place.append($placeImg, $placeName, $placeDescription);
-  return $place.prop("outerHTML");
-};
-
 const renderPopupForm = function() {
   return `
       <form id="addPlace">

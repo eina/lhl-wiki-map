@@ -22,17 +22,15 @@ $(() => {
       );
       yvrMap.addTo(myMap);
 
-      if (points) {
-        // render markers
-        // L.marker([49.280571, -123.11378])
-        //   .bindPopup("Hopefully details here")
-        //   .addTo(myMap);
-        // L.marker([49.282656, -123.126912])
-        //   .bindPopup("Hopefully details here")
-        //   .addTo(myMap);
-        // L.marker([49.285944, -123.134379])
-        //   .bindPopup("Hopefully details here")
-        //   .addTo(myMap);
+      if (points && points.length) {
+        points.forEach(({ lat, lng, id, detail: desc, title, image_url: imgURL }) => {
+          const pointLatLng = L.latLng(lat, lng);
+          // render markers
+          L.marker(pointLatLng)
+            .bindPopup(renderPopupDetails({ id, desc, title, imgURL }))
+            // .bindPopup("<h4>title</h4><p>detail</p>")
+            .addTo(myMap);
+        });
       }
     }
   };

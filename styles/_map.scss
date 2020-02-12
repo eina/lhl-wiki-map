@@ -6,4 +6,11 @@
   margin: 2em 0 3em;
   resize: vertical;
   overflow: hidden; /* something other than visible */
+
+  &-marker-details {
+    img {
+      // width: 150px;
+      // height: auto;
+    }
+  }
 }
