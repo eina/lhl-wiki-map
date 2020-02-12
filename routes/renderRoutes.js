@@ -6,7 +6,7 @@ const {
   getUsersFavs,
   getUsersEdits
 } = require("../lib/dataHelpers/users");
-const { getMaps, getMapByID } = require("../lib/dataHelpers/maps");
+const { getMaps, getMapByID, postMap } = require("../lib/dataHelpers/maps");
 const { checkFav } = require("../lib/dataHelpers/favs");
 // const { getPointsByMapID } = require("../lib/dataHelpers/points");
 
@@ -133,5 +133,7 @@ module.exports = db => {
         res.status(500).json({ error: err.message });
       });
   });
+
+  router.post("/maps/new", (req, res) => {});
   return router;
 };
