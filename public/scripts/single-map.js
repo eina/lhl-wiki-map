@@ -1,5 +1,4 @@
 $(() => {
-  /* Leaflet Shared Map? */
   /* Leaflet: View Map With Points (on single-map.ejs) */
 
   const renderSingleMap = function() {
