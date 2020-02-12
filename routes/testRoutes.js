@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 const express = require(`express`);
 const router = express.Router();
-const { postMap, getMapByID, getMaps } = require("../lib/dataHelpers/maps");
+const { postMap, getMapByID, getMaps, deleteMapByID } = require("../lib/dataHelpers/maps");
 const { postPoint, editPoint, getPointsByMapID } = require("../lib/dataHelpers/points");
 const { checkFav } = require("../lib/dataHelpers/favs");
 
@@ -10,6 +10,14 @@ module.exports = db => {
   // router.get("/", (req, res) => {
 
   // });
+
+  router.get("/", (req, res) => {
+    deleteMapByID(db, {
+      mapID: 1
+    }).then(data => {
+      res.json(data);
+    });
+  });
 
   router.get("/getMaps", (req, res) => {
     getMaps(db).then(data => {
