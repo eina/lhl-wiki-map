@@ -1,7 +1,7 @@
 const express = require(`express`);
 const router = express.Router();
-const { postPoint } = require("../lib/dataHelpers/points");
 const { postMap, getMapByID } = require("../lib/dataHelpers/maps");
+const { postPoint, editPoint } = require("../lib/dataHelpers/points");
 const { checkFav } = require("../lib/dataHelpers/favs");
 
 module.exports = db => {
@@ -11,6 +11,22 @@ module.exports = db => {
   // });
 
   router.get("/", (req, res) => {
+    editPoint(db, {
+      pointID: 1,
+      pointData: {
+        mapID: 5,
+        title: 'NEW GEN MAP',
+        detail: 'CRIME AND PUNISHMENT',
+        imageURL: 'GOOGLE',
+        lat: 69,
+        lng: 420
+      }
+    }).then(data => {
+      res.json(data);
+    });
+  });
+
+  router.get("/checkFav", (req, res) => {
     checkFav(db, {userID:1, mapID:1}).then(data => {
       res.json(data);
     });
