@@ -17,7 +17,7 @@
   <section class="grid-container">
     <h1 class="grid-header">All Maps</h1>
     <div class="card-grid" id="all-maps">
-      <% if (locals.maps) { %> <% maps.forEach(map => { %>
+      <% if (locals.maps && maps.length) { %> <% maps.forEach(map => { %>
       <article class="card s-rounded">
         <div class="card-image card-map">
           <img
