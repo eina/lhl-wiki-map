@@ -1,5 +1,4 @@
 /* eslint-disable no-undef */
-
 $(() => {
   /* Log In Modal Functionalities */
   const modalControl = function() {
@@ -21,6 +20,13 @@ $(() => {
       }
     });
   });
+
+  /* Add Favourites */
+  console.log("what is this", $("#fave-map"));
+  // $(".btn-heart").click(function(e) {
+  //   console.log("what am i", $(this));
+  // });
+  // ("/u/:userID/m/:mapID");
 
   /* Edit Place Details */
   const editPlaceBtn = $(".edit-place");
@@ -145,7 +151,6 @@ $(() => {
   //   // trigger change to load content for that
   //   $profileSelect.val("my-maps").trigger("change");
   // }
-
   /* Leaflet Shared Map? */
   /* Leaflet: View Map With Points (on single-map.ejs) */
   const renderSingleMap = function() {
@@ -273,10 +278,4 @@ $(() => {
   };
 
   createMap.on("click touchstart", onMapClick);
-
-  // $.ajax({
-  //   method: "GET",
-  //   url:
-  //     "https://api.mapbox.com/styles/v1/mapbox/light-v10/static/-123.117,49.2816,14.3/300x200?access_token=pk.eyJ1IjoidGhlbGl0dGxlYmxhY2tzbWl0aCIsImEiOiJjazZkeHZmcTcwMnV1M2tvZHNpb3VidzZpIn0.STnRpYTjWHNdD1n1Ew6u6g"
-  // }).then(data => console.log("what is this", data));
 });
