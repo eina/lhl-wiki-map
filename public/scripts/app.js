@@ -21,15 +21,16 @@ $(() => {
         }
       });
     } else {
-      $.ajax({
-        method: "DELETE",
-        url: `/api/favs/u/${user}/m/${map}`
-      }).then(data => {
-        if (data.rowCount) {
-          const current = Number($numFavs.text());
-          $numFavs.text(current - 1);
-        }
-      });
+      console.log("lol you tried to fave again");
+      // $.ajax({
+      //   method: "DELETE",
+      //   url: `/api/favs/u/${user}/m/${map}`
+      // }).then(data => {
+      //   if (data.rowCount) {
+      //     const current = Number($numFavs.text());
+      //     $numFavs.text(current - 1);
+      //   }
+      // });
     }
   });
 

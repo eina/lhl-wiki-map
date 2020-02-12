@@ -7,12 +7,12 @@
   <% if (map) { %>
   <div class="content-header flex-space-between">
     <div>
-      <h1 class="mb-0"><%= map.details.title %></h1>
-      <p class="mb-0">by <%= map.details.owner_name %></p>
+      <h1 class="mb-0"><%= map.title %></h1>
+      <p class="mb-0">by <%= map.creator %></p>
     </div>
 
     <p class="mb-0">
-      <span><%= map.details.faves %></span>
+      <span><%= map.fav_count %></span>
       <button class="btn btn-link btn-heart">
         <%- include('partials/_heart-svg') %>
       </button>
@@ -21,7 +21,7 @@
   <div id="leaflet-map" class="map full-width"></div>
 
   <div class="grid-container">
-    <% if (map.points.length) { %>
+    <% if (map.points && map.points.length) { %>
     <h2 class="grid-header">My Places</h2>
 
     <div class="card-grid place-grid">
