@@ -1,6 +1,6 @@
 const express = require(`express`);
 const router = express.Router();
-const { getUserByID } = require("../lib/dataHelpers/users");
+const { getUserByID, getUsersMaps } = require("../lib/dataHelpers/users");
 const { getMaps } = require("../lib/dataHelpers/maps");
 
 module.exports = db => {
@@ -27,9 +27,36 @@ module.exports = db => {
 
   router.get("/users/:id", (req, res) => {
     const currentUser = req.cookies && req.cookies.userID ? req.cookies.userID : null;
+    let templateVars = { currentUser };
+    return getUserByID(db, { id: req.params.id })
+      .then(user => {
+        templateVars = { ...templateVars, user };
+        return user;
+      })
+      .then(user => {
+        return getUsersMaps(db, { userID: user.id });
+      })
+      .then(maps => {
+        templateVars = { ...templateVars, maps, currentPage: "profile" };
+        console.log(templateVars);
+        res.render("profile", templateVars);
+      });
+  });
+
+  router.get("/users/:id/favs", (req, res) => {
+    const currentUser = req.cookies && req.cookies.userID ? req.cookies.userID : null;
     // let user;
     return getUserByID(db, { id: req.params.id }).then(user => {
-      res.render("profile", { currentUser, user });
+      res.render("profile", { currentUser, user, currentPage: "favs" });
+      return user;
+    });
+  });
+
+  router.get("/users/:id/activity", (req, res) => {
+    const currentUser = req.cookies && req.cookies.userID ? req.cookies.userID : null;
+    // let user;
+    return getUserByID(db, { id: req.params.id }).then(user => {
+      res.render("profile", { currentUser, user, currentPage: "activity" });
       return user;
     });
   });

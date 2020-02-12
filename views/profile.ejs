@@ -8,16 +8,54 @@
   <div class="content-header">
     <h1><%= user.fullname %></h1>
 
-    <div class="form-group text-right">
-      <select class="form-select profile-view" id="profile-view-select">
+    <div class="text-right">
+      <a href="/users/2">My Maps</a>
+      <a href="/users/2/favs">Favourite Maps</a>
+      <a href="/users/2/activity">My Activity</a>
+      <!-- <select class="form-select profile-view" id="profile-view-select">
         <option value="my-maps">My Maps</option>
         <option value="my-faves">My Favourite Maps</option>
         <option value="my-activity">My Activity</option>
-      </select>
+      </select> -->
     </div>
   </div>
 
-  <section id="user-container" class="grid-container"></section>
+  <section id="user-container" class="grid-container">
+    <% if (currentPage === 'profile' && maps.length) { %>
+    <h2>My Maps</h2>
+    <div class="card-grid">
+      <% maps.forEach(map => { %>
+      <article class="card s-rounded">
+        <div class="card-image card-map">
+          <img
+            class="img-responsive"
+            src="https://api.mapbox.com/styles/v1/mapbox/light-v10/static/<%= map.center_lng %>,<%= map.center_lat %>,13/300x200?access_token=pk.eyJ1IjoidGhlbGl0dGxlYmxhY2tzbWl0aCIsImEiOiJjazZkeHZmcTcwMnV1M2tvZHNpb3VidzZpIn0.STnRpYTjWHNdD1n1Ew6u6g"
+          />
+          <a class="btn btn-primary s-rounded view-btn" href="/maps/<%= map.id %>">View</a>
+        </div>
+        <div class="card-header">
+          <div>
+            <div class="card-title h3"><%= map.title %></div>
+            <p class="card-subtitle text-gray">by <a href="#"><%= map.owner_name %></a></p>
+          </div>
+
+          <p>
+            <span class="map-faves"><%= map.fav_count %></span>
+            <span class="static-heart"><%- include('partials/_heart-svg') %></span>
+          </p>
+        </div>
+      </article>
+      <% }) %>      
+    <% } %>
+    <!-- favourites -->
+    <% if (currentPage === 'favs') { %>
+    <p>my favs!</p>
+    <% } %>
+    <!-- activity -->
+    <% if (currentPage === 'activity') { %>
+    <p>my activity!</p>
+    <% } %>
+  </section>
 </main>
 
 <%- include('partials/_site-foot') %>
