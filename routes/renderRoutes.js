@@ -53,6 +53,10 @@ module.exports = db => {
       })
       .then(user => {
         singleMap = { ...singleMap, creator: user.fullname };
+        return checkFav(db, { userID: currentUser, mapID: singleMap.id });
+      })
+      .then(data => {
+        singleMap = { ...singleMap, faved: data };
         res.render("single-map", { currentUser, singleMap });
       });
   });

@@ -13,7 +13,7 @@
 
     <p class="mb-0">
       <span><%= map.fav_count %></span>
-      <button class="btn btn-link btn-heart">
+      <button class="btn btn-link btn-heart <%= map.faved ? 'faved-map': ''; %>">
         <%- include('partials/_heart-svg') %>
       </button>
     </p>
