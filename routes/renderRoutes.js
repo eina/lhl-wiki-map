@@ -6,7 +6,7 @@ const {
   getUsersFavs,
   getUsersEdits
 } = require("../lib/dataHelpers/users");
-const { getMaps } = require("../lib/dataHelpers/maps");
+const { getMaps, getMapByID } = require("../lib/dataHelpers/maps");
 const { checkFav } = require("../lib/dataHelpers/favs");
 
 module.exports = db => {
@@ -43,7 +43,10 @@ module.exports = db => {
   });
 
   router.get("/maps/:id", (req, res) => {
-    res.render("single-map");
+    return getMapByID(db, { mapID: req.params.id }).then(data => {
+      console.log("data?", data);
+      res.render("single-map");
+    });
   });
 
   router.get("/users/:id", (req, res) => {
