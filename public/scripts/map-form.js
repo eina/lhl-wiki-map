@@ -53,7 +53,43 @@ $(() => {
     mapForm.closePopup();
   };
 
-  const renderPointCard = function({ formVals }) {};
+  /**
+   * Renders single map card on /(index)
+   * @param {object} mapDetails object with: center_lat, center_lng, title, owner_name, id, numFavs
+   */
+  const renderPlaceCard = function({ title, desc, imgURL }) {
+    const $cardContainer = $("<article>").addClass("card s-rounded");
+    const $cardImgContainer = $("<div>").addClass("card-image");
+    const $cardImg = $("<img>").attr({
+      class: "img-responsive",
+      src: imgURL
+    });
+    $cardImgContainer.append($cardImg);
+
+    const $cardHeaderContainer = $("<div>").addClass("card-header");
+    const $placeTitle = $("<h3>")
+      .addClass("card-title")
+      .text(title);
+    $cardHeaderContainer.append($placeTitle);
+
+    const $cardBodyContainer = $("<div>").addClass("card-body");
+    const $cardBodyText = $("<p>").text(desc);
+    $cardBodyContainer.append($cardBodyText);
+
+    const $cardFooterContainer = $("<div>").addClass("card-body");
+    const $deleteButton = $("<button>")
+      .addClass("btn")
+      .text("Delete");
+    $cardFooterContainer.append($deleteButton);
+
+    $cardContainer.append(
+      $cardImgContainer,
+      $cardHeaderContainer,
+      $cardBodyContainer,
+      $cardFooterContainer
+    );
+    return $cardContainer;
+  };
 
   /**
    * Render form that shows on map click to add a point
@@ -120,6 +156,10 @@ $(() => {
             coords: L.latLng(lat, lng),
             formVals: { title: placeName, imgURL: placeImg, desc: placeDesc }
           });
+          // show on my places grid
+          $("#user-points").prepend(
+            renderPlaceCard({ title: placeName, imgURL: placeImg, desc: placeDesc })
+          );
         } else {
           console.log("submit something you fool!");
         }
