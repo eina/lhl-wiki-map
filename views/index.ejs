@@ -16,7 +16,36 @@
 
   <section class="grid-container">
     <h1 class="grid-header">All Maps</h1>
-    <div class="card-grid" id="all-maps"></div>
+    <div class="card-grid" id="all-maps">
+      <% if (locals.maps) { %> <% maps.forEach(map => { %>
+      <article class="card s-rounded">
+        <div class="card-image card-map">
+          <img
+            class="img-responsive"
+            src="https://api.mapbox.com/styles/v1/mapbox/light-v10/static/<%= map.center_lng %>,<%= map.center_lat %>,13/300x200?access_token=pk.eyJ1IjoidGhlbGl0dGxlYmxhY2tzbWl0aCIsImEiOiJjazZkeHZmcTcwMnV1M2tvZHNpb3VidzZpIn0.STnRpYTjWHNdD1n1Ew6u6g"
+          />
+          <a class="btn btn-primary s-rounded view-btn" href="/maps/<%= map.id %>">View</a>
+        </div>
+        <div class="card-header">
+          <div>
+            <div class="card-title h3"><%= map.title %></div>
+            <p class="card-subtitle text-gray">by <a href="#"><%= map.owner_name %></a></p>
+          </div>
+
+          <div>
+            <span class="map-faves"><%= map.fav_count %></span>
+            <button
+              class="btn btn-link btn-heart"
+              data-map="<%= map.id %>"
+              data-user="<%= map.u_id %>"
+            >
+              <%- include('partials/_heart-svg') %>
+            </button>
+          </div>
+        </div>
+      </article>
+      <% }) %> <% } %>
+    </div>
   </section>
 </main>
 <%- include('partials/_site-foot') %>

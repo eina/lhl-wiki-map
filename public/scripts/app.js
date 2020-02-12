@@ -1,7 +1,5 @@
 /* eslint-disable no-undef */
 
-const heartSvg = ``;
-
 $(() => {
   /* Log In Modal Functionalities */
   const modalControl = function() {
@@ -11,67 +9,17 @@ $(() => {
   $("#btn-login").click(modalControl);
   $("#modal-close").click(modalControl);
 
-  /**
-   * Renders single map card on /(index)
-   * @param {object} mapDetails object with: center_lat, center_lng, title, owner_name, id, numFavs
-   */
-  const renderMapCard = function(mapDetails) {
-    const { title, owner_name: ownerName, id, fav_count: numFavs } = mapDetails;
-    const $cardContainer = $("<article>")
-      .addClass("card s-rounded")
-      .attr({ id: `map-card-${id}` });
-    const $cardImgContainer = $("<div>").addClass("card-image card-map");
-    const $cardImg = $("<img>").attr({
-      class: "img-responsive",
-      src:
-        "https://api.mapbox.com/styles/v1/mapbox/light-v10/static/-123.117,49.2816,13/300x200?access_token=pk.eyJ1IjoidGhlbGl0dGxlYmxhY2tzbWl0aCIsImEiOiJjazZkeHZmcTcwMnV1M2tvZHNpb3VidzZpIn0.STnRpYTjWHNdD1n1Ew6u6g"
+  /* Favourite A Map */
+  $(".btn-heart").click(function(event) {
+    const { user, map } = $(this).data();
+    let $numFavs = $(this).prev(".map-faves");
+
+    $.ajax({ method: "POST", url: `/api/favs/u/${user}/m/${map}` }).then(data => {
+      if (data.rowCount) {
+        const current = Number($numFavs.text());
+        $numFavs.text(current + 1);
+      }
     });
-    const $viewMapLink = $("<a>")
-      .text("View")
-      .attr({
-        class: "btn btn-primary s-rounded view-btn",
-        href: "/maps/1"
-      });
-    $cardImgContainer.append($cardImg, $viewMapLink);
-
-    const $cardHeaderContainer = $("<div>").addClass("card-header");
-    const $mapTitle = $("<h3>")
-      .addClass("card-title")
-      .text(title);
-    const $mapSubtitle = $("<p>")
-      .addClass("card-subtitle text-gray")
-      .text("by ");
-    const $mapOwner = $("<a>")
-      .attr({ src: `/maps/${id}` })
-      .text(ownerName);
-    $mapSubtitle.append($mapOwner);
-    const $mapLikes = $("<span>").text(numFavs);
-    const $heartBtn = $(
-      `<button class="btn btn-link btn-heart"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-heart"><pathd="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg></button>`
-    );
-    const $divFlex1 = $("<div>").append($mapTitle, $mapSubtitle);
-    const $divFlex2 = $("<div>").append($mapLikes, $heartBtn);
-
-    $cardHeaderContainer.append($divFlex1, $divFlex2);
-
-    $cardContainer.append($cardImgContainer, $cardHeaderContainer);
-    return $cardContainer;
-  };
-
-  // load items on index
-  $.ajax({ method: "GET", url: "/" }).then(page => {
-    if (page) {
-      // get maps
-      $.ajax({ method: "GET", url: "/test/maps/all" }).then(mapsList => {
-        // load maps
-        if (mapsList.length) {
-          mapsList.map(map => {
-            const $mapCard = renderMapCard({ ...map });
-            $("#all-maps").prepend($mapCard);
-          });
-        }
-      });
-    }
   });
 
   /* Edit Place Details */
@@ -122,81 +70,81 @@ $(() => {
   });
 
   /* Profile Select Thing */
-  const $profileSelect = $("#profile-view-select");
-  const renderProfileSections = function(e) {
-    const $selectVal = $(this).val();
-    const $userContainer = $("#user-container");
-    const renderCard = () => {
-      const $card = $("<div>").addClass("card s-rounded");
-      const $cardImg = $("<div>").addClass("card-image");
-      const $cardHeader = $("<div>").addClass("card-header");
-      const $cardTitle = $("<div>")
-        .addClass("card-title h5")
-        .text("Map Title");
-      const $mapFaves = $("<p>")
-        .addClass("map-faves")
-        .text(999);
+  // const $profileSelect = $("#profile-view-select");
+  // const renderProfileSections = function(e) {
+  //   const $selectVal = $(this).val();
+  //   const $userContainer = $("#user-container");
+  //   const renderCard = () => {
+  //     const $card = $("<div>").addClass("card s-rounded");
+  //     const $cardImg = $("<div>").addClass("card-image");
+  //     const $cardHeader = $("<div>").addClass("card-header");
+  //     const $cardTitle = $("<div>")
+  //       .addClass("card-title h5")
+  //       .text("Map Title");
+  //     const $mapFaves = $("<p>")
+  //       .addClass("map-faves")
+  //       .text(999);
 
-      const $pointImg = $("<img>").attr({ src: "https://picsum.photos/800/500" });
+  //     const $pointImg = $("<img>").attr({ src: "https://picsum.photos/800/500" });
 
-      $cardImg.append($pointImg);
-      $cardHeader.append($cardTitle, $mapFaves);
+  //     $cardImg.append($pointImg);
+  //     $cardHeader.append($cardTitle, $mapFaves);
 
-      $card.append($cardImg, $cardHeader);
+  //     $card.append($cardImg, $cardHeader);
 
-      return $card;
-    };
+  //     return $card;
+  //   };
 
-    const renderActivityTable = () => {
-      const $table = $("<table>").addClass("table table-striped table-hover");
-      const $thead = $("<thead>").append(`<tr><th>Date</th><th>Details</th></tr>`);
-      const $tr = $("<tr>");
+  //   const renderActivityTable = () => {
+  //     const $table = $("<table>").addClass("table table-striped table-hover");
+  //     const $thead = $("<thead>").append(`<tr><th>Date</th><th>Details</th></tr>`);
+  //     const $tr = $("<tr>");
 
-      // loop through something
-      const $td1 = $("<td>").text("January 24, 2020");
-      const $mapLink = $("<a>")
-        .attr({ href: "#" })
-        .text("[Map Name]");
-      const $td2 = $("<td>").append("Edited ", $mapLink);
+  //     // loop through something
+  //     const $td1 = $("<td>").text("January 24, 2020");
+  //     const $mapLink = $("<a>")
+  //       .attr({ href: "#" })
+  //       .text("[Map Name]");
+  //     const $td2 = $("<td>").append("Edited ", $mapLink);
 
-      const $activeRow = $tr.addClass("active").append($td1, $td2);
-      const $tbody = $("<tbody>").append($activeRow);
+  //     const $activeRow = $tr.addClass("active").append($td1, $td2);
+  //     const $tbody = $("<tbody>").append($activeRow);
 
-      $table.append($thead, $tbody);
-      return $table;
-    };
+  //     $table.append($thead, $tbody);
+  //     return $table;
+  //   };
 
-    // remove content inside
-    $userContainer.empty();
-    if ($selectVal === "my-maps") {
-      const $card = renderCard();
-      const $gridHeader = `<h2 class="grid-header">My Maps</h2>`;
-      const $cardGrid = $(`<div class="card-grid"></div>`).prepend($card);
+  //   // remove content inside
+  //   $userContainer.empty();
+  //   if ($selectVal === "my-maps") {
+  //     const $card = renderCard();
+  //     const $gridHeader = `<h2 class="grid-header">My Maps</h2>`;
+  //     const $cardGrid = $(`<div class="card-grid"></div>`).prepend($card);
 
-      $userContainer.append($gridHeader, $cardGrid);
-    }
-    if ($selectVal === "my-faves") {
-      const $card = renderCard();
-      const $gridHeader = `<h2 class="grid-header">Favourites</h2>`;
-      const $cardGrid = $(`<div class="card-grid"></div>`).prepend($card);
+  //     $userContainer.append($gridHeader, $cardGrid);
+  //   }
+  //   if ($selectVal === "my-faves") {
+  //     const $card = renderCard();
+  //     const $gridHeader = `<h2 class="grid-header">Favourites</h2>`;
+  //     const $cardGrid = $(`<div class="card-grid"></div>`).prepend($card);
 
-      $userContainer.append($gridHeader, $cardGrid);
-    }
-    if ($selectVal === "my-activity") {
-      const $gridHeader = `<h2 class="grid-header">Activity</h2>`;
-      const $table = renderActivityTable();
+  //     $userContainer.append($gridHeader, $cardGrid);
+  //   }
+  //   if ($selectVal === "my-activity") {
+  //     const $gridHeader = `<h2 class="grid-header">Activity</h2>`;
+  //     const $table = renderActivityTable();
 
-      $userContainer.append($gridHeader, $table);
-    }
-  };
+  //     $userContainer.append($gridHeader, $table);
+  //   }
+  // };
 
-  if ($profileSelect) {
-    $profileSelect.on("change", renderProfileSections);
+  // if ($profileSelect) {
+  //   $profileSelect.on("change", renderProfileSections);
 
-    // set the default selected option
-    // trigger change to load content for that
-    $profileSelect.val("my-maps").trigger("change");
-  }
+  //   // set the default selected option
+  //   // trigger change to load content for that
+  //   $profileSelect.val("my-maps").trigger("change");
+  // }
 
   /* Leaflet Shared Map? */
   /* Leaflet: View Map With Points (on single-map.ejs) */
@@ -326,9 +274,9 @@ $(() => {
 
   createMap.on("click touchstart", onMapClick);
 
-  $.ajax({
-    method: "GET",
-    url:
-      "https://api.mapbox.com/styles/v1/mapbox/light-v10/static/-123.117,49.2816,14.3/300x200?access_token=pk.eyJ1IjoidGhlbGl0dGxlYmxhY2tzbWl0aCIsImEiOiJjazZkeHZmcTcwMnV1M2tvZHNpb3VidzZpIn0.STnRpYTjWHNdD1n1Ew6u6g"
-  }).then(data => console.log("what is this", data));
+  // $.ajax({
+  //   method: "GET",
+  //   url:
+  //     "https://api.mapbox.com/styles/v1/mapbox/light-v10/static/-123.117,49.2816,14.3/300x200?access_token=pk.eyJ1IjoidGhlbGl0dGxlYmxhY2tzbWl0aCIsImEiOiJjazZkeHZmcTcwMnV1M2tvZHNpb3VidzZpIn0.STnRpYTjWHNdD1n1Ew6u6g"
+  // }).then(data => console.log("what is this", data));
 });
