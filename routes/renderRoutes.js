@@ -40,7 +40,7 @@ module.exports = db => {
   });
 
   router.get("/maps/new", (req, res) => {
-    res.render("map-form");
+    res.render("map-form", { page: "create-map" });
   });
 
   router.get("/maps/:id", (req, res) => {
