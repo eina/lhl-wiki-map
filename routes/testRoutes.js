@@ -1,13 +1,25 @@
 /* eslint-disable no-unused-vars */
 const express = require(`express`);
 const router = express.Router();
-const { postMap, getMapByID, getMaps, deleteMapByID } = require("../lib/dataHelpers/maps");
-const { postPoint, editPoint, getPointsByMapID } = require("../lib/dataHelpers/points");
-const { checkFav, deleteFav } = require("../lib/dataHelpers/favs");
+const { getUsersFavs } =
+  require("../lib/dataHelpers/users");
+const { postMap, getMapByID, getMaps, deleteMapByID } =
+  require("../lib/dataHelpers/maps");
+const { postPoint, editPoint, getPointsByMapID } =
+  require("../lib/dataHelpers/points");
+const { checkFav, deleteFav } =
+  require("../lib/dataHelpers/favs");
+
 
 module.exports = db => {
 
   router.get("/", (req, res) => {
+    getUsersFavs(db, { userID: 1 }).then(data => {
+      res.json(data);
+    });
+  });
+
+  router.get("/deleteFav", (req, res) => {
     deleteFav(db, {
       mapID: 1
     }).then(data => {
