@@ -1,7 +1,7 @@
 const express = require(`express`);
 const router = express.Router();
-const { postPoint } = require("../lib/dataHelpers/points");
 const { postMap, getMapByID } = require("../lib/dataHelpers/maps");
+const { postPoint, editPoint, getPointsByMapID } = require("../lib/dataHelpers/points");
 const { checkFav } = require("../lib/dataHelpers/favs");
 
 module.exports = db => {
@@ -11,13 +11,46 @@ module.exports = db => {
   // });
 
   router.get("/", (req, res) => {
+    getMapByID(db, {
+      mapID: 3,
+    }).then(data => {
+      console.log(data);
+      res.json(data);
+    });
+  });
+
+  router.get("/getPointsByMapID", (req, res) => {
+    getPointsByMapID(db, {
+      mapID: 2,
+    }).then(data => {
+      res.json(data);
+    });
+  });
+
+  router.get("/editPoint", (req, res) => {
+    editPoint(db, {
+      pointID: 1,
+      pointData: {
+        mapID: 5,
+        title: 'NEW GEN MAP',
+        detail: 'CRIME AND PUNISHMENT',
+        imageURL: 'GOOGLE',
+        lat: 69,
+        lng: 420
+      }
+    }).then(data => {
+      res.json(data);
+    });
+  });
+
+  router.get("/checkFav", (req, res) => {
     checkFav(db, {userID:1, mapID:1}).then(data => {
       res.json(data);
     });
   });
 
   router.get("/getMapByID", (req, res) => {
-    getMapByID(db, {mapID:1}).then(data => {
+    getMapByID(db, { mapID: 2 }).then(data => {
       res.json(data);
     });
   });

@@ -8,7 +8,7 @@ const {
 } = require("../lib/dataHelpers/users");
 const { getMaps, getMapByID } = require("../lib/dataHelpers/maps");
 const { checkFav } = require("../lib/dataHelpers/favs");
-const { getPointsByMapID } = require("../lib/dataHelpers/points");
+// const { getPointsByMapID } = require("../lib/dataHelpers/points");
 
 module.exports = db => {
   router.get("/", (req, res) => {
@@ -43,25 +43,17 @@ module.exports = db => {
     res.render("map-form");
   });
 
-  router.get("/map/:id", (req, res) => {});
-
   router.get("/maps/:id", (req, res) => {
-    let mapDetails = {};
-    return (
-      getMapByID(db, { mapID: req.params.id })
-        .then(map => {
-          mapDetails = { ...mapDetails, ...map };
-          return map;
-        })
-        // .then(data => {
-        //   return getPointsByMapID();
-        // })
-        .then(data => getUserByID(db, { userID: data.id }))
-        .then(user => {
-          mapDetails = { ...mapDetails, creator: user.fullname };
-          res.render("single-map", { singleMap: mapDetails });
-        })
-    );
+    let singleMap = {};
+    return getMapByID(db, { mapID: req.params.id })
+      .then(mapDetails => {
+        singleMap = { ...singleMap, ...mapDetails };
+        return getUserByID(db, { userID: mapDetails.u_id });
+      })
+      .then(user => {
+        singleMap = { ...singleMap, creator: user.fullname };
+        res.render("single-map", { singleMap });
+      });
   });
 
   router.get("/users/:id", (req, res) => {
