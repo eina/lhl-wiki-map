@@ -12,10 +12,9 @@
     </div>
 
     <p class="mb-0">
-      <span><%= map.fav_count %></span>
-      <button class="btn btn-link btn-heart <%= map.faved ? 'faved-map': ''; %>">
-        <%- include('partials/_heart-svg') %>
-      </button>
+      <span class="map-faves"><%= map.fav_count %></span>
+      <%- include('partials/_heart-btn', { favedByCurrentUser: singleMap.faved, id: singleMap.id,
+      u_id: singleMap.u_id }) %>
     </p>
   </div>
   <div
