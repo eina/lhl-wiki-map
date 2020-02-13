@@ -1,5 +1,6 @@
 const express = require('express');
 const router  = express.Router();
+const { deleteFav } = require("../../lib/dataHelpers/favs");
 
 module.exports = (db) => {
   router.post("/u/:userID/m/:mapID", (req, res) => {
@@ -21,15 +22,25 @@ module.exports = (db) => {
       });
   });
 
+  router.delete("/m/:mapID", (req, res) => {
+    deleteFav(db, {
+      mapID: req.params.mapID,
+    })
+      .then(data => {
+        res.json(data);
+      })
+      .catch(err => {
+        res
+          .status(500)
+          .json({ error: err.message });
+      });
+  });
+
   router.delete("/u/:userID/m/:mapID", (req, res) => {
-    let queryParams = [];
-    let queryString = `DELETE FROM favorites `;
-
-    queryParams.push(req.params.userID);
-    queryParams.push(req.params.mapID);
-    queryString += `WHERE u_id = $1 AND map_id = $2;`;
-
-    db.query(queryString, queryParams)
+    deleteFav(db, {
+      userID: req.params.userID,
+      mapID: req.params.mapID,
+    })
       .then(data => {
         res.json(data);
       })
