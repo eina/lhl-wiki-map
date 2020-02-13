@@ -8,7 +8,7 @@ const { postEdit } =
 const { getUsersFavs } =
   require("../lib/dataHelpers/users");
 
-const { postMap, getMapByID, getMaps, deleteMapByID, getMapsFavedByUser, editMap } =
+const { postMap, getMapByID, getMaps, deleteMapByID, getMapsFavedByUser, editMap, getMapsOwnedByUser, getMapsEditedByUser } =
   require("../lib/dataHelpers/maps");
 
 const { postPoint, editPoint, getPointsByMapID, deletePoint } =
@@ -19,6 +19,13 @@ const { checkFav, deleteFav } =
 
 
 module.exports = db => {
+
+  router.get("/", (req, res) => {
+    getMapsEditedByUser(db, {userID:1}).then(data => {
+      res.json(data);
+    });
+  });
+
   router.get("/deletePoint", (req, res) => {
     deletePoint(db, {
       pointID: 1
@@ -127,12 +134,6 @@ module.exports = db => {
     deleteMapByID(db, {
       mapID: 1
     }).then(data => {
-      res.json(data);
-    });
-  });
-
-  router.get("/getMaps", (req, res) => {
-    getMaps(db).then(data => {
       res.json(data);
     });
   });
