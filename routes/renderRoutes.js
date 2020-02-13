@@ -46,19 +46,19 @@ module.exports = db => {
   router.get("/maps/:id", (req, res) => {
     const currentUser = req.cookies && req.cookies.userID ? req.cookies.userID : null;
     let singleMap = {};
-    return getMapByID(db, { mapID: req.params.id }).then(mapDetails => {
-      singleMap = { ...singleMap, ...mapDetails };
-      console.log("details??", mapDetails);
-      res.render("single-map", { currentUser, singleMap });
-      // return getUserByID(db, { userID: mapDetails.u_id });
-    });
-    // .then(user => {
-    //   singleMap = { ...singleMap, creator: user.fullname };
-    //   return checkFav(db, { userID: currentUser, mapID: singleMap.id });
-    // })
-    // .then(data => {
-    //   singleMap = { ...singleMap, faved: data };
-    // });
+    return getMapByID(db, { mapID: req.params.id })
+      .then(mapDetails => {
+        singleMap = { ...singleMap, ...mapDetails };
+        return getUserByID(db, { userID: mapDetails.u_id });
+      })
+      .then(user => {
+        singleMap = { ...singleMap, creator: user.fullname };
+        return checkFav(db, { userID: currentUser, mapID: singleMap.id });
+      })
+      .then(data => {
+        singleMap = { ...singleMap, faved: data };
+        res.render("single-map", { currentUser, singleMap });
+      });
   });
 
   router.get("/users/:id", (req, res) => {
@@ -147,10 +147,8 @@ module.exports = db => {
       creationTime,
       ...req.body
     };
-    console.log("hello post obj", postObj);
     return postMap(db, postObj).then(data => {
       const { id } = data[0].rows[0];
-      console.log("hello????", id);
       res.json({ mapID: id });
     });
   });

@@ -24,7 +24,9 @@
             class="img-responsive"
             src="https://api.mapbox.com/styles/v1/mapbox/light-v10/static/<%= map.center_lng %>,<%= map.center_lat %>,13/300x200?access_token=pk.eyJ1IjoidGhlbGl0dGxlYmxhY2tzbWl0aCIsImEiOiJjazZkeHZmcTcwMnV1M2tvZHNpb3VidzZpIn0.STnRpYTjWHNdD1n1Ew6u6g"
           />
-          <a class="btn btn-primary s-rounded view-btn" href="/maps/<%= map.id %>" data-map="">View</a>
+          <a class="btn btn-primary s-rounded view-btn" href="/maps/<%= map.id %>" data-map=""
+            >View</a
+          >
         </div>
         <div class="card-header">
           <div>
@@ -34,26 +36,8 @@
 
           <div>
             <span class="map-faves"><%= map.fav_count %></span>
-            <!-- todo: refactor if possible -->
-            <%if (map.favedByCurrentUser) {%>
-            <button
-              class="btn btn-link btn-heart faved-map"
-              data-faved=<%= map.favedByCurrentUser %>
-              data-map="<%= map.id %>"
-              data-user="<%= map.u_id %>"
-            >
-              <%- include('partials/_heart-svg') %>
-            </button>
-            <%} else {%>
-            <button
-              class="btn btn-link btn-heart"
-              data-faved=<%= map.favedByCurrentUser %>
-              data-map="<%= map.id %>"
-              data-user="<%= map.u_id %>"
-            >
-              <%- include('partials/_heart-svg') %>
-            </button>
-            <%}%>
+            <%- include('partials/_heart-btn', { favedByCurrentUser: map.favedByCurrentUser, id:
+            map.id, u_id: map.u_id }) %>
           </div>
         </div>
       </article>
