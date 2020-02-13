@@ -74,7 +74,7 @@ module.exports = db => {
       })
       .then(data => {
         singleMap = { ...singleMap, faved: data };
-        res.render("single-map", { templateVars, singleMap });
+        res.render("single-map", { ...templateVars, singleMap });
       });
   });
 
