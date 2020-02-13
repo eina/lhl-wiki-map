@@ -49,6 +49,11 @@ module.exports = db => {
     res.render("index");
   });
 
+  router.get("/logout", (req, res) => {
+    res.clearCookie("user").render("index");
+    // res.render("index");
+  });
+
   router.get("/maps/new", (req, res) => {
     const currentUser = req.cookies && req.cookies.userID ? req.cookies.userID : null;
     return getUserByID(db, { userID: currentUser }).then(user => {
