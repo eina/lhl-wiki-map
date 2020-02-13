@@ -3,10 +3,7 @@ const express = require(`express`);
 const router = express.Router();
 
 // require all helper functions
-const {
-  getUserByID,
-  getUserByEmail,
-} = require("../lib/dataHelpers/users");
+const { getUserByID, getUserByEmail } = require("../lib/dataHelpers/users");
 const {
   getMapByID,
   getMaps,
@@ -15,20 +12,11 @@ const {
   getMapsEditedByUser,
   deleteMap,
   createNewMap,
-  updateMap,
+  updateMap
 } = require("../lib/dataHelpers/maps");
-const {
-  getPointsByMapID,
-  createNewPoint,
-  updatePoint,
-} = require("../lib/dataHelpers/points");
-const {
-  checkFav,
-  deleteFav,
-} = require("../lib/dataHelpers/favs");
-const {
-  createNewEditRecord,
-} = require("../lib/dataHelpers/edits");
+const { getPointsByMapID, createNewPoint, updatePoint } = require("../lib/dataHelpers/points");
+const { checkFav, deleteFav } = require("../lib/dataHelpers/favs");
+const { createNewEditRecord } = require("../lib/dataHelpers/edits");
 
 module.exports = db => {
   router.get("/", (req, res) => {
@@ -69,8 +57,13 @@ module.exports = db => {
 
   router.get("/maps/:id", (req, res) => {
     const currentUser = req.cookies && req.cookies.userID ? req.cookies.userID : null;
+    let templateVars = { currentUser };
     let singleMap = {};
-    return getMapByID(db, { mapID: req.params.id })
+    return getUserByID(db, { userID: currentUser })
+      .then(user => {
+        templateVars = { ...templateVars, user };
+        return getMapByID(db, { mapID: req.params.id });
+      })
       .then(mapDetails => {
         singleMap = { ...singleMap, ...mapDetails };
         return getUserByID(db, { userID: mapDetails.u_id });
@@ -81,7 +74,7 @@ module.exports = db => {
       })
       .then(data => {
         singleMap = { ...singleMap, faved: data };
-        res.render("single-map", { currentUser, singleMap });
+        res.render("single-map", { templateVars, singleMap });
       });
   });
 

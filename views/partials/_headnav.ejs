@@ -6,7 +6,7 @@
 
     <div class="navbar-section">
       <% if (locals.user) { %>
-      <p id="navbar-user">Hi, <a href="/users/<%= user.id %>">name</a></p>
+      <p id="navbar-user">Hi, <a href="/users/<%= user.id %>"><%= user.fullname %></a></p>
       <% } else { %>
       <p id="navbar-user">
         <!-- <a href="/login" class="btn-link" id="btn-login">Log In</a> -->
