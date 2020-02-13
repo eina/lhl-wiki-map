@@ -66,11 +66,9 @@ $(() => {
       method: "POST",
       url: `/api/maps/${mapID}/delete`
     }).then(data => {
-      if (data.rows && data.rows.length) {
-        console.log("k bye!!!");
-        window.location.replace(window.location.origin);
-        return;
-      }
+      console.log("k bye!!!");
+      window.location.replace(window.location.origin);
+      return;
     });
   });
 });
