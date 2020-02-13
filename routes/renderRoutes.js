@@ -50,8 +50,8 @@ module.exports = db => {
   });
 
   router.get("/logout", (req, res) => {
-    res.clearCookie("user").render("index");
-    // res.render("index");
+    res.clearCookie("userID");
+    res.render("index");
   });
 
   router.get("/maps/new", (req, res) => {
