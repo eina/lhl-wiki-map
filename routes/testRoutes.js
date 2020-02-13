@@ -2,16 +2,16 @@
 const express = require(`express`);
 const router = express.Router();
 
-const { postEdit } =
+const { createNewEdit } =
   require("../lib/dataHelpers/edits");
 
 const { getUsersFavs } =
   require("../lib/dataHelpers/users");
 
-const { postMap, getMapByID, getMaps, deleteMapByID, getMapsFavedByUser, editMap, getMapsOwnedByUser, getMapsEditedByUser } =
+const { createNewMap, getMapByID, getMaps, deleteMapByID, getMapsFavedByUser, editMap, getMapsOwnedByUser, getMapsEditedByUser } =
   require("../lib/dataHelpers/maps");
 
-const { postPoint, editPoint, getPointsByMapID, deletePoint } =
+const { createNewPoint, editPoint, getPointsByMapID, deletePoint } =
   require("../lib/dataHelpers/points");
 
 const { checkFav, deleteFav } =
@@ -34,9 +34,9 @@ module.exports = db => {
     });
   });
 
-  router.get("/postMap", (req, res) => {
+  router.get("/createNewMap", (req, res) => {
     const today = new Date();
-    postMap(db, {
+    createNewMap(db, {
       userID: 1,
       mapTitle: 'The Forbidden Map',
       creationTime: today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate() + ' ' + today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds(),
@@ -105,9 +105,9 @@ module.exports = db => {
     });
   });
 
-  router.get("/postEdit", (req, res) => {
+  router.get("/createNewEdit", (req, res) => {
     const today = new Date();
-    postEdit(db, {
+    createNewEdit(db, {
       userID: 2,
       mapID: 1,
       creationTime: today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate() + ' ' + today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds(),
@@ -170,19 +170,6 @@ module.exports = db => {
 
   router.get("/getMapByID", (req, res) => {
     getMapByID(db, { mapID: 2 }).then(data => {
-      res.json(data);
-    });
-  });
-
-  router.get("/point", (req, res) => {
-    postPoint(db, {
-      mapID: 1,
-      title: 'Title',
-      detail: 'Details are important.',
-      imageURL: 'https://source.unsplash.com/random/800x600',
-      lat: 50,
-      lng: - 120,
-    }).then(data => {
       res.json(data);
     });
   });
