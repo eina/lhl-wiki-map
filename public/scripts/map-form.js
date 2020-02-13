@@ -5,6 +5,7 @@ $(() => {
    */
 
   const tempPointsArray = [];
+  const markerRef = [];
 
   const removeObj = (array, placeName) => {
     let result = [];
@@ -18,8 +19,22 @@ $(() => {
     return result;
   };
 
+  const findIndex = (array, placeName) => {
+    let result;
+
+    array.forEach((obj, idx) => {
+      if (obj.title === placeName) {
+        result = idx;
+      }
+    });
+
+    return result;
+  };
+
+  const myMap = L.map("leaflet-map");
+
   const renderCreateMap = function() {
-    const createMap = L.map("leaflet-map").setView([49.280571, -123.11378], 15);
+    const createMap = myMap.setView([49.280571, -123.11378], 15);
     L.tileLayer(
       "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoidGhlbGl0dGxlYmxhY2tzbWl0aCIsImEiOiJjazZlMnExanYwaXU0M2tsb2I5cDRzcTQwIn0.bwS19as5AZCy7I-y3w-Tkw",
       {
@@ -52,7 +67,6 @@ $(() => {
         data: { centerLat, centerLng, points: tempPointsArray }
       }).then(data => {
         const { mapID } = data;
-        console.log("is this localhost:8080", window.location);
         window.location.href = `${window.location.origin}/maps/${mapID}`;
         return;
       });
@@ -66,8 +80,9 @@ $(() => {
   const addPointOnMap = function({ map, coords, formVals }) {
     // add the marker
     const marker = L.marker(coords).addTo(map);
+    // set to markerRef so you can delete it
+    markerRef.push(marker);
     // bind the popup to the marker
-    // needs details
     marker.bindPopup(renderPopupDetails({ ...formVals })).openPopup();
     // close the popup form
     mapForm.closePopup();
@@ -186,7 +201,6 @@ $(() => {
           $("#user-points").prepend(
             renderPlaceCard({ title: placeName, imgURL: placeImg, desc: placeDesc })
           );
-          console.log("tempPointsArray????", tempPointsArray);
         } else {
           console.log("submit something you fool!");
         }
@@ -211,6 +225,9 @@ $(() => {
     // select the parent so you can remove it
     const $cardParent = $(this).parents(".card");
     const cardTitle = $cardParent.find(".card-title").text();
+    // find in markerRef
+    const markerIndex = findIndex(tempPointsArray, cardTitle);
+    myMap.removeLayer(markerRef[markerIndex]);
     // find in tempArray and delete
     removeObj(tempPointsArray, cardTitle);
     // delete from DOM

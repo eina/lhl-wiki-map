@@ -1,8 +1,8 @@
-const express = require('express');
-const router  = express.Router();
+const express = require("express");
+const router = express.Router();
 const { deleteMap, getMaps } = require("../../lib/dataHelpers/maps");
 
-module.exports = (db) => {
+module.exports = db => {
   router.get("/all", (req, res) => {
     getMaps(db)
       .then(data => {
@@ -10,9 +10,7 @@ module.exports = (db) => {
         res.json(maps);
       })
       .catch(err => {
-        res
-          .status(500)
-          .json({ error: err.message });
+        res.status(500).json({ error: err.message });
       });
   });
 
@@ -28,23 +26,19 @@ module.exports = (db) => {
         res.json(data.rows[0]);
       })
       .catch(err => {
-        res
-          .status(500)
-          .json({ error: err.message });
+        res.status(500).json({ error: err.message });
       });
   });
 
-  router.delete("/:mapID", (req, res) => {
+  router.post("/:mapID/delete", (req, res) => {
     deleteMap(db, {
-      mapID: req.params.mapID,
+      mapID: req.params.mapID
     })
       .then(data => {
         res.json(data);
       })
       .catch(err => {
-        res
-          .status(500)
-          .json({ error: err.message });
+        res.status(500).json({ error: err.message });
       });
   });
 

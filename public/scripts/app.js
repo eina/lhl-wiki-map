@@ -54,4 +54,22 @@ $(() => {
       });
     }
   });
+
+  /**
+   * Delete Map
+   */
+
+  $("#delete-map").on("click", function() {
+    const { map } = $(this).data();
+    console.log("delete this maaaaap", map);
+    $.ajax({
+      method: "POST",
+      url: `/api/maps/${map}/delete`
+    }).then(data => {
+      if (data.rows && data.rows.length) {
+        window.location.href = `/`;
+        return;
+      }
+    });
+  });
 });
