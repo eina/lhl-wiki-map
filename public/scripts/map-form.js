@@ -4,6 +4,8 @@ $(() => {
    * renderPopupDetails: imported from app.js as a global variable
    */
 
+  const tempPointsArray = [];
+
   const renderCreateMap = function() {
     const createMap = L.map("leaflet-map").setView([49.280571, -123.11378], 15);
     L.tileLayer(
@@ -78,7 +80,7 @@ $(() => {
 
     const $cardFooterContainer = $("<div>").addClass("card-body");
     const $deleteButton = $("<button>")
-      .addClass("btn")
+      .addClass("btn delete-place-btn")
       .text("Delete");
     $cardFooterContainer.append($deleteButton);
 
@@ -149,7 +151,7 @@ $(() => {
         if (placeName && placeDesc) {
           const query = $(this).serialize();
           // push this to array to be sent to map
-          tempPointsArray.push({ query, lat, lng });
+          tempPointsArray.push({ query, lat, lng, title: placeName });
           // show marker on map with details
           addPointOnMap({
             map: mapForm,
@@ -160,6 +162,7 @@ $(() => {
           $("#user-points").prepend(
             renderPlaceCard({ title: placeName, imgURL: placeImg, desc: placeDesc })
           );
+          console.log("tempPointsArray????", tempPointsArray);
         } else {
           console.log("submit something you fool!");
         }
@@ -169,8 +172,7 @@ $(() => {
 
   /* instantiate leaflet map */
   const mapForm = renderCreateMap();
-
-  const tempPointsArray = [];
+  const $deletePlace = $(".delete-place-btn");
 
   /* Create Map Form Submit */
   $("#createMapForm").submit(e => submitCreateMapForm(e, mapForm));
@@ -178,5 +180,27 @@ $(() => {
   /* click handler for leaflet map */
   mapForm.on("click touchstart", onMapClick);
 
-  console.log("tempPointsArray????", tempPointsArray);
+  const removeObj = (array, placeName) => {
+    let result = [];
+
+    array.forEach(obj => {
+      if (obj.title !== placeName) {
+        result.push(obj);
+      }
+    });
+
+    return result;
+  };
+
+  $("#user-points").on("click", ".delete-place-btn", function(e) {
+    // select the parent so you can remove it
+    const $cardParent = $(this).parents(".card");
+    const cardTitle = $cardParent.find(".card-title").text();
+    // find in tempArray and delete
+    removeObj(tempPointsArray, cardTitle);
+    // delete from DOM
+    $cardParent.remove();
+  });
+
+  console.log($deletePlace);
 });
