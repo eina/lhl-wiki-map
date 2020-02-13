@@ -37,7 +37,7 @@ $(() => {
       .attr({ type: "submit" })
       .text("Save");
     const $cancelEditBtn = $("<button>")
-      .addClass("btn btn-danger")
+      .addClass("btn btn-danger cancel-edit")
       .attr({ type: "button" })
       .text("Cancel");
 
@@ -63,9 +63,9 @@ $(() => {
     $parent.empty();
     $parent.append(renderEditPlaceForm(pointID, details));
 
-    // $cancelEdit.on("click", function(e) {
-    //   console.log($);
-    // });
+    $cancelEdit.on("click", function(e) {
+      console.log($);
+    });
   };
 
   $editPlaceBtn.on("click", editPlace);
