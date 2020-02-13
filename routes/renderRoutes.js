@@ -3,10 +3,9 @@ const router = express.Router();
 const {
   getUserByID,
   getUsersMaps,
-  getUsersFavs,
   getUsersEdits
 } = require("../lib/dataHelpers/users");
-const { getMaps, getMapByID } = require("../lib/dataHelpers/maps");
+const { getMaps, getMapByID, getMapsFavedByUser } = require("../lib/dataHelpers/maps");
 const { checkFav } = require("../lib/dataHelpers/favs");
 // const { getPointsByMapID } = require("../lib/dataHelpers/points");
 
@@ -85,7 +84,7 @@ module.exports = db => {
         templateVars = { ...templateVars, user };
         return user;
       })
-      .then(user => getUsersFavs(db, { userID: user.id }))
+      .then(user => getMapsFavedByUser(db, { userID: user.id }))
       .then(maps => {
         if (maps && maps.length) {
           const favMaps = maps.map(el => {

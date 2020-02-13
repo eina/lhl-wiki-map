@@ -1,12 +1,19 @@
 /* eslint-disable no-unused-vars */
 const express = require(`express`);
 const router = express.Router();
+
+const { postEdit } =
+  require("../lib/dataHelpers/edits");
+
 const { getUsersFavs } =
   require("../lib/dataHelpers/users");
-const { postMap, getMapByID, getMaps, deleteMapByID } =
+
+const { postMap, getMapByID, getMaps, deleteMapByID, getMapsFavedByUser, editMap } =
   require("../lib/dataHelpers/maps");
+
 const { postPoint, editPoint, getPointsByMapID } =
   require("../lib/dataHelpers/points");
+
 const { checkFav, deleteFav } =
   require("../lib/dataHelpers/favs");
 
@@ -14,7 +21,31 @@ const { checkFav, deleteFav } =
 module.exports = db => {
 
   router.get("/", (req, res) => {
-    getUsersFavs(db, { userID: 1 }).then(data => {
+    editMap(db, {
+      mapID: 1,
+      mapData: {
+        mapTitle: 'NEW GEN MAP',
+        centerLat: 69,
+        centerLng: 420
+      }
+    }).then(data => {
+      res.json(data);
+    });
+  });
+
+  router.get("/postEdit", (req, res) => {
+    const today = new Date();
+    postEdit(db, {
+      userID: 2,
+      mapID: 1,
+      creationTime: today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate() + ' ' + today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds(),
+    }).then(data => {
+      res.json(data);
+    });
+  });
+
+  router.get("/getMapsFavedByUser", (req, res) => {
+    getMapsFavedByUser(db, { userID: 1 }).then(data => {
       res.json(data);
     });
   });
