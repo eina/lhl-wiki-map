@@ -80,8 +80,11 @@ module.exports = db => {
         return getMapByID(db, { mapID: req.params.id });
       })
       .then(mapDetails => {
-        singleMap = { ...singleMap, ...mapDetails };
-        return getUserByID(db, { userID: mapDetails.u_id });
+        console.log("do you have something here", mapDetails);
+        if (mapDetails.existence) {
+          singleMap = { ...singleMap, ...mapDetails };
+          return getUserByID(db, { userID: mapDetails.u_id });
+        }
       })
       .then(user => {
         singleMap = { ...singleMap, creator: user.fullname };
@@ -94,6 +97,9 @@ module.exports = db => {
           ownedByCurrentUser: Number(currentUser) === Number(singleMap.u_id)
         };
         res.render("single-map", { ...templateVars, singleMap });
+      })
+      .catch(err => {
+        res.render("error", { status: 404, message: "Sorry, looks like that map doesn't exist" });
       });
   });
 

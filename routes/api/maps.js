@@ -31,7 +31,7 @@ module.exports = db => {
   });
 
   router.post("/:mapID/delete", (req, res) => {
-    deleteMap(db, {
+    return deleteMap(db, {
       mapID: req.params.mapID
     })
       .then(data => {

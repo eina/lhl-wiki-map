@@ -13,11 +13,11 @@
 
     <div>
       <% if (singleMap.ownedByCurrentUser) {%>
-      <button class="btn btn-primary" id="delete-map">Delete</button>
+      <button class="btn btn-primary" id="delete-map" data-map=<%= map.id, %> >Delete</button>
       <%}%>
       <p class="mb-0">
         <span class="map-faves"><%= map.fav_count %></span>
-        <%- include('partials/_heart-btn', { favedByCurrentUser: singleMap.faved, id: singleMap.id,
+        <%- include('partials/_heart-btn', { favedByCurrentUser: singleMap.faved, id: map.id,
         u_id: singleMap.u_id }) %>
       </p>
     </div>
@@ -25,7 +25,7 @@
   <div
     id="single-map"
     class="map full-width"
-    data-map-details="<%= JSON.stringify({ lat: map.center_lat, lng: map.center_lng}); %>"
+    data-map-details="<%= JSON.stringify({ mapID: map.id, lat: map.center_lat, lng: map.center_lng}); %>"
   ></div>
 
   <% if (map.points && map.points.length) { %>
