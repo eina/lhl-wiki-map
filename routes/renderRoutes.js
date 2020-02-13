@@ -188,5 +188,18 @@ module.exports = db => {
       res.json({ mapID: id });
     });
   });
+
+  router.post("/points/new", (req, res) => {
+    console.log(req);
+    const newPointObj = {
+      ...req.body
+    };
+
+    return createNewMap(db, newPointObj).then(data => {
+      const { id } = data.rows[0];
+      res.json({ mapID: id });
+    });
+  });
+
   return router;
 };
