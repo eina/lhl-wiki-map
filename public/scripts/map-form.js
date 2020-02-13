@@ -46,18 +46,15 @@ $(() => {
     } else {
       const center = mapObj.getCenter();
       const { lat: centerLat, lng: centerLng } = center;
-      // console.log("formValues to be sent", formValues, query);
-      // const creationTime = moment()
-      //   .format("YYYY-MM-DD H:mm")
-      //   .toString();
-      // return formValues;
       $.ajax({
         method: "POST",
         url: `/maps/new?${query}`,
-        data: { centerLat, centerLng, points: tempPointsArray },
-        success: function(data) {
-          console.log("are you the id", data);
-        }
+        data: { centerLat, centerLng, points: tempPointsArray }
+      }).then(data => {
+        const { mapID } = data;
+        console.log("is this localhost:8080", window.location);
+        window.location.href = `${window.location.origin}/maps/${mapID}`;
+        return;
       });
     }
   };
