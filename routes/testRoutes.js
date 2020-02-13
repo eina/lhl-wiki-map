@@ -1,14 +1,19 @@
 /* eslint-disable no-unused-vars */
 const express = require(`express`);
 const router = express.Router();
+
 const { postEdit } =
   require("../lib/dataHelpers/edits");
+
 const { getUsersFavs } =
   require("../lib/dataHelpers/users");
-const { postMap, getMapByID, getMaps, deleteMapByID, getMapsFavedByUser } =
+
+const { postMap, getMapByID, getMaps, deleteMapByID, getMapsFavedByUser, editMap } =
   require("../lib/dataHelpers/maps");
+
 const { postPoint, editPoint, getPointsByMapID } =
   require("../lib/dataHelpers/points");
+
 const { checkFav, deleteFav } =
   require("../lib/dataHelpers/favs");
 
@@ -16,6 +21,19 @@ const { checkFav, deleteFav } =
 module.exports = db => {
 
   router.get("/", (req, res) => {
+    editMap(db, {
+      mapID: 1,
+      mapData: {
+        mapTitle: 'NEW GEN MAP',
+        centerLat: 69,
+        centerLng: 420
+      }
+    }).then(data => {
+      res.json(data);
+    });
+  });
+
+  router.get("/postEdit", (req, res) => {
     const today = new Date();
     postEdit(db, {
       userID: 2,
