@@ -5,8 +5,6 @@ $(() => {
   const {
     mapDetails: { mapID, lat: mapLat, lng: mapLng }
   } = $("#leaflet-map").data();
-  const $editPlaceBtn = $(".edit-place-btn");
-  const $deletePlaceBtn = $(".delete-place-btn");
 
   const renderFormGroup = function(formValues, placeID) {
     const $container = $("<label>").addClass("form-group");
@@ -52,7 +50,6 @@ $(() => {
   };
 
   const editPlace = function() {
-    console.log("hello!!!");
     const { pointId: pointID } = $(this).data();
     // find the parent
     const $parent = $(`[data-map=${mapID}][data-point=${pointID}]`);
@@ -70,52 +67,6 @@ $(() => {
       $copyBeforeEdit = [];
     });
   };
-
-  $(".card").on("click", ".edit-place-btn", editPlace);
-
-  // editPlaceBtn.click(function(event) {
-  //   const $placeID = $(this)
-  //     .parent()
-  //     .parent();
-  //   const $placeIDString = $placeID.attr("id");
-  //   const $copyBeforeEdit = $placeID.clone();
-  //   // todo: need the details of this place to be populated!
-
-  // const renderEditPlaceForm = placeId => {
-  //   return `<form id="edit-${placeId}">
-  //     <div class="card-body">
-  //       <label class="form-group">
-  //         <span class="form-label">Name</span>
-  //         <input type="text" class="form-input" id="edit-place2-name" name="place-name" />
-  //       </label>
-  //       <label class="form-group">
-  //         <span class="form-label">Image URL</span>
-  //         <input type="text" class="form-input" id="edit-place2-img" name="place-img" />
-  //       </label>
-  //       <label class="form-group">
-  //         <span class="form-label">Description</span>
-  //         <textarea class="form-input" id="edit-place2-desc" rows="3" name="place-desc"></textarea>
-  //       </label>
-  //     </div>
-  //     <div class="card-footer">
-  //       <button class="btn edit-place" type="button">Edit</button>
-  //       <button class="btn" type="button" id="cancel-edit-${placeId}">Cancel</button>
-  //     </div>
-  //   </form>`;
-  // };
-
-  //   $placeID.empty();
-  //   $placeID.append(() => renderEditPlaceForm($placeIDString));
-
-  //   // todo: make this work lol
-  //   const revertChanges = function(event) {
-  //     $placeID.empty();
-  //     $placeID.append($copyBeforeEdit);
-  //   };
-
-  //   // click handler for cancel edit
-  //   $(`#cancel-edit-${$placeIDString}`).click(revertChanges);
-  // });
 
   const renderSingleMap = function({ mapLat, mapLng }) {
     const $mapTitle = $("#map-title");
@@ -172,4 +123,13 @@ $(() => {
   };
 
   renderSingleMap({ mapLat, mapLng });
+
+  // click handler for edit button
+  $(".card").on("click", ".edit-place-btn", editPlace);
+
+  // click handler for edit button
+  $(".card").on("click", ".delete-place-btn", function(e) {
+    const { pointId: pointID } = $(this).data();
+    console.log("delete me pls!", pointID, mapID);
+  });
 });
