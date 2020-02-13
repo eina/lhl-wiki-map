@@ -13,7 +13,7 @@
 
     <div>
       <% if (singleMap.ownedByCurrentUser) {%>
-      <a href="/maps/<%= map.id %>/edit" class="btn btn-primary">Edit</a>
+      <button class="btn btn-primary" id="delete-map">Delete</button>
       <%}%>
       <p class="mb-0">
         <span class="map-faves"><%= map.fav_count %></span>
@@ -34,7 +34,7 @@
 
     <div class="card-grid place-grid">
       <% map.points.forEach(place => { %>
-      <div class="card" id="map-<%= place.map_id %>-point-<%= place.id %>">
+      <div class="card" data-map=<%= place.map_id %> data-point=<%= place.id %>>
         <div class="card-image">
           <img class="img-responsive" src="<%= place.image_url %>" />
         </div>
@@ -48,6 +48,11 @@
           <button class="btn btn-primary view-marker-btn" data-point-id="<%= place.id %>">
             View on Map
           </button>
+          <% if (locals.currentUser) { %>
+          <button class="btn btn-primary delete-place-btn" data-point-id="<%= place.id %>">
+            Delete Point
+          </button>
+          <% } %>
         </div>
       </div>
       <% }); %>

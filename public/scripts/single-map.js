@@ -40,6 +40,22 @@ $(() => {
           // open popup
           pointMarker.openPopup();
         });
+
+        $(".delete-place-btn").on("click", function(e) {
+          const { pointId: pointID } = $(this).data();
+          const $parent = $(this)
+            .parent()
+            .parent();
+          const { map } = $parent;
+          $.ajax({ method: "POST", url: `/api/points/${pointID}/delete` }).then(data => {
+            if (data.rowCount === 1) {
+              // remove marker
+              myMap.removeLayer(markerRef[pointID]);
+              // remove element
+              $parent.remove();
+            }
+          });
+        });
       }
     }
   };

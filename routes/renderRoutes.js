@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 const express = require(`express`);
 const router = express.Router();
+const moment = require("moment");
 
 // require all helper functions
 const { getUserByID, getUserByEmail } = require("../lib/dataHelpers/users");
@@ -55,19 +56,19 @@ module.exports = db => {
     });
   });
 
-  router.get("/maps/:id/edit", (req, res) => {
-    const currentUser = req.cookies && req.cookies.userID ? req.cookies.userID : null;
-    let templateVars = { currentUser };
-    return getUserByID(db, { userID: currentUser })
-      .then(user => {
-        templateVars = { ...templateVars, user, page: "edit-map" };
-        return getMapByID(db, { mapID: req.params.id });
-      })
-      .then(mapDetails => {
-        templateVars = { ...templateVars, map: mapDetails };
-        res.render("map-form", templateVars);
-      });
-  });
+  // router.get("/maps/:id/edit", (req, res) => {
+  //   const currentUser = req.cookies && req.cookies.userID ? req.cookies.userID : null;
+  //   let templateVars = { currentUser };
+  //   return getUserByID(db, { userID: currentUser })
+  //     .then(user => {
+  //       templateVars = { ...templateVars, user, page: "edit-map" };
+  //       return getMapByID(db, { mapID: req.params.id });
+  //     })
+  //     .then(mapDetails => {
+  //       templateVars = { ...templateVars, map: mapDetails };
+  //       res.render("map-form", templateVars);
+  //     });
+  // });
 
   router.get("/maps/:id", (req, res) => {
     const currentUser = req.cookies && req.cookies.userID ? req.cookies.userID : null;
