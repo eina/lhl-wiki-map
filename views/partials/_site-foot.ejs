@@ -12,7 +12,7 @@
    crossorigin=""></script>    
    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js" integrity="sha256-4iQZ6BVL4qNKlQ27TExEhBN1HFPvAvAMbFavKKosSWQ=" crossorigin="anonymous"></script>
    <script type="text/javascript" src="/scripts/app.js"></script>
-   <% if (locals.page && locals.page === "create-map" ) {%> 
+   <% if (locals.page && (locals.page === "create-map" || locals.page === "edit-map") ) {%> 
     <script type="text/javascript" src="/scripts/map-form.js"></script> 
     <%}%>            
     <% if (locals.singleMap) {%> 
