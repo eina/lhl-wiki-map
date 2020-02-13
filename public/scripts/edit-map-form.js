@@ -5,6 +5,8 @@ $(() => {
   const {
     mapDetails: { mapID, lat: mapLat, lng: mapLng }
   } = $("#leaflet-map").data();
+  const markerRef = [];
+  const myMap = L.map("leaflet-map");
 
   const renderFormGroup = function(formValues, placeID) {
     const $container = $("<label>").addClass("form-group");
@@ -68,7 +70,7 @@ $(() => {
     });
   };
 
-  const renderSingleMap = function({ mapLat, mapLng }) {
+  const renderSingleMap = function({ map, mapLat, mapLng }) {
     const $mapTitle = $("#map-title");
     const { value: titleValue } = $mapTitle.data();
 
@@ -81,7 +83,7 @@ $(() => {
     if ((mapLat, mapLng)) {
       const { points } = $("#points-display").data();
       const mapLatLng = L.latLng(mapLat, mapLng);
-      const myMap = L.map("leaflet-map").setView(mapLatLng, 14);
+      map.setView(mapLatLng, 14);
       const yvrMap = L.tileLayer(
         "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoidGhlbGl0dGxlYmxhY2tzbWl0aCIsImEiOiJjazZlMnExanYwaXU0M2tsb2I5cDRzcTQwIn0.bwS19as5AZCy7I-y3w-Tkw",
         {
@@ -93,17 +95,15 @@ $(() => {
           id: "mapbox/streets-v11"
         }
       );
-      yvrMap.addTo(myMap);
+      yvrMap.addTo(map);
 
       if (points && points.length) {
-        const markerRef = [];
-
         points.forEach(({ lat, lng, id, detail: desc, title, image_url: imgURL }) => {
           const pointLatLng = L.latLng(lat, lng);
           // render markers
           markerRef[id] = L.marker(pointLatLng)
             .bindPopup(renderPopupDetails({ id, desc, title, imgURL }))
-            .addTo(myMap);
+            .addTo(map);
         });
 
         $(".view-marker-btn").click(function() {
@@ -122,7 +122,7 @@ $(() => {
     }
   };
 
-  renderSingleMap({ mapLat, mapLng });
+  renderSingleMap({ map: myMap, mapLat, mapLng });
 
   // click handler for edit button
   $(".card").on("click", ".edit-place-btn", editPlace);
@@ -130,6 +130,15 @@ $(() => {
   // click handler for edit button
   $(".card").on("click", ".delete-place-btn", function(e) {
     const { pointId: pointID } = $(this).data();
-    console.log("delete me pls!", pointID, mapID);
+    const $parent = $(`[data-map=${mapID}][data-point=${pointID}]`);
+    // test
+    $.ajax({ method: "POST", url: `/api/points/${pointID}/delete` }).then(data => {
+      if (data.rowCount === 1) {
+        // remove marker
+        myMap.removeLayer(markerRef[pointID]);
+        // remove element
+        $parent.remove();
+      }
+    });
   });
 });
