@@ -16,6 +16,7 @@
         id="map-title"
         class="form-input input-lg"
         placeholder="eg. Best Coffee in Town"
+        data-value="<%= map.title %>"
       />
     </label>
 
@@ -26,9 +27,42 @@
     </div>
   </form>
 
-  <div id="leaflet-map" class="map full-width"></div>
+  <div
+    id="leaflet-map"
+    class="map full-width"
+    data-map-details="<%= JSON.stringify({ lat: map.center_lat, lng: map.center_lng}); %>"
+  ></div>
 
-  <h3>My Places</h3>
-  <div class="card-grid place-grid" id="user-points"></div>
+  <% if (map.points && map.points.length) { %>
+  <div class="grid-container" id="points-display" data-points="<%= JSON.stringify(map.points); %>">
+    <h2 class="grid-header">My Places</h2>
+    <div class="card-grid place-grid">
+      <% map.points.forEach(place => { %>
+      <div class="card" id="map-<%= place.map_id %>-point-<%= place.id %>">
+        <div class="card-image">
+          <img class="img-responsive" src="<%= place.image_url %>" />
+        </div>
+        <div class="card-header">
+          <div class="card-title h5"><%= place.title %></div>
+        </div>
+        <div class="card-body">
+          <p><%= place.detail %></p>
+        </div>
+        <div class="card-footer btn-group btn-group-block text-center">
+          <button class="btn btn-primary view-marker-btn" data-point-id="<%= place.id %>">
+            View
+          </button>
+          <button class="btn btn-primary view-marker-btn" data-point-id="<%= place.id %>">
+            Edit
+          </button>
+          <button class="btn btn-primary view-marker-btn" data-point-id="<%= place.id %>">
+            Delete
+          </button>
+        </div>
+      </div>
+      <% }); %>
+    </div>
+  </div>
+  <% } %>
 </main>
 <%- include('partials/_site-foot') %>
