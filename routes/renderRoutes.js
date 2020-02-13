@@ -1,5 +1,6 @@
 const express = require(`express`);
 const router = express.Router();
+const moment = require("moment");
 const {
   getUserByID,
   getUsersMaps,
@@ -138,7 +139,21 @@ module.exports = db => {
   });
 
   router.post("/maps/new", (req, res) => {
-    console.log("what is this", req);
+    const currentUser = req.cookies && req.cookies.userID ? req.cookies.userID : null;
+    const creationTime = moment()
+      .format("YYYY-MM-DD HH:mm")
+      .toString();
+    const postObj = {
+      userID: currentUser,
+      mapTitle: req.query["map-title"],
+      creationTime,
+      ...req.body
+    };
+    // console.log("hello post obj", postObj);
+    return postMap(db, postObj).then(data => {
+      const { id } = data[0].rows[0];
+      res.redirect(`/maps/${id}`);
+    });
   });
   return router;
 };

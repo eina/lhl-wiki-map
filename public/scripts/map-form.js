@@ -6,6 +6,18 @@ $(() => {
 
   const tempPointsArray = [];
 
+  const removeObj = (array, placeName) => {
+    let result = [];
+
+    array.forEach(obj => {
+      if (obj.title !== placeName) {
+        result.push(obj);
+      }
+    });
+
+    return result;
+  };
+
   const renderCreateMap = function() {
     const createMap = L.map("leaflet-map").setView([49.280571, -123.11378], 15);
     L.tileLayer(
@@ -26,18 +38,24 @@ $(() => {
    * onSubmit handler for #createMapForm
    * @param {object} e submit event object
    */
-  const submitCreateMapForm = function(event, mapObj) {
+  const submitCreateMapForm = function(query, mapObj) {
     event.preventDefault();
     if (!mapObj) {
+      console.log("do you have a map??? do you have points????");
       return false;
     } else {
-      const query = $(this).serialize();
       const center = mapObj.getCenter();
-      const formValues = { ...center };
-      console.log("formValues to be sent", formValues, query);
+      const { lat: centerLat, lng: centerLng } = center;
+      // console.log("formValues to be sent", formValues, query);
+      // const creationTime = moment()
+      //   .format("YYYY-MM-DD H:mm")
+      //   .toString();
       // return formValues;
-
-      $.ajax({ method: "POST", url: "/maps/new", data: { formValues, query } });
+      $.ajax({
+        method: "POST",
+        url: `/maps/new?${query}`,
+        data: { centerLat, centerLng, points: tempPointsArray }
+      });
     }
   };
 
@@ -149,9 +167,15 @@ $(() => {
           .find("#place-img")
           .val();
         if (placeName && placeDesc) {
-          const query = $(this).serialize();
+          // const query = $(this).serialize();
           // push this to array to be sent to map
-          tempPointsArray.push({ query, lat, lng, title: placeName });
+          tempPointsArray.push({
+            lat,
+            lng,
+            title: placeName,
+            detail: placeDesc,
+            imageURL: placeImg
+          });
           // show marker on map with details
           addPointOnMap({
             map: mapForm,
@@ -172,25 +196,16 @@ $(() => {
 
   /* instantiate leaflet map */
   const mapForm = renderCreateMap();
-  const $deletePlace = $(".delete-place-btn");
 
   /* Create Map Form Submit */
-  $("#createMapForm").submit(e => submitCreateMapForm(e, mapForm));
+  $("#createMapForm").submit(function(e) {
+    e.preventDefault();
+    const query = $(this).serialize();
+    submitCreateMapForm(query, mapForm);
+  });
 
   /* click handler for leaflet map */
   mapForm.on("click touchstart", onMapClick);
-
-  const removeObj = (array, placeName) => {
-    let result = [];
-
-    array.forEach(obj => {
-      if (obj.title !== placeName) {
-        result.push(obj);
-      }
-    });
-
-    return result;
-  };
 
   $("#user-points").on("click", ".delete-place-btn", function(e) {
     // select the parent so you can remove it
@@ -201,6 +216,4 @@ $(() => {
     // delete from DOM
     $cardParent.remove();
   });
-
-  console.log($deletePlace);
 });
