@@ -13,11 +13,11 @@
 
     <div>
       <% if (singleMap.ownedByCurrentUser) {%>
-      <button class="btn btn-primary" id="delete-map">Delete</button>
+      <button class="btn btn-primary" id="delete-map" data-map=<%= map.id, %> >Delete</button>
       <%}%>
       <p class="mb-0">
         <span class="map-faves"><%= map.fav_count %></span>
-        <%- include('partials/_heart-btn', { favedByCurrentUser: singleMap.faved, id: singleMap.id,
+        <%- include('partials/_heart-btn', { favedByCurrentUser: singleMap.faved, id: map.id,
         u_id: singleMap.u_id }) %>
       </p>
     </div>
@@ -25,16 +25,16 @@
   <div
     id="single-map"
     class="map full-width"
-    data-map-details="<%= JSON.stringify({ lat: map.center_lat, lng: map.center_lng}); %>"
+    data-map-details="<%= JSON.stringify({ mapID: map.id, lat: map.center_lat, lng: map.center_lng}); %>"
   ></div>
 
   <% if (map.points && map.points.length) { %>
   <div class="grid-container" id="points-display" data-points="<%= JSON.stringify(map.points); %>">
     <h2 class="grid-header">My Places</h2>
 
-    <div class="card-grid place-grid">
+    <div class="card-grid place-grid" id="user-points">
       <% map.points.forEach(place => { %>
-      <div class="card" data-map=<%= place.map_id %> data-point=<%= place.id %>>
+      <div class="card" data-map=<%= place.map_id %> data-point=<%= place.id %> data-details="<%= JSON.stringify(place) %>">
         <div class="card-image">
           <img class="img-responsive" src="<%= place.image_url %>" />
         </div>
@@ -49,8 +49,11 @@
             View on Map
           </button>
           <% if (locals.currentUser) { %>
+          <button class="btn btn-primary edit-place-btn" data-point-id="<%= place.id %>">
+            Edit
+          </button>
           <button class="btn btn-primary delete-place-btn" data-point-id="<%= place.id %>">
-            Delete Point
+            Delete
           </button>
           <% } %>
         </div>

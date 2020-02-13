@@ -80,8 +80,10 @@ module.exports = db => {
         return getMapByID(db, { mapID: req.params.id });
       })
       .then(mapDetails => {
-        singleMap = { ...singleMap, ...mapDetails };
-        return getUserByID(db, { userID: mapDetails.u_id });
+        if (mapDetails.existence) {
+          singleMap = { ...singleMap, ...mapDetails };
+          return getUserByID(db, { userID: mapDetails.u_id });
+        }
       })
       .then(user => {
         singleMap = { ...singleMap, creator: user.fullname };
@@ -94,6 +96,9 @@ module.exports = db => {
           ownedByCurrentUser: Number(currentUser) === Number(singleMap.u_id)
         };
         res.render("single-map", { ...templateVars, singleMap });
+      })
+      .catch(err => {
+        res.render("error", { status: 404, message: "Sorry, looks like that map doesn't exist" });
       });
   });
 
@@ -186,6 +191,14 @@ module.exports = db => {
     return createNewMap(db, newMapObj).then(data => {
       const { id } = data[0].rows[0];
       res.json({ mapID: id });
+    });
+  });
+
+  router.post("/points/:id/update", (req, res) => {
+    // const currentUser = req.cookies && req.cookies.userID ? req.cookies.userID : null;
+    return updatePoint(db, { pointID: req.params.id, pointData: req.body }).then(data => {
+      console.log("what are you returning", data);
+      res.json(data);
     });
   });
   return router;

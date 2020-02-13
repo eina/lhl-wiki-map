@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 $(() => {
   /**
    * Leaflet: Create Map (on map-form.ejs)
