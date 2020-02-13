@@ -8,27 +8,46 @@ $(() => {
   const $editPlaceBtn = $(".edit-place-btn");
   const $deletePlaceBtn = $(".delete-place-btn");
 
+  const renderFormGroup = function(formValues, placeID) {
+    const $container = $("<label>").addClass("form-group");
+
+    Object.keys(formValues).forEach(fieldName => {
+      const fieldVal = formValues[fieldName];
+      const idString = `edit-place${placeID}-name`;
+      const $formLabel = $("<span>").addClass("form-label");
+      const $formInput = $("<input>")
+        .addClass("form-input")
+        .attr({ type: "text", name: idString, id: idString });
+
+      $formLabel.text(fieldName);
+      $formInput.val(fieldVal);
+
+      $container.append($formLabel, $formInput);
+    });
+    return $container;
+  };
+
   const renderEditPlaceForm = function(placeID) {
-    return `<form id="edit-${placeID}">
-        <div class="card-body">
-          <label class="form-group">
-            <span class="form-label">Name</span>
-            <input type="text" class="form-input" id="edit-place2-name" name="place-name" />
-          </label>
-          <label class="form-group">
-            <span class="form-label">Image URL</span>
-            <input type="text" class="form-input" id="edit-place2-img" name="place-img" />
-          </label>
-          <label class="form-group">
-            <span class="form-label">Description</span>
-            <textarea class="form-input" id="edit-place2-desc" rows="3" name="place-desc"></textarea>
-          </label>
-        </div>
-        <div class="card-footer">
-          <button class="btn edit-place" type="button">Edit</button>
-          <button class="btn" type="button" id="cancel-edit-${placeID}">Cancel</button>
-        </div>
-      </form>`;
+    const $cardBody = $("<div>").addClass("card-body");
+    const $form = $("<form>").attr({ id: `edit-${placeID}` });
+    const $saveEditBtn = $("<button>")
+      .addClass("btn btn-primary")
+      .attr({ type: "submit" })
+      .text("Save");
+    const $cancelEditBtn = $("<button>")
+      .addClass("btn btn-danger")
+      .attr({ type: "button" })
+      .text("Cancel");
+
+    const $btnContainer = $("<div>").addClass("card-footer");
+
+    $btnContainer.append($cancelEditBtn, $saveEditBtn);
+    $cardBody.append(
+      renderFormGroup({ name: "test name", desc: "test desc", imgURL: "test img" }, placeID)
+    );
+    $form.append($cardBody, $btnContainer);
+
+    return $form;
   };
 
   const editPlace = function() {
@@ -38,7 +57,13 @@ $(() => {
     // clone the element in case user cancels their edit
     const $copyBeforeEdit = $parent.clone();
 
+    // empty card and append form
+    $parent.empty();
     $parent.append(renderEditPlaceForm(pointID));
+
+    // $cancelEdit.on("click", function(e) {
+    //   console.log($);
+    // });
   };
 
   $editPlaceBtn.on("click", editPlace);
