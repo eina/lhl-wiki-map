@@ -3,7 +3,7 @@ const router  = express.Router();
 
 module.exports = (db) => {
 
-  // nothing here lul
+  // This is a useless file. I should probably delete it.
 
   return router;
 };

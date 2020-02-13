@@ -1,6 +1,6 @@
 const express = require('express');
 const router  = express.Router();
-const { deleteMapByID, getMaps } = require("../../lib/dataHelpers/maps");
+const { deleteMap, getMaps } = require("../../lib/dataHelpers/maps");
 
 module.exports = (db) => {
   router.get("/all", (req, res) => {
@@ -39,7 +39,7 @@ module.exports = (db) => {
   });
 
   router.delete("/:mapID", (req, res) => {
-    deleteMapByID(db, {
+    deleteMap(db, {
       mapID: req.params.mapID,
     })
       .then(data => {

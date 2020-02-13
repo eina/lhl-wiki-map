@@ -3,8 +3,7 @@ const router  = express.Router();
 
 module.exports = (db) => {
 
-  // Nothing Here
-  // There should be stuff in helpers
+  // Same as points. Barely anything have been used.
 
   return router;
 };

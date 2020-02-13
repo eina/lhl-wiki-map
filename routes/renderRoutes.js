@@ -1,13 +1,34 @@
+/* eslint-disable no-unused-vars */
 const express = require(`express`);
 const router = express.Router();
+
+// require all helper functions
 const {
   getUserByID,
-  getUsersMaps,
-  getUsersEdits
+  getUserByEmail,
 } = require("../lib/dataHelpers/users");
-const { getMaps, getMapByID, getMapsFavedByUser } = require("../lib/dataHelpers/maps");
-const { checkFav } = require("../lib/dataHelpers/favs");
-// const { getPointsByMapID } = require("../lib/dataHelpers/points");
+const {
+  getMapByID,
+  getMaps,
+  getMapsOwnedByUser,
+  getMapsFavedByUser,
+  getMapsEditedByUser,
+  deleteMap,
+  createNewMap,
+  updateMap,
+} = require("../lib/dataHelpers/maps");
+const {
+  getPointsByMapID,
+  createNewPoint,
+  updatePoint,
+} = require("../lib/dataHelpers/points");
+const {
+  checkFav,
+  deleteFav,
+} = require("../lib/dataHelpers/favs");
+const {
+  createNewEditRecord,
+} = require("../lib/dataHelpers/edits");
 
 module.exports = db => {
   router.get("/", (req, res) => {
@@ -69,7 +90,7 @@ module.exports = db => {
         templateVars = { ...templateVars, user };
         return user;
       })
-      .then(user => getUsersMaps(db, { userID: user.id }))
+      .then(user => getMapsOwnedByUser(db, { userID: user.id }))
       .then(maps => {
         templateVars = { ...templateVars, maps, currentPage: "profile" };
         res.render("profile", templateVars);
@@ -106,7 +127,7 @@ module.exports = db => {
         templateVars = { ...templateVars, user };
         return user;
       })
-      .then(user => getUsersEdits(db, { userID: user.id }))
+      .then(user => getMapsEditedByUser(db, { userID: user.id }))
       .then(activities => {
         templateVars = { ...templateVars, activities, currentPage: "activity" };
         res.render("profile", templateVars);
