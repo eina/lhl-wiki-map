@@ -214,12 +214,12 @@ $(() => {
         detail
       };
       // console.log("hello submit", details);
-      $.ajax({ method: "POST", url: `/points/${id}/update`, data: dataToSend }).then(data =>
-        console.log("did you ssucceed", data)
+      $.ajax({ method: "POST", url: `/points/${id}/update`, data: dataToSend }).then(
+        data => console.log("did you ssucceed", data)
+        // $parent.empty();
+        // $parent.append($copyBeforeEdit[$copyBeforeEdit.length - 1]);
+        // $copyBeforeEdit = [];
       );
-      // $parent.empty();
-      // $parent.append($copyBeforeEdit[$copyBeforeEdit.length - 1]);
-      // $copyBeforeEdit = [];
     });
   };
 
