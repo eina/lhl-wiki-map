@@ -196,20 +196,31 @@ $(() => {
     $parent.empty();
     $parent.append(renderEditPlaceForm(pointID, details));
 
-    console.log("what is place", $parent);
-
     $parent.on("click", ".cancel-edit-btn", function() {
       $parent.empty();
       $parent.append($copyBeforeEdit[$copyBeforeEdit.length - 1]);
       $copyBeforeEdit = [];
     });
 
-    // $parent.on("submit", ".cancel-edit-btn", function(e) {
-    //   e.preventDefault();
-    //   // $parent.empty();
-    //   // $parent.append($copyBeforeEdit[$copyBeforeEdit.length - 1]);
-    //   // $copyBeforeEdit = [];
-    // });
+    $parent.find("form").on("submit", function(e) {
+      e.preventDefault();
+      const { detail, id, image_url: imageURL, lat, lng, map_id: mapID, title } = details;
+      const dataToSend = {
+        mapID,
+        imageURL,
+        title,
+        lat,
+        lng,
+        detail
+      };
+      // console.log("hello submit", details);
+      $.ajax({ method: "POST", url: `/points/${id}/update`, data: dataToSend }).then(data =>
+        console.log("did you ssucceed", data)
+      );
+      // $parent.empty();
+      // $parent.append($copyBeforeEdit[$copyBeforeEdit.length - 1]);
+      // $copyBeforeEdit = [];
+    });
   };
 
   const renderSingleMap = function(map) {

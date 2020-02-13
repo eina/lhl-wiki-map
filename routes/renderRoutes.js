@@ -80,7 +80,6 @@ module.exports = db => {
         return getMapByID(db, { mapID: req.params.id });
       })
       .then(mapDetails => {
-        console.log("do you have something here", mapDetails);
         if (mapDetails.existence) {
           singleMap = { ...singleMap, ...mapDetails };
           return getUserByID(db, { userID: mapDetails.u_id });
@@ -192,6 +191,14 @@ module.exports = db => {
     return createNewMap(db, newMapObj).then(data => {
       const { id } = data[0].rows[0];
       res.json({ mapID: id });
+    });
+  });
+
+  router.post("/points/:id/update", (req, res) => {
+    // const currentUser = req.cookies && req.cookies.userID ? req.cookies.userID : null;
+    return updatePoint(db, { pointID: req.params.id, pointData: req.body }).then(data => {
+      console.log("what are you returning", data);
+      res.json(data);
     });
   });
   return router;
