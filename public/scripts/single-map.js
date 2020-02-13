@@ -196,11 +196,20 @@ $(() => {
     $parent.empty();
     $parent.append(renderEditPlaceForm(pointID, details));
 
+    console.log("what is place", $parent);
+
     $parent.on("click", ".cancel-edit-btn", function() {
       $parent.empty();
       $parent.append($copyBeforeEdit[$copyBeforeEdit.length - 1]);
       $copyBeforeEdit = [];
     });
+
+    // $parent.on("submit", ".cancel-edit-btn", function(e) {
+    //   e.preventDefault();
+    //   // $parent.empty();
+    //   // $parent.append($copyBeforeEdit[$copyBeforeEdit.length - 1]);
+    //   // $copyBeforeEdit = [];
+    // });
   };
 
   const renderSingleMap = function(map) {
