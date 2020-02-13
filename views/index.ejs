@@ -33,27 +33,15 @@
           </div>
 
           <div>
-            <span class="map-faves"><%= map.fav_count %></span>
-            <!-- todo: refactor if possible -->
-            <%if (map.favedByCurrentUser) {%>
+            <span class="map-faves"><%= map.fav_count %></span>            
             <button
-              class="btn btn-link btn-heart faved-map"
+              class="btn btn-link btn-heart <%= map.favedByCurrentUser ? 'faved-map' : ''; %>"
               data-faved=<%= map.favedByCurrentUser %>
               data-map="<%= map.id %>"
               data-user="<%= map.u_id %>"
             >
               <%- include('partials/_heart-svg') %>
-            </button>
-            <%} else {%>
-            <button
-              class="btn btn-link btn-heart"
-              data-faved=<%= map.favedByCurrentUser %>
-              data-map="<%= map.id %>"
-              data-user="<%= map.u_id %>"
-            >
-              <%- include('partials/_heart-svg') %>
-            </button>
-            <%}%>
+            </button>            
           </div>
         </div>
       </article>
