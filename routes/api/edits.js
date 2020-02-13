@@ -3,7 +3,8 @@ const router  = express.Router();
 
 module.exports = (db) => {
 
-  // Nothing Here Lol
+  // Nothing Here
+  // There should be stuff in helpers
 
   return router;
 };
