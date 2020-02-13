@@ -80,7 +80,7 @@ module.exports = db => {
     FROM
       maps
       JOIN users ON users.id = u_id
-      JOIN favorites ON maps.id = map_id `;
+      FULL JOIN favorites ON maps.id = map_id `;
 
     queryParams.push(req.params.userID);
     queryString += `WHERE users.id = $${queryParams.length} `;
@@ -124,7 +124,7 @@ module.exports = db => {
     FROM
       users
       JOIN edits ON users.id = u_id
-      JOIN maps ON maps.id = edits.map_id
+      FULL JOIN maps ON maps.id = edits.map_id
     `;
 
     queryParams.push(req.params.userID);
