@@ -56,7 +56,6 @@ $(() => {
   const submitCreateMapForm = function(query, mapObj) {
     event.preventDefault();
     if (!mapObj) {
-      console.log("do you have a map??? do you have points????");
       return false;
     } else {
       const center = mapObj.getCenter();
@@ -67,7 +66,7 @@ $(() => {
         data: { centerLat, centerLng, points: tempPointsArray }
       }).then(data => {
         const { mapID } = data;
-        window.location.href = `${window.location.origin}/maps/${mapID}`;
+        window.location.replace(`${window.location.origin}/maps/${mapID}`);
         return;
       });
     }

@@ -5,7 +5,6 @@ $(() => {
     const { mapDetails } = $("#single-map").data();
     // render map
     if (mapDetails) {
-      const { points } = $("#points-display").data();
       const mapLatLng = L.latLng(mapDetails.lat, mapDetails.lng);
       const myMap = L.map("single-map").setView(mapLatLng, 14);
       const yvrMap = L.tileLayer(
@@ -21,7 +20,8 @@ $(() => {
       );
       yvrMap.addTo(myMap);
 
-      if (points && points.length) {
+      if ($("#points-display").data()) {
+        const { points } = $("#points-display").data();
         const markerRef = [];
 
         points.forEach(({ lat, lng, id, detail: desc, title, image_url: imgURL }) => {
@@ -42,19 +42,19 @@ $(() => {
         });
 
         $(".delete-place-btn").on("click", function(e) {
-          const { pointId: pointID } = $(this).data();
-          const $parent = $(this)
-            .parent()
-            .parent();
-          const { map } = $parent;
-          $.ajax({ method: "POST", url: `/api/points/${pointID}/delete` }).then(data => {
-            if (data.rowCount === 1) {
-              // remove marker
-              myMap.removeLayer(markerRef[pointID]);
-              // remove element
-              $parent.remove();
-            }
-          });
+          // const { pointId: pointID } = $(this).data();
+          // const $parent = $(this)
+          //   .parent()
+          //   .parent();
+          // const { map } = $parent;
+          // $.ajax({ method: "POST", url: `/api/points/${pointID}/delete` }).then(data => {
+          //   if (data.rowCount === 1) {
+          //     // remove marker
+          //     myMap.removeLayer(markerRef[pointID]);
+          //     // remove element
+          //     $parent.remove();
+          //   }
+          // });
         });
       }
     }
