@@ -19,7 +19,7 @@ const { checkFav, deleteFav } =
 
 
 module.exports = db => {
-  router.get("/", (req, res) => {
+  router.get("/deletePoint", (req, res) => {
     deletePoint(db, {
       pointID: 1
     }).then(data => {
