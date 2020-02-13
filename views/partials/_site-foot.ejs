@@ -10,8 +10,11 @@
     <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
    integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
    crossorigin=""></script>    
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js" integrity="sha256-4iQZ6BVL4qNKlQ27TExEhBN1HFPvAvAMbFavKKosSWQ=" crossorigin="anonymous"></script>
    <script type="text/javascript" src="/scripts/app.js"></script>
-    <!-- <script type="text/javascript" src="/scripts/map-form.js"></script>  -->
+   <% if (locals.page && locals.page === "create-map" ) {%> 
+    <script type="text/javascript" src="/scripts/map-form.js"></script> 
+    <%}%>            
     <% if (locals.singleMap) {%> 
     <script type="text/javascript" src="/scripts/single-map.js"></script>
     <%}%>        

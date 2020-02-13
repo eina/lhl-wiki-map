@@ -1,0 +1,8 @@
+<button
+  class="btn btn-link btn-heart <%= favedByCurrentUser ? 'faved-map' : ''; %>"
+  data-faved=<%= favedByCurrentUser %>
+  data-map="<%= id %>"
+  data-user="<%= u_id %>"
+>
+  <%- include('./_heart-svg') %>
+</button>  

@@ -61,7 +61,10 @@ module.exports = db => {
   });
 
   router.get("/maps/new", (req, res) => {
-    res.render("map-form");
+    const currentUser = req.cookies && req.cookies.userID ? req.cookies.userID : null;
+    return getUserByID(db, { userID: currentUser }).then(user => {
+      res.render("map-form", { currentUser, user, page: "create-map" });
+    });
   });
 
   router.get("/maps/:id", (req, res) => {
@@ -155,6 +158,23 @@ module.exports = db => {
       .catch(err => {
         res.status(500).json({ error: err.message });
       });
+  });
+
+  router.post("/maps/new", (req, res) => {
+    const currentUser = req.cookies && req.cookies.userID ? req.cookies.userID : null;
+    const creationTime = moment()
+      .format("YYYY-MM-DD HH:mm")
+      .toString();
+    const postObj = {
+      userID: currentUser,
+      mapTitle: req.query["map-title"],
+      creationTime,
+      ...req.body
+    };
+    return createNewMap(db, postObj).then(data => {
+      const { id } = data[0].rows[0];
+      res.json({ mapID: id });
+    });
   });
   return router;
 };
