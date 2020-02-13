@@ -9,9 +9,9 @@
     <h1><%= user.fullname %></h1>
 
     <div class="btn-group text-right">      
-      <a href="/users/2" class="btn">My Maps</a>
-      <a href="/users/2/favs" class="btn">Favourite Maps</a>
-      <a href="/users/2/activity" class="btn">My Activity</a>
+      <a href="/users/<%= currentUser %>" class="btn">My Maps</a>
+      <a href="/users/<%= currentUser %>/favs" class="btn">Favourite Maps</a>
+      <a href="/users/<%= currentUser %>/activity" class="btn">My Activity</a>
     </div>
   </div>
 
