@@ -1,10 +1,34 @@
+/* eslint-disable no-unused-vars */
 const express = require(`express`);
 const router = express.Router();
-const moment = require("moment");
-const { getUserByID, getUsersMaps, getUsersEdits } = require("../lib/dataHelpers/users");
-const { getMaps, getMapByID, getMapsFavedByUser, postMap } = require("../lib/dataHelpers/maps");
-const { checkFav } = require("../lib/dataHelpers/favs");
-// const { getPointsByMapID } = require("../lib/dataHelpers/points");
+
+// require all helper functions
+const {
+  getUserByID,
+  getUserByEmail,
+} = require("../lib/dataHelpers/users");
+const {
+  getMapByID,
+  getMaps,
+  getMapsOwnedByUser,
+  getMapsFavedByUser,
+  getMapsEditedByUser,
+  deleteMap,
+  createNewMap,
+  updateMap,
+} = require("../lib/dataHelpers/maps");
+const {
+  getPointsByMapID,
+  createNewPoint,
+  updatePoint,
+} = require("../lib/dataHelpers/points");
+const {
+  checkFav,
+  deleteFav,
+} = require("../lib/dataHelpers/favs");
+const {
+  createNewEditRecord,
+} = require("../lib/dataHelpers/edits");
 
 module.exports = db => {
   router.get("/", (req, res) => {
@@ -69,7 +93,7 @@ module.exports = db => {
         templateVars = { ...templateVars, user };
         return user;
       })
-      .then(user => getUsersMaps(db, { userID: user.id }))
+      .then(user => getMapsOwnedByUser(db, { userID: user.id }))
       .then(maps => {
         templateVars = { ...templateVars, maps, currentPage: "profile" };
         res.render("profile", templateVars);
@@ -106,7 +130,7 @@ module.exports = db => {
         templateVars = { ...templateVars, user };
         return user;
       })
-      .then(user => getUsersEdits(db, { userID: user.id }))
+      .then(user => getMapsEditedByUser(db, { userID: user.id }))
       .then(activities => {
         templateVars = { ...templateVars, activities, currentPage: "activity" };
         res.render("profile", templateVars);
@@ -147,7 +171,7 @@ module.exports = db => {
       creationTime,
       ...req.body
     };
-    return postMap(db, postObj).then(data => {
+    return createNewMap(db, postObj).then(data => {
       const { id } = data[0].rows[0];
       res.json({ mapID: id });
     });
