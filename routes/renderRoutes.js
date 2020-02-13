@@ -73,7 +73,11 @@ module.exports = db => {
         return checkFav(db, { userID: currentUser, mapID: singleMap.id });
       })
       .then(data => {
-        singleMap = { ...singleMap, faved: data };
+        singleMap = {
+          ...singleMap,
+          faved: data,
+          ownedByCurrentUser: Number(currentUser) === Number(singleMap.u_id)
+        };
         res.render("single-map", { ...templateVars, singleMap });
       });
   });

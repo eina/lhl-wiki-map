@@ -4,18 +4,23 @@
 <!-- <header> + <nav> -->
 <%- include('partials/_headnav') %>
 <main>
-  <% if (locals.singleMap) { const map = singleMap; %> <%= %>
+  <% if (locals.singleMap) { const map = singleMap; %>
   <div class="content-header flex-space-between">
     <div>
       <h1 class="mb-0"><%= map.title %></h1>
       <p class="mb-0">by <%= map.creator %></p>
     </div>
 
-    <p class="mb-0">
-      <span class="map-faves"><%= map.fav_count %></span>
-      <%- include('partials/_heart-btn', { favedByCurrentUser: singleMap.faved, id: singleMap.id,
-      u_id: singleMap.u_id }) %>
-    </p>
+    <div>
+      <% if (singleMap.ownedByCurrentUser) {%>
+      <button class="btn btn-primary">Edit</button>
+      <%}%>
+      <p class="mb-0">
+        <span class="map-faves"><%= map.fav_count %></span>
+        <%- include('partials/_heart-btn', { favedByCurrentUser: singleMap.faved, id: singleMap.id,
+        u_id: singleMap.u_id }) %>
+      </p>
+    </div>
   </div>
   <div
     id="single-map"
