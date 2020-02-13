@@ -14,12 +14,14 @@ $(() => {
     Object.keys(formValues).forEach(fieldName => {
       const fieldVal = formValues[fieldName];
       const idString = `edit-place${placeID}-name`;
-      const $formLabel = $("<span>").addClass("form-label");
-      const $formInput = $("<input>")
+      const $formLabel = $("<span>")
+        .addClass("form-label")
+        .css("text-transform", "capitalize");
+      const $formInput = $(fieldName === "description" ? "<textarea>" : "<input>")
         .addClass("form-input")
         .attr({ type: "text", name: idString, id: idString });
 
-      $formLabel.text(fieldName);
+      $formLabel.text(fieldName === "imgURL" ? "Image URL" : fieldName);
       $formInput.val(fieldVal);
 
       $container.append($formLabel, $formInput);
@@ -27,7 +29,7 @@ $(() => {
     return $container;
   };
 
-  const renderEditPlaceForm = function(placeID) {
+  const renderEditPlaceForm = function(placeID, formDetails) {
     const $cardBody = $("<div>").addClass("card-body");
     const $form = $("<form>").attr({ id: `edit-${placeID}` });
     const $saveEditBtn = $("<button>")
@@ -39,12 +41,11 @@ $(() => {
       .attr({ type: "button" })
       .text("Cancel");
 
-    const $btnContainer = $("<div>").addClass("card-footer");
+    const $btnContainer = $("<div>").addClass("card-footer text-right");
+    const { title: name, detail: description, image_url: imgURL } = formDetails;
 
     $btnContainer.append($cancelEditBtn, $saveEditBtn);
-    $cardBody.append(
-      renderFormGroup({ name: "test name", desc: "test desc", imgURL: "test img" }, placeID)
-    );
+    $cardBody.append(renderFormGroup({ name, imgURL, description }, placeID));
     $form.append($cardBody, $btnContainer);
 
     return $form;
@@ -54,12 +55,13 @@ $(() => {
     const { pointId: pointID } = $(this).data();
     // find the parent
     const $parent = $(`[data-map=${mapID}][data-point=${pointID}]`);
+    const { details } = $parent.data();
     // clone the element in case user cancels their edit
     const $copyBeforeEdit = $parent.clone();
 
     // empty card and append form
     $parent.empty();
-    $parent.append(renderEditPlaceForm(pointID));
+    $parent.append(renderEditPlaceForm(pointID, details));
 
     // $cancelEdit.on("click", function(e) {
     //   console.log($);

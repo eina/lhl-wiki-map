@@ -38,7 +38,7 @@
     <h2 class="grid-header">My Places</h2>
     <div class="card-grid place-grid">
       <% map.points.forEach(place => { %>
-      <div class="card" data-map=<%= place.map_id %> data-point=<%= place.id %>>
+      <div class="card" data-map=<%= place.map_id %> data-point=<%= place.id %> data-details="<%= JSON.stringify(place); %>">
         <div class="card-image">
           <img class="img-responsive" src="<%= place.image_url %>" />
         </div>
