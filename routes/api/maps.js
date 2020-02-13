@@ -34,10 +34,6 @@ module.exports = (db) => {
       });
   });
 
-  router.get("/:mapID/points", (req, res) => {
-    //TODO Write this
-  });
-
   router.delete("/:mapID", (req, res) => {
     deleteMap(db, {
       mapID: req.params.mapID,
