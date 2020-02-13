@@ -1,6 +1,47 @@
 $(() => {
   /* Leaflet: View Map With Points (on single-map.ejs) */
 
+  const renderEditPlaceForm = function(placeID, formDetails) {
+    const $cardBody = $("<div>").addClass("card-body");
+    const $form = $("<form>").attr({ id: `edit-${placeID}` });
+    const $saveEditBtn = $("<button>")
+      .addClass("btn btn-primary")
+      .attr({ type: "submit" })
+      .text("Save");
+    const $cancelEditBtn = $("<button>")
+      .addClass("btn btn-danger cancel-edit-btn")
+      .attr({ type: "button" })
+      .text("Cancel");
+
+    const $btnContainer = $("<div>").addClass("card-footer text-right");
+    const { title: name, detail: description, image_url: imgURL } = formDetails;
+
+    $btnContainer.append($cancelEditBtn, $saveEditBtn);
+    $cardBody.append(renderFormGroup({ name, imgURL, description }, placeID));
+    $form.append($cardBody, $btnContainer);
+
+    return $form;
+  };
+
+  const editPlace = function(mapID) {
+    const { pointId: pointID } = $(this).data();
+    // find the parent
+    const $parent = $(`[data-map=${mapID}][data-point=${pointID}]`);
+    let $copyBeforeEdit = $parent.clone();
+    const { details } = $parent.data();
+    // clone the element in case user cancels their edit
+
+    // empty card and append form
+    $parent.empty();
+    $parent.append(renderEditPlaceForm(pointID, details));
+
+    $parent.on("click", ".cancel-edit-btn", function() {
+      $parent.empty();
+      $parent.append($copyBeforeEdit[$copyBeforeEdit.length - 1]);
+      $copyBeforeEdit = [];
+    });
+  };
+
   const renderSingleMap = function() {
     const { mapDetails } = $("#single-map").data();
     // render map
@@ -42,19 +83,19 @@ $(() => {
         });
 
         $(".delete-place-btn").on("click", function(e) {
-          // const { pointId: pointID } = $(this).data();
-          // const $parent = $(this)
-          //   .parent()
-          //   .parent();
-          // const { map } = $parent;
-          // $.ajax({ method: "POST", url: `/api/points/${pointID}/delete` }).then(data => {
-          //   if (data.rowCount === 1) {
-          //     // remove marker
-          //     myMap.removeLayer(markerRef[pointID]);
-          //     // remove element
-          //     $parent.remove();
-          //   }
-          // });
+          const { pointId: pointID } = $(this).data();
+          const $parent = $(this)
+            .parent()
+            .parent();
+          console.log("delete plaaaace", markerRef, pointID);
+          $.ajax({ method: "POST", url: `/api/points/${pointID}/delete` }).then(data => {
+            if (data.rowCount === 1) {
+              // remove marker
+              myMap.removeLayer(markerRef[pointID]);
+              // remove element
+              $parent.remove();
+            }
+          });
         });
       }
     }
