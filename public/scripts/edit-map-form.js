@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 $(() => {
   /* Leaflet: View Map With Points (on single-map.ejs) */
 

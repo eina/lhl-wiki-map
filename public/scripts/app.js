@@ -25,7 +25,7 @@ $(() => {
   $("#btn-login").click(modalControl);
   $("#modal-close").click(modalControl);
 
-  /* Favourite A Map */
+  /* Favorite A Map */
   $(".btn-heart").click(function() {
     const { user, map, faved } = $(this).data();
     let $numFavs = $(this).prev(".map-faves");
