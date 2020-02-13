@@ -183,13 +183,13 @@ module.exports = db => {
     const creationTime = moment()
       .format("YYYY-MM-DD HH:mm")
       .toString();
-    const postObj = {
+    const newMapObj = {
       userID: currentUser,
       mapTitle: req.query["map-title"],
       creationTime,
       ...req.body
     };
-    return createNewMap(db, postObj).then(data => {
+    return createNewMap(db, newMapObj).then(data => {
       const { id } = data[0].rows[0];
       res.json({ mapID: id });
     });
