@@ -37,7 +37,7 @@ $(() => {
       .attr({ type: "submit" })
       .text("Save");
     const $cancelEditBtn = $("<button>")
-      .addClass("btn btn-danger cancel-edit")
+      .addClass("btn btn-danger cancel-edit-btn")
       .attr({ type: "button" })
       .text("Cancel");
 
@@ -52,23 +52,26 @@ $(() => {
   };
 
   const editPlace = function() {
+    console.log("hello!!!");
     const { pointId: pointID } = $(this).data();
     // find the parent
     const $parent = $(`[data-map=${mapID}][data-point=${pointID}]`);
+    let $copyBeforeEdit = $parent.clone();
     const { details } = $parent.data();
     // clone the element in case user cancels their edit
-    const $copyBeforeEdit = $parent.clone();
 
     // empty card and append form
     $parent.empty();
     $parent.append(renderEditPlaceForm(pointID, details));
 
-    $cancelEdit.on("click", function(e) {
-      console.log($);
+    $parent.on("click", ".cancel-edit-btn", function() {
+      $parent.empty();
+      $parent.append($copyBeforeEdit[$copyBeforeEdit.length - 1]);
+      $copyBeforeEdit = [];
     });
   };
 
-  $editPlaceBtn.on("click", editPlace);
+  $(".card").on("click", ".edit-place-btn", editPlace);
 
   // editPlaceBtn.click(function(event) {
   //   const $placeID = $(this)
