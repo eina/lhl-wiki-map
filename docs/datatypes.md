@@ -24,6 +24,7 @@
   created_at: timestamp,
   center_lat: float,
   center_lng: float,
+  existence: boolean defaults true,
 }
 ```
 

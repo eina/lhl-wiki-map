@@ -1,13 +1,8 @@
 const express = require(`express`);
 const router = express.Router();
 const moment = require("moment");
-const {
-  getUserByID,
-  getUsersMaps,
-  getUsersFavs,
-  getUsersEdits
-} = require("../lib/dataHelpers/users");
-const { getMaps, getMapByID, postMap } = require("../lib/dataHelpers/maps");
+const { getUserByID, getUsersMaps, getUsersEdits } = require("../lib/dataHelpers/users");
+const { getMaps, getMapByID, getMapsFavedByUser, postMap } = require("../lib/dataHelpers/maps");
 const { checkFav } = require("../lib/dataHelpers/favs");
 // const { getPointsByMapID } = require("../lib/dataHelpers/points");
 
@@ -21,7 +16,7 @@ module.exports = db => {
         return getMaps(db);
       })
       .then(maps => {
-        if (templateVars.currentUser) {
+        if (templateVars.currentUser && maps) {
           const updatedMaps = maps.map(el => {
             return checkFav(db, { userID: templateVars.currentUser, mapID: el.id }).then(data => {
               console.log(data);
@@ -33,7 +28,8 @@ module.exports = db => {
           templateVars = { ...templateVars, maps };
         }
         res.render("index", templateVars);
-      });
+      })
+      .catch(err => console.log(err));
   });
 
   router.get("/login", (req, res) => {
@@ -88,14 +84,16 @@ module.exports = db => {
         templateVars = { ...templateVars, user };
         return user;
       })
-      .then(user => getUsersFavs(db, { userID: user.id }))
+      .then(user => getMapsFavedByUser(db, { userID: user.id }))
       .then(maps => {
-        const favMaps = maps.map(el => {
-          return getUserByID(db, { userID: el.u_id }).then(data => {
-            return { ...el, mapCreator: data.fullname };
+        if (maps && maps.length) {
+          const favMaps = maps.map(el => {
+            return getUserByID(db, { userID: el.u_id }).then(data => {
+              return { ...el, mapCreator: data.fullname };
+            });
           });
-        });
-        templateVars = { ...templateVars, maps: favMaps, currentPage: "favs" };
+          templateVars = { ...templateVars, maps: favMaps, currentPage: "favs" };
+        }
         res.render("profile", templateVars);
       });
   });

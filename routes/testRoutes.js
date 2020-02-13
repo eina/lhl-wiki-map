@@ -1,20 +1,81 @@
+/* eslint-disable no-unused-vars */
 const express = require(`express`);
 const router = express.Router();
-const { postMap, getMapByID } = require("../lib/dataHelpers/maps");
-const { postPoint, editPoint, getPointsByMapID } = require("../lib/dataHelpers/points");
-const { checkFav } = require("../lib/dataHelpers/favs");
+
+const { postEdit } =
+  require("../lib/dataHelpers/edits");
+
+const { getUsersFavs } =
+  require("../lib/dataHelpers/users");
+
+const { postMap, getMapByID, getMaps, deleteMapByID, getMapsFavedByUser, editMap } =
+  require("../lib/dataHelpers/maps");
+
+const { postPoint, editPoint, getPointsByMapID } =
+  require("../lib/dataHelpers/points");
+
+const { checkFav, deleteFav } =
+  require("../lib/dataHelpers/favs");
+
 
 module.exports = db => {
 
-  // router.get("/", (req, res) => {
-
-  // });
-
   router.get("/", (req, res) => {
+    editMap(db, {
+      mapID: 1,
+      mapData: {
+        mapTitle: 'NEW GEN MAP',
+        centerLat: 69,
+        centerLng: 420
+      }
+    }).then(data => {
+      res.json(data);
+    });
+  });
+
+  router.get("/postEdit", (req, res) => {
+    const today = new Date();
+    postEdit(db, {
+      userID: 2,
+      mapID: 1,
+      creationTime: today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate() + ' ' + today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds(),
+    }).then(data => {
+      res.json(data);
+    });
+  });
+
+  router.get("/getMapsFavedByUser", (req, res) => {
+    getMapsFavedByUser(db, { userID: 1 }).then(data => {
+      res.json(data);
+    });
+  });
+
+  router.get("/deleteFav", (req, res) => {
+    deleteFav(db, {
+      mapID: 1
+    }).then(data => {
+      res.json(data);
+    });
+  });
+
+  router.get("/deleteMapByID", (req, res) => {
+    deleteMapByID(db, {
+      mapID: 1
+    }).then(data => {
+      res.json(data);
+    });
+  });
+
+  router.get("/getMaps", (req, res) => {
+    getMaps(db).then(data => {
+      res.json(data);
+    });
+  });
+
+  router.get("/getMapByID/NowWithPoints", (req, res) => {
     getMapByID(db, {
       mapID: 3,
     }).then(data => {
-      console.log(data);
       res.json(data);
     });
   });

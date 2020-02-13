@@ -1,27 +1,10 @@
 const express = require('express');
 const router  = express.Router();
+const { deleteMapByID, getMaps } = require("../../lib/dataHelpers/maps");
 
 module.exports = (db) => {
   router.get("/all", (req, res) => {
-    let queryParams = [];
-    let queryString = `
-    SELECT
-      maps.*,
-      users.fullname AS owner_name,
-      count(favorites.*) AS fav_count
-    FROM
-      maps
-      JOIN users ON users.id = u_id
-      JOIN favorites ON maps.id = map_id
-    GROUP BY
-      maps.id,
-      users.fullname
-    ORDER BY
-      fav_count DESC,
-      maps.id ASC;
-    `;
-
-    db.query(queryString, queryParams)
+    getMaps(db)
       .then(data => {
         const maps = data.rows;
         res.json(maps);
@@ -42,7 +25,6 @@ module.exports = (db) => {
 
     db.query(queryString, queryParams)
       .then(data => {
-
         res.json(data.rows[0]);
       })
       .catch(err => {
@@ -57,14 +39,9 @@ module.exports = (db) => {
   });
 
   router.delete("/:mapID", (req, res) => {
-    // res.json(`Not yet implemented lol`);
-    let queryParams = [];
-    let queryString = `DELETE FROM maps `;
-
-    queryParams.push(req.params.mapID);
-    queryString += `WHERE maps.id = $${queryParams.length};`;
-
-    db.query(queryString, queryParams)
+    deleteMapByID(db, {
+      mapID: req.params.mapID,
+    })
       .then(data => {
         res.json(data);
       })

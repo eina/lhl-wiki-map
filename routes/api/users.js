@@ -1,5 +1,7 @@
 const express = require(`express`);
 const router = express.Router();
+const { getUsersFavs } =
+  require("../../lib/dataHelpers/users");
 
 module.exports = db => {
   router.get(`/all`, (req, res) => {
@@ -103,21 +105,7 @@ module.exports = db => {
   });
 
   router.get("/:userID/favs", (req, res) => {
-    let queryParams = [];
-    let queryString = `
-    SELECT
-      users.id,
-      maps.*
-    FROM
-      users
-      JOIN favorites ON users.id = u_id
-      JOIN maps ON maps.id = favorites.map_id
-    `;
-
-    queryParams.push(req.params.userID);
-    queryString += `WHERE users.id = $${queryParams.length};`;
-
-    db.query(queryString, queryParams)
+    getUsersFavs(db, {userID:req.params.userID})
       .then(data => {
         const maps = data.rows;
         res.json(maps);
