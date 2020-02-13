@@ -20,7 +20,66 @@ const { checkFav, deleteFav } =
 
 module.exports = db => {
 
+
   router.get("/", (req, res) => {
+    const today = new Date();
+    postMap(db, {
+      userID: 1,
+      mapTitle: 'The Forbidden Map',
+      creationTime: today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate() + ' ' + today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds(),
+      centerLat: 50,
+      centerLng: -123,
+      points: [
+        {
+          title: 'Title',
+          detail: 'Details are important.',
+          imageURL: 'https://source.unsplash.com/random/800x600',
+          lat: 50,
+          lng: - 120,
+        },
+        {
+          title: 'Title',
+          detail: 'Details are important.',
+          imageURL: 'https://source.unsplash.com/random/800x600',
+          lat: 50,
+          lng: - 120,
+        },
+        {
+          title: 'Title',
+          detail: 'Details are important.',
+          imageURL: 'https://source.unsplash.com/random/800x600',
+          lat: 50,
+          lng: - 120,
+        },
+        {
+          title: 'Title',
+          detail: 'Details are important.',
+          imageURL: 'https://source.unsplash.com/random/800x600',
+          lat: 50,
+          lng: - 120,
+        },
+        {
+          title: 'Title',
+          detail: 'Details are important.',
+          imageURL: 'https://source.unsplash.com/random/800x600',
+          lat: 50,
+          lng: - 120,
+        },
+      ],
+    }).then(data => {
+      res.json(data);
+    });
+  });
+
+  router.get("/getMapByID", (req, res) => {
+    getMapByID(db, {
+      mapID: 9,
+    }).then(data => {
+      res.json(data);
+    });
+  });
+
+  router.get("/editMap", (req, res) => {
     editMap(db, {
       mapID: 1,
       mapData: {
@@ -72,14 +131,6 @@ module.exports = db => {
     });
   });
 
-  router.get("/getMapByID/NowWithPoints", (req, res) => {
-    getMapByID(db, {
-      mapID: 3,
-    }).then(data => {
-      res.json(data);
-    });
-  });
-
   router.get("/getPointsByMapID", (req, res) => {
     getPointsByMapID(db, {
       mapID: 2,
@@ -112,56 +163,6 @@ module.exports = db => {
 
   router.get("/getMapByID", (req, res) => {
     getMapByID(db, { mapID: 2 }).then(data => {
-      res.json(data);
-    });
-  });
-
-  router.get("/maps", (req, res) => {
-    const today = new Date();
-    postMap(db, {
-      creatorID: 1,
-      mapTitle: 'The Forbidden Map',
-      creationTime: today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate() + ' ' + today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds(),
-      centerLat: 50,
-      centerLng: -123,
-      points: [
-        {
-          title: 'Title',
-          detail: 'Details are important.',
-          imageURL: 'https://source.unsplash.com/random/800x600',
-          lat: 50,
-          lng: - 120,
-        },
-        {
-          title: 'Title',
-          detail: 'Details are important.',
-          imageURL: 'https://source.unsplash.com/random/800x600',
-          lat: 50,
-          lng: - 120,
-        },
-        {
-          title: 'Title',
-          detail: 'Details are important.',
-          imageURL: 'https://source.unsplash.com/random/800x600',
-          lat: 50,
-          lng: - 120,
-        },
-        {
-          title: 'Title',
-          detail: 'Details are important.',
-          imageURL: 'https://source.unsplash.com/random/800x600',
-          lat: 50,
-          lng: - 120,
-        },
-        {
-          title: 'Title',
-          detail: 'Details are important.',
-          imageURL: 'https://source.unsplash.com/random/800x600',
-          lat: 50,
-          lng: - 120,
-        },
-      ],
-    }).then(data => {
       res.json(data);
     });
   });
