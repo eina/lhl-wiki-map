@@ -54,7 +54,10 @@ $(() => {
       $.ajax({
         method: "POST",
         url: `/maps/new?${query}`,
-        data: { centerLat, centerLng, points: tempPointsArray }
+        data: { centerLat, centerLng, points: tempPointsArray },
+        success: function(data) {
+          console.log("are you the id", data);
+        }
       });
     }
   };

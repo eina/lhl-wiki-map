@@ -152,7 +152,8 @@ module.exports = db => {
     // console.log("hello post obj", postObj);
     return postMap(db, postObj).then(data => {
       const { id } = data[0].rows[0];
-      res.redirect(`/maps/${id}`);
+      return id;
+      // res.redirect(`/maps/${id}`);
     });
   });
   return router;
