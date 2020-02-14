@@ -51,7 +51,7 @@ module.exports = db => {
 
   router.get("/logout", (req, res) => {
     res.clearCookie("userID");
-    res.render("index");
+    res.redirect("/");
   });
 
   router.get("/maps/new", (req, res) => {
@@ -175,7 +175,7 @@ module.exports = db => {
       .then(data => {
         const result = data.rows[0];
         res.cookie("userID", data.rows[0].id);
-        res.render("index", { user: { ...result, currentUser: req.cookies.user } });
+        res.redirect("/");
       })
       .catch(err => {
         res.status(500).json({ error: err.message });
