@@ -4,6 +4,11 @@
   max-width: 800px;
   box-shadow: 0 0.25rem 1rem rgba(48, 55, 66, 0.15);
 
+  &-image {
+    height: 280px;
+    overflow: hidden;
+  }
+
   &-header {
     display: flex;
     justify-content: space-between;
@@ -29,4 +34,9 @@
   bottom: 15px;
   left: 50%;
   transform: translateX(-50%);
+}
+
+// on map view cards
+.point-btn-container .btn {
+  margin-right: 0.5em;
 }

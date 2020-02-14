@@ -44,18 +44,9 @@
         <div class="card-body">
           <p><%= place.detail %></p>
         </div>
-        <div class="card-footer text-center">
-          <button class="btn btn-primary view-marker-btn" data-point-id="<%= place.id %>">
-            View on Map
-          </button>
-          <% if (locals.currentUser) { %>
-          <button class="btn btn-primary edit-place-btn" data-point-id="<%= place.id %>">
-            Edit
-          </button>
-          <button class="btn btn-primary delete-place-btn" data-point-id="<%= place.id %>">
-            Delete
-          </button>
-          <% } %>
+        <div class="card-footer point-btn-container text-center">
+          <button class="btn btn-primary view-marker-btn" data-point-id="<%= place.id %>">View on Map
+          </button><% if (locals.currentUser) { %><button class="btn btn-primary edit-place-btn" data-point-id="<%= place.id %>">Edit</button><button class="btn btn-primary delete-place-btn" data-point-id="<%= place.id %>">Delete</button><% } %>
         </div>
       </div>
       <% }); %>

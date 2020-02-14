@@ -28,7 +28,7 @@ $(() => {
     const $cardBodyContainer = $("<div>").addClass("card-body");
     const $cardBodyText = $("<p>").text(desc);
 
-    const $cardFooterContainer = $("<div>").addClass("card-footer text-center");
+    const $cardFooterContainer = $("<div>").addClass("card-footer point-btn-container text-center");
     const $deleteButton = $("<button>")
       .addClass("btn btn-primary delete-place-btn")
       .text("Delete");
