@@ -140,7 +140,10 @@ module.exports = db => {
         if (maps && maps.length) {
           favMaps = maps.map(el => {
             return getUserByID(db, { userID: el.u_id }).then(data => {
-              return { ...el, mapCreator: data.fullname };
+              return {
+                ...el,
+                mapCreator: data.fullname
+              };
             });
           });
         }
@@ -159,7 +162,12 @@ module.exports = db => {
       })
       .then(user => getMapsEditedByUser(db, { userID: user.id }))
       .then(activities => {
-        templateVars = { ...templateVars, activities, currentPage: "activity" };
+        const timeString = moment(activities.edited_at).fromNow();
+        templateVars = {
+          ...templateVars,
+          activities: activities.map(el => ({ ...el, timeString })),
+          currentPage: "activity"
+        };
         res.render("profile", templateVars);
       });
   });
@@ -221,11 +229,10 @@ module.exports = db => {
       detail: req.query["edit-description"],
       ...req.body
     };
-    return updatePoint(db, { pointID: req.params.id, pointData: toSend }).then(data =>{
+    return updatePoint(db, { pointID: req.params.id, pointData: toSend }).then(data => {
       createNewEditRecord(db, { mapID: req.body.mapID, userID: req.body.userID });
       res.json(data.rows[0]);
-    }
-    );
+    });
   });
 
   router.post("/points/new", (req, res) => {

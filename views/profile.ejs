@@ -70,7 +70,7 @@
           <tbody>
             <% activities.forEach(activity => { %>
             <tr>
-              <td><%= activity.edited_at %></td>
+              <td><%= activity.timeString %></td>
               <td><%= user.fullname %> edited <a href="/maps/<%= activity.map_id %>"><%= activity.title %></a></td>
             </tr>
             <% }) %>
