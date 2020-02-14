@@ -4,9 +4,10 @@ $(() => {
   const markerRef = [];
   const singleMap = L.map("single-map");
   const {
-    mapDetails: { mapID },
+    mapDetails: { mapID, userID },
     user
   } = $("#single-map").data();
+  console.log(`${userID} in single-map.js`);
 
   /**
    * Renders single map card on /(index)

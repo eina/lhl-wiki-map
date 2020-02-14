@@ -36,6 +36,7 @@ module.exports = db => {
       mapID: req.params.mapID
     })
       .then(data => {
+        console.log(`${req.body.userID} in api delete`);
         createNewEditRecord(db, { userID: req.body.userID, mapID: req.params.mapID  });
         res.json(data);
       })

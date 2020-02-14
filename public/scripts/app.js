@@ -62,10 +62,11 @@ $(() => {
 
   $("#delete-map").on("click", function() {
     const { map: mapID, user: userID } = $(this).data();
+    console.log(`${userID} in delete-map`);
     $.ajax({
       method: "POST",
       url: `/api/maps/${mapID}/delete`,
-      data: userID
+      data: { userID }
     }).then(data => {
       window.location.replace(window.location.origin);
       return;
