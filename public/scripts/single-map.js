@@ -116,7 +116,7 @@ $(() => {
           .val();
         if (placeName && placeDesc) {
           // show marker on map with details
-          $.ajax({ method: "POST", url: `/points/new?${query}`, data: { lat, lng, mapID } }).then(
+          $.ajax({ method: "POST", url: `/points/new?${query}`, data: { lat, lng, mapID, userID } }).then(
             data => {
               const {
                 detail: desc,
@@ -125,7 +125,7 @@ $(() => {
                 lat,
                 lng,
                 map_id: map,
-                title
+                title,
               } = data;
               addPointOnMap({
                 map: singleMap,
@@ -302,7 +302,7 @@ $(() => {
   });
 
   /* click handler for leaflet map */
-  if (user) {
+  if (user || userID) {
     singleMap.on("click touchstart", onMapClick);
   }
 

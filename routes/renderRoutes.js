@@ -226,6 +226,7 @@ module.exports = db => {
         ...req.body
       };
       return createNewPoint(db, toSend).then(data => {
+        createNewEditRecord(db, { mapID: req.body.mapID, userID: req.body.userID });
         res.json(data.rows[0]);
       });
     }
