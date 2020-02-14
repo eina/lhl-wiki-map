@@ -8,7 +8,7 @@
   <div class="content-header">
     <h1><%= user.fullname %></h1>
 
-    <div class="btn-group text-right">      
+    <div class="btn-group text-right">
       <a href="/users/<%= currentUser %>" class="btn">My Maps</a>
       <a href="/users/<%= currentUser %>/favs" class="btn">Favourite Maps</a>
       <a href="/users/<%= currentUser %>/activity" class="btn">My Activity</a>
@@ -22,10 +22,8 @@
       <% maps.forEach(map => { %>
       <article class="card s-rounded">
         <div class="card-image card-map">
-          <img
-            class="img-responsive"
-            src="https://api.mapbox.com/styles/v1/mapbox/light-v10/static/<%= map.center_lng %>,<%= map.center_lat %>,13/300x200?access_token=pk.eyJ1IjoidGhlbGl0dGxlYmxhY2tzbWl0aCIsImEiOiJjazZlMnExanYwaXU0M2tsb2I5cDRzcTQwIn0.bwS19as5AZCy7I-y3w-Tkw"
-          />
+          <img class="img-responsive"
+            src="https://api.mapbox.com/styles/v1/mapbox/light-v10/static/<%= map.center_lng %>,<%= map.center_lat %>,13/300x200?access_token=pk.eyJ1IjoidGhlbGl0dGxlYmxhY2tzbWl0aCIsImEiOiJjazZlMnExanYwaXU0M2tsb2I5cDRzcTQwIn0.bwS19as5AZCy7I-y3w-Tkw" />
           <a class="btn btn-primary s-rounded view-btn" href="/maps/<%= map.id %>">View</a>
         </div>
         <div class="card-header">
@@ -40,48 +38,46 @@
           </p>
         </div>
       </article>
-      <% }) %>      
-    <% } %>
-    <!-- favourites -->
-    <% if (currentPage === 'favs' && maps.length) { %>
-    <h2>Favourites</h2>
-    <div class="card-grid">
-      <% maps.forEach(map => { %>
-      <article class="card s-rounded">
-        <div class="card-image card-map">
-          <img
-            class="img-responsive"
-            src="https://api.mapbox.com/styles/v1/mapbox/light-v10/static/<%= map.center_lng %>,<%= map.center_lat %>,13/300x200?access_token=pk.eyJ1IjoidGhlbGl0dGxlYmxhY2tzbWl0aCIsImEiOiJjazZlMnExanYwaXU0M2tsb2I5cDRzcTQwIn0.bwS19as5AZCy7I-y3w-Tkw"
-          />
-          <a class="btn btn-primary s-rounded view-btn" href="/maps/<%= map.id %>">View</a>
-        </div>
-        <div class="card-header">
-          <div>
-            <div class="card-title h3"><%= map.title %></div>
-            <p class="card-subtitle text-gray">by <%= map.mapCreator %></p>
-          </div>          
-        </div>
-      </article>
-      <% }) %>    
-    <% } %>
-    <!-- activity -->
-    <% if (currentPage === 'activity' && activities.length) { %>
-    <h2>My Activity</h2>
-    <table class="table table-striped table-hover">
-      <thead>
-        <td>Date</td>
-        <td>Details</td>
-      </thead>
-      <tbody>
-        <% activities.forEach(activity => { %>
-          <tr>
-            <td><%= activity.edited_at %></td>
-            <td><%= user.fullname %> edited <a href="/maps/<%= activity.map_id %>"><%= activity.title %></a></td>
-          </tr>         
+      <% }) %>
+      <% } %>
+      <!-- favorites -->
+      <% if (currentPage === 'favs' && maps.length) { %>
+      <h2>Favorites</h2>
+      <div class="card-grid">
+        <% maps.forEach(map => { %>
+        <article class="card s-rounded">
+          <div class="card-image card-map">
+            <img class="img-responsive"
+              src="https://api.mapbox.com/styles/v1/mapbox/light-v10/static/<%= map.center_lng %>,<%= map.center_lat %>,13/300x200?access_token=pk.eyJ1IjoidGhlbGl0dGxlYmxhY2tzbWl0aCIsImEiOiJjazZlMnExanYwaXU0M2tsb2I5cDRzcTQwIn0.bwS19as5AZCy7I-y3w-Tkw" />
+            <a class="btn btn-primary s-rounded view-btn" href="/maps/<%= map.id %>">View</a>
+          </div>
+          <div class="card-header">
+            <div>
+              <div class="card-title h3"><%= map.title %></div>
+              <p class="card-subtitle text-gray">by <%= map.mapCreator %></p>
+            </div>
+          </div>
+        </article>
         <% }) %>
-      </tbody>
-    </table>
-    <% } %>
+        <% } %>
+        <!-- activity -->
+        <% if (currentPage === 'activity' && activities.length) { %>
+        <h2>My Activity</h2>
+        <table class="table table-striped table-hover">
+          <thead>
+            <td>Date</td>
+            <td>Details</td>
+          </thead>
+          <tbody>
+            <% activities.forEach(activity => { %>
+            <tr>
+              <td><%= activity.edited_at %></td>
+              <td><%= user.fullname %> edited <a href="/maps/<%= activity.map_id %>"><%= activity.title %></a></td>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
+        <% } %>
   </section>
 </main>
 

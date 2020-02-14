@@ -132,14 +132,15 @@ module.exports = db => {
       })
       .then(user => getMapsFavedByUser(db, { userID: user.id }))
       .then(maps => {
+        let favMaps = [];
         if (maps && maps.length) {
-          const favMaps = maps.map(el => {
+          favMaps = maps.map(el => {
             return getUserByID(db, { userID: el.u_id }).then(data => {
               return { ...el, mapCreator: data.fullname };
             });
           });
-          templateVars = { ...templateVars, maps: favMaps, currentPage: "favs" };
         }
+        templateVars = { ...templateVars, maps: favMaps, currentPage: "favs" };
         res.render("profile", templateVars);
       });
   });
