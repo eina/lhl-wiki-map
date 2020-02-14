@@ -212,8 +212,10 @@ module.exports = db => {
       detail: req.query["edit-description"],
       ...req.body
     };
-    return updatePoint(db, { pointID: req.params.id, pointData: toSend }).then(data =>
-      res.json(data.rows[0])
+    return updatePoint(db, { pointID: req.params.id, pointData: toSend }).then(data =>{
+      createNewEditRecord(db, { mapID: req.body.mapID, userID: req.body.userID });
+      res.json(data.rows[0]);
+    }
     );
   });
 

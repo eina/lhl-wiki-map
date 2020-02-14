@@ -230,7 +230,8 @@ $(() => {
       const dataToSend = {
         mapID,
         lat,
-        lng
+        lng,
+        userID
       };
       $.ajax({ method: "POST", url: `/points/${id}/update?${query}`, data: dataToSend }).then(
         data => {
@@ -290,7 +291,7 @@ $(() => {
       const $parent = $(this)
         .parent()
         .parent();
-      $.ajax({ method: "POST", url: `/api/points/${pointID}/delete` }).then(data => {
+      $.ajax({ method: "POST", url: `/api/points/${pointID}/delete`, data: { mapID, userID } }).then(data => {
         if (data.rowCount === 1) {
           // remove marker
           singleMap.removeLayer(markerRef[pointID]);
