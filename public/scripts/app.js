@@ -60,13 +60,12 @@ $(() => {
    */
 
   $("#delete-map").on("click", function() {
-    const { map: mapID } = $(this).data();
-    console.log("delete this maaaaap", mapID);
+    const { map: mapID, user: userID } = $(this).data();
     $.ajax({
       method: "POST",
-      url: `/api/maps/${mapID}/delete`
+      url: `/api/maps/${mapID}/delete`,
+      data: userID
     }).then(data => {
-      console.log("k bye!!!");
       window.location.replace(window.location.origin);
       return;
     });

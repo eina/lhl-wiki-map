@@ -4,7 +4,7 @@ $(() => {
   const markerRef = [];
   const singleMap = L.map("single-map");
   const {
-    mapDetails: { mapID }
+    mapDetails: { mapID, userID }
   } = $("#single-map").data();
 
   /**
