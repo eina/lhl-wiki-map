@@ -1,5 +1,5 @@
 INSERT INTO maps (u_id, title, created_at, center_lat, center_lng)
-  VALUES (1, 'Alice Map 1', '2016-06-22 11:00', 49.280571, - 123.11378);
+  VALUES (1, 'Japanese Food', '2020-01-01 12:00', 49.284159, - 123.125478);
 
 INSERT INTO maps (u_id, title, created_at, center_lat, center_lng)
   VALUES (1, 'Alice Map 2', '2020-01-02 14:00', 49.282656, - 123.126912);
