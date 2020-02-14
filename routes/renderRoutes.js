@@ -110,16 +110,20 @@ module.exports = db => {
   router.get("/users/:id", (req, res) => {
     const currentUser = req.cookies && req.cookies.userID ? req.cookies.userID : null;
     let templateVars = { currentUser };
-    return getUserByID(db, { userID: req.params.id })
-      .then(user => {
-        templateVars = { ...templateVars, user };
-        return user;
-      })
-      .then(user => getMapsOwnedByUser(db, { userID: user.id }))
-      .then(maps => {
-        templateVars = { ...templateVars, maps, currentPage: "profile" };
-        res.render("profile", templateVars);
-      });
+    if (currentUser) {
+      return getUserByID(db, { userID: req.params.id })
+        .then(user => {
+          templateVars = { ...templateVars, user };
+          return user;
+        })
+        .then(user => getMapsOwnedByUser(db, { userID: user.id }))
+        .then(maps => {
+          templateVars = { ...templateVars, maps, currentPage: "profile" };
+          res.render("profile", templateVars);
+        });
+    } else {
+      res.render("index");
+    }
   });
 
   router.get("/users/:id/favs", (req, res) => {
@@ -161,6 +165,10 @@ module.exports = db => {
 
   router.get("/maps/new", (req, res) => {
     res.render("map-form");
+  });
+
+  router.get("*", (req, res) => {
+    res.render("index");
   });
 
   router.post(`/login`, (req, res) => {
