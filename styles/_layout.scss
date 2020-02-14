@@ -6,6 +6,12 @@ body {
   padding-bottom: 5rem;
 }
 
+.bg-main {
+  background: $primary-color; /* fallback for old browsers */
+  background: linear-gradient(to right, #4a00e0, $primary-color);
+  color: #fff;
+}
+
 .wrapper,
 .hero.site-hero {
   width: 90%;

@@ -5,14 +5,14 @@
 <%- include('partials/_headnav') %>
 
 <main>
-  <div class="bg-gray full-width">
+  <div class="bg-main full-width">
     <div class="hero hero-lg site-hero">
       <div class="hero-body">
         <h1>Curate your favourite spots</h1>
         <%if (locals.currentUser) {%>
         <a href="/maps/new" class="btn btn-lg btn-primary s-rounded">Create Your Map</a>
         <%} else {%>
-        <button class="btn btn-lg btn-primary s-rounded" id="login-from-create">
+        <button class="btn btn-lg s-rounded" id="login-from-create">
           Create Your Map
         </button>
         <%}%>

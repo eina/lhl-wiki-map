@@ -8,8 +8,12 @@ const renderPopupDetails = function({ id, desc, title, imgURL }) {
   const $placeImg = $("<img>")
     .addClass("img-responsive")
     .attr({ src: imgURL });
-  const $placeName = $("<p>").text(title);
-  const $placeDescription = $("<p>").text(desc);
+  const $placeName = $("<p>")
+    .addClass("h5 mb-0")
+    .text(title);
+  const $placeDescription = $("<p>")
+    .addClass("map-marker-desc")
+    .text(desc);
   const $place = $("<div>").addClass("map-marker-details");
 
   $place.append($placeImg, $placeName, $placeDescription);

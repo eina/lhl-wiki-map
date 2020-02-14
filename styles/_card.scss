@@ -4,11 +4,6 @@
   max-width: 800px;
   box-shadow: 0 0.25rem 1rem rgba(48, 55, 66, 0.15);
 
-  &-image {
-    height: 280px;
-    overflow: hidden;
-  }
-
   &-header {
     display: flex;
     justify-content: space-between;
@@ -23,8 +18,11 @@
     margin-bottom: 0;
   }
 
+  &-image,
   &-map {
     position: relative;
+    max-height: 200px;
+    overflow: hidden;
   }
 }
 

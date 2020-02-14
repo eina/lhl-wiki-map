@@ -4,11 +4,10 @@
 <!-- <header> + <nav> -->
 <%- include('partials/_headnav') %>
 
-<main>
-  <div class="content-header">
+<main>      
+  <div class="content-header profile-header">    
     <h1><%= user.fullname %></h1>
-
-    <div class="btn-group text-right">
+    <div class="btn-group text-right">      
       <a href="/users/<%= currentUser %>" class="btn">My Maps</a>
       <a href="/users/<%= currentUser %>/favs" class="btn">Favourite Maps</a>
       <a href="/users/<%= currentUser %>/activity" class="btn">My Activity</a>
