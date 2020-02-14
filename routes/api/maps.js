@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { deleteMap, getMaps } = require("../../lib/dataHelpers/maps");
+const { createNewEditRecord } = require("../../lib/dataHelpers/edits");
 
 module.exports = db => {
   router.get("/all", (req, res) => {
@@ -35,6 +36,7 @@ module.exports = db => {
       mapID: req.params.mapID
     })
       .then(data => {
+        createNewEditRecord(db, { userID: req.body.userID, mapID: req.params.mapID  });
         res.json(data);
       })
       .catch(err => {

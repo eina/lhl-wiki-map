@@ -278,9 +278,6 @@ $(() => {
     }
   };
 
-  if (user) {
-  }
-
   renderSingleMap(singleMap);
   // click handler for edit
   $(".card").on("click", ".edit-place-btn", editPlace);

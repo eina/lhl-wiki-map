@@ -193,8 +193,13 @@ module.exports = db => {
       creationTime,
       ...req.body
     };
+
     return createNewMap(db, newMapObj).then(data => {
       const { id } = data[0].rows[0];
+      createNewEditRecord(db, {
+        userID: currentUser,
+        mapID: id
+      });
       res.json({ mapID: id });
     });
   });
@@ -213,7 +218,6 @@ module.exports = db => {
   });
 
   router.post("/points/new", (req, res) => {
-    console.log("hello query and data", req.query, req.body);
     if (req.query && req.body) {
       const toSend = {
         title: req.query["place-name"],
