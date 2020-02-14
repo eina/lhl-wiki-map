@@ -9,7 +9,13 @@
     <div class="hero hero-lg site-hero">
       <div class="hero-body">
         <h1>Curate your favourite spots</h1>
-        <a href="maps/new" class="btn btn-lg btn-primary s-rounded">Create Your Map</a>
+        <%if (locals.currentUser) {%>
+        <a href="/maps/new" class="btn btn-lg btn-primary s-rounded">Create Your Map</a>
+        <%} else {%>
+        <button class="btn btn-lg btn-primary s-rounded" id="login-from-create">
+          Create Your Map
+        </button>
+        <%}%>
       </div>
     </div>
   </div>
@@ -20,9 +26,13 @@
       <% if (locals.maps && maps.length) { %> <% maps.forEach(map => { %>
       <article class="card s-rounded">
         <div class="card-image card-map">
-          <img class="img-responsive"
-            src="https://api.mapbox.com/styles/v1/mapbox/light-v10/static/<%= map.center_lng %>,<%= map.center_lat %>,13/300x200?access_token=pk.eyJ1IjoidGhlbGl0dGxlYmxhY2tzbWl0aCIsImEiOiJjazZlMnExanYwaXU0M2tsb2I5cDRzcTQwIn0.bwS19as5AZCy7I-y3w-Tkw" />
-          <a class="btn btn-primary s-rounded view-btn" href="/maps/<%= map.id %>" data-map="">View</a>
+          <img
+            class="img-responsive"
+            src="https://api.mapbox.com/styles/v1/mapbox/light-v10/static/<%= map.center_lng %>,<%= map.center_lat %>,13/300x200?access_token=pk.eyJ1IjoidGhlbGl0dGxlYmxhY2tzbWl0aCIsImEiOiJjazZlMnExanYwaXU0M2tsb2I5cDRzcTQwIn0.bwS19as5AZCy7I-y3w-Tkw"
+          />
+          <a class="btn btn-primary s-rounded view-btn" href="/maps/<%= map.id %>" data-map=""
+            >View</a
+          >
         </div>
         <div class="card-header">
           <div>

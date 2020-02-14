@@ -23,6 +23,7 @@ $(() => {
   };
   // toggle modal open and close
   $("#btn-login").click(modalControl);
+  $("#login-from-create").click(modalControl);
   $("#modal-close").click(modalControl);
 
   /* Favorite A Map */

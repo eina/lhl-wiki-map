@@ -4,7 +4,8 @@ $(() => {
   const markerRef = [];
   const singleMap = L.map("single-map");
   const {
-    mapDetails: { mapID, userID }
+    mapDetails: { mapID },
+    user
   } = $("#single-map").data();
 
   /**
@@ -300,7 +301,9 @@ $(() => {
   });
 
   /* click handler for leaflet map */
-  singleMap.on("click touchstart", onMapClick);
+  if (user) {
+    singleMap.on("click touchstart", onMapClick);
+  }
 
   $(".view-marker-btn").click(function() {
     const { pointId } = $(this).data();
