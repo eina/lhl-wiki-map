@@ -46,7 +46,7 @@ module.exports = db => {
   });
 
   router.get("/login", (req, res) => {
-    res.render("index");
+    res.redirect("/");
   });
 
   router.get("/logout", (req, res) => {
