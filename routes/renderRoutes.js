@@ -211,5 +211,20 @@ module.exports = db => {
       res.json(data.rows[0])
     );
   });
+
+  router.post("/points/new", (req, res) => {
+    console.log("hello query and data", req.query, req.body);
+    if (req.query && req.body) {
+      const toSend = {
+        title: req.query["place-name"],
+        detail: req.query["place-desc"],
+        imageURL: req.query["place-img"],
+        ...req.body
+      };
+      return createNewPoint(db, toSend).then(data => {
+        res.json(data.rows[0]);
+      });
+    }
+  });
   return router;
 };

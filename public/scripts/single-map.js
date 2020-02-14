@@ -104,6 +104,7 @@ $(() => {
     // submit handler for the form
     if ($("#addPlace")) {
       $("#addPlace").submit(function(event) {
+        const query = $(this).serialize();
         event.preventDefault();
         const placeName = $(this)
           .find("#place-name")
@@ -111,20 +112,29 @@ $(() => {
         const placeDesc = $(this)
           .find("#place-desc")
           .val();
-        const placeImg = $(this)
-          .find("#place-img")
-          .val();
         if (placeName && placeDesc) {
-          // const query = $(this).serialize();
           // show marker on map with details
-          addPointOnMap({
-            map: singleMap,
-            coords: L.latLng(lat, lng),
-            formVals: { title: placeName, imgURL: placeImg, desc: placeDesc }
-          });
-          // show on my places grid
-          $("#user-points").prepend(
-            renderPlaceCard({ title: placeName, imgURL: placeImg, desc: placeDesc })
+          $.ajax({ method: "POST", url: `/points/new?${query}`, data: { lat, lng, mapID } }).then(
+            data => {
+              const {
+                detail: desc,
+                id: point,
+                image_url: imgURL,
+                lat,
+                lng,
+                map_id: map,
+                title
+              } = data;
+              addPointOnMap({
+                map: singleMap,
+                coords: L.latLng(lat, lng),
+                formVals: { title, imgURL, desc }
+              });
+              // show on my places grid
+              $("#user-points").append(
+                renderPlaceCard({ title, imgURL, desc, point, map, details: JSON.stringify(data) })
+              );
+            }
           );
         } else {
           console.log("submit something you fool!");
