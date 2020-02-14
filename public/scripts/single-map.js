@@ -11,7 +11,7 @@ $(() => {
    * Renders single map card on /(index)
    * @param {object} mapDetails object with: center_lat, center_lng, title, owner_name, id, numFavs
    */
-  const renderPlaceCard = function({ title, desc, imgURL }) {
+  const renderPlaceCard = function({ title, desc, imgURL, point, map, details }) {
     const $cardContainer = $("<article>").addClass("card s-rounded");
     const $cardImgContainer = $("<div>").addClass("card-image");
     const $cardImg = $("<img>").attr({
@@ -24,22 +24,30 @@ $(() => {
     const $placeTitle = $("<h3>")
       .addClass("card-title")
       .text(title);
-    $cardHeaderContainer.append($placeTitle);
 
     const $cardBodyContainer = $("<div>").addClass("card-body");
     const $cardBodyText = $("<p>").text(desc);
-    $cardBodyContainer.append($cardBodyText);
 
-    const $cardFooterContainer = $("<div>").addClass("card-footer");
+    const $cardFooterContainer = $("<div>").addClass("card-footer text-center");
     const $deleteButton = $("<button>")
-      .addClass("btn delete-place-btn")
+      .addClass("btn btn-primary delete-place-btn")
       .text("Delete");
     const $editButton = $("<button>")
-      .addClass("btn edit-place-btn")
+      .addClass("btn btn-primary edit-place-btn")
       .text("Edit");
     const $viewMapButton = $("<button>")
-      .addClass("btn .view-marker-btn")
+      .addClass("btn btn-primary view-marker-btn")
       .text("View on Map");
+
+    if (point && map && details) {
+      $cardContainer.attr({ data: { point, map, details: JSON.stringify(details) } });
+      $deleteButton.attr({ "data-point-id": point });
+      $editButton.attr({ "data-point-id": point });
+      $viewMapButton.attr({ "data-point-id": point });
+    }
+
+    $cardHeaderContainer.append($placeTitle);
+    $cardBodyContainer.append($cardBodyText);
     $cardFooterContainer.append($viewMapButton, $editButton, $deleteButton);
 
     $cardContainer.append(
@@ -145,7 +153,7 @@ $(() => {
 
     Object.keys(formValues).forEach(fieldName => {
       const fieldVal = formValues[fieldName];
-      const idString = `edit-place${placeID}-name`;
+      const idString = `edit-${fieldName}`;
       const $formLabel = $("<span>")
         .addClass("form-label")
         .css("text-transform", "capitalize");
@@ -205,21 +213,23 @@ $(() => {
 
     $parent.find("form").on("submit", function(e) {
       e.preventDefault();
+      const query = $(this).serialize();
       const { detail, id, image_url: imageURL, lat, lng, map_id: mapID, title } = details;
       const dataToSend = {
         mapID,
-        imageURL,
-        title,
         lat,
-        lng,
-        detail
+        lng
       };
-      // console.log("hello submit", details);
-      $.ajax({ method: "POST", url: `/points/${id}/update`, data: dataToSend }).then(
-        data => console.log("did you ssucceed", data)
-        // $parent.empty();
-        // $parent.append($copyBeforeEdit[$copyBeforeEdit.length - 1]);
-        // $copyBeforeEdit = [];
+      $.ajax({ method: "POST", url: `/points/${id}/update?${query}`, data: dataToSend }).then(
+        data => {
+          if (data) {
+            const { title, detail: desc, image_url: imgURL, id: point, map_id: map } = data;
+            $parent.empty();
+            $parent.append(
+              renderPlaceCard({ title, desc, imgURL, point, map, details: JSON.stringify(data) })
+            );
+          }
+        }
       );
     });
   };

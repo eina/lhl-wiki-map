@@ -201,10 +201,15 @@ module.exports = db => {
 
   router.post("/points/:id/update", (req, res) => {
     // const currentUser = req.cookies && req.cookies.userID ? req.cookies.userID : null;
-    return updatePoint(db, { pointID: req.params.id, pointData: req.body }).then(data => {
-      console.log("what are you returning", data);
-      res.json(data);
-    });
+    const toSend = {
+      title: req.query["edit-name"],
+      imageURL: req.query["edit-imgURL"],
+      detail: req.query["edit-description"],
+      ...req.body
+    };
+    return updatePoint(db, { pointID: req.params.id, pointData: toSend }).then(data =>
+      res.json(data.rows[0])
+    );
   });
   return router;
 };
